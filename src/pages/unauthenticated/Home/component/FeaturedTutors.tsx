@@ -1,7 +1,7 @@
-import FeatureIcon from "../../../assets/svgs/feature.svg";
-import David from "../../../assets/images/david-joe.png";
-import Mark from "../../../assets/images/mark.png";
-import Amber from "../../../assets/images/amber.png";
+import FeatureIcon from "../../../../assets/svgs/feature.svg";
+import David from "../../../../assets/images/david-joe.png";
+import Mark from "../../../../assets/images/mark.png";
+import Amber from "../../../../assets/images/amber.png";
 
 type IProps = {
   item: {

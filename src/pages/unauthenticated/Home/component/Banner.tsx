@@ -1,7 +1,7 @@
 import { CiPlay1 } from "react-icons/ci";
-import Ellipse from "../../../assets/svgs/ellipse.svg";
-import Flash from "../../../assets/svgs/flash.svg";
-import Pen from "../../../assets/svgs/pen.svg";
+import Ellipse from "../../../../assets/svgs/ellipse.svg";
+import Flash from "../../../../assets/svgs/flash.svg";
+import Pen from "../../../../assets/svgs/pen.svg";
 import { Button } from "@mantine/core";
 import { Fragment } from "react";
 

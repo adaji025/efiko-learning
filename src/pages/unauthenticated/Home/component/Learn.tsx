@@ -1,8 +1,8 @@
-import Line from "../../../assets/svgs/underline.svg";
-import AccessIcon from "../../../assets/svgs/access.svg";
-import AccessOneIcon from "../../../assets/svgs/access1.svg";
-import LearnIcon from "../../../assets/svgs/learn.svg";
-import LearnOneIcon from "../../../assets/svgs/learn1.svg";
+import Line from "../../../../assets/svgs/underline.svg";
+import AccessIcon from "../../../../assets/svgs/access.svg";
+import AccessOneIcon from "../../../../assets/svgs/access1.svg";
+import LearnIcon from "../../../../assets/svgs/learn.svg";
+import LearnOneIcon from "../../../../assets/svgs/learn1.svg";
 
 const Learn = () => {
   return (
