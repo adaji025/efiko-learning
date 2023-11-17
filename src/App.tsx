@@ -13,7 +13,7 @@ export default function App() {
       }}
     >
       <Routes>
-        <Route path="/" element={<Unauthenticated />} />
+        <Route path="/*" element={<Unauthenticated />} />
       </Routes>
     </MantineProvider>
   );
