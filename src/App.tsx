@@ -1,7 +1,7 @@
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
-import { Routes, Route } from "react-router-dom";
-import Home from "./pages/Home/Home";
+import { Route, Routes } from "react-router-dom";
+import Unauthenticated from "./components/Unauthenticated";
 
 export default function App() {
   return (
@@ -13,7 +13,7 @@ export default function App() {
       }}
     >
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Unauthenticated />} />
       </Routes>
     </MantineProvider>
   );
