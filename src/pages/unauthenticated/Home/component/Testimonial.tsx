@@ -1,9 +1,9 @@
 import { useRef } from "react";
-import Quote from "../../../assets/svgs/quote.svg";
+import Quote from "../../../../assets/svgs/quote.svg";
 import { Rating } from "@mantine/core";
 import Slider from "react-slick";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
-import David from "../../../assets/images/david-joe.png";
+import David from "../../../../assets/images/david-joe.png";
 
 const Card = () => {
   return (

@@ -1,12 +1,11 @@
-import Line from "../../assets/svgs/underline.svg";
+import Line from "../../../assets/svgs/underline.svg";
 import { Accordion } from "@mantine/core";
 
 const LearnMore = () => {
   const learningData = [
     {
       title: `What is Efiko Learning? `,
-      text: `We have already answered your most asked questions. Have a look at the
-      FAQs below.`,
+      text: `An eLearning platform is a software application that provides a virtual learning environment for students and learners to access educational resources and take online courses. It enables instructors to create and manage online courses, deliver learning materials, track student progress, and assess student performance.`,
     },
     {
       title: `How to use Efiko Learning? `,
@@ -51,7 +50,11 @@ const LearnMore = () => {
         <h2 className="text-center font-bold text-2xl text-primary">Leaning</h2>
         <Accordion defaultValue="Apples" className="mt-5">
           {learningData.map((data, index) => (
-            <Accordion.Item key={index} value={index.toString()} className="border mb-2 rounded-lg">
+            <Accordion.Item
+              key={index}
+              value={index.toString()}
+              className="border mb-2 rounded-lg"
+            >
               <Accordion.Control>{data.title}</Accordion.Control>
               <Accordion.Panel>{data.text}</Accordion.Panel>
             </Accordion.Item>
@@ -59,10 +62,16 @@ const LearnMore = () => {
         </Accordion>
       </div>
       <div className="mt-20 max-w-[1000px] mx-auto">
-        <h2 className="text-center font-bold text-2xl text-primary">Payments</h2>
+        <h2 className="text-center font-bold text-2xl text-primary">
+          Payments
+        </h2>
         <Accordion defaultValue="Apples" className="mt-5">
           {paymentData.map((data, index) => (
-            <Accordion.Item key={index} value={index.toString()} className="border mb-2 rounded-lg">
+            <Accordion.Item
+              key={index}
+              value={index.toString()}
+              className="border mb-2 rounded-lg"
+            >
               <Accordion.Control>{data.title}</Accordion.Control>
               <Accordion.Panel>{data.text}</Accordion.Panel>
             </Accordion.Item>
