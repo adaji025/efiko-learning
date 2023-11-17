@@ -11,6 +11,7 @@ export default {
         secondary: "#E2DAFB",
         'e-yellow': "#DFFF78",
         'e-green': "#00F5BF",
+        'pink': "#FE66C4",
       }
     },
   },

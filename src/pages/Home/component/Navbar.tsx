@@ -56,9 +56,9 @@ const Navbar = () => {
           {navMenuItems.map((menu, idx) => (
             <div
               key={idx}
-              className={`block relative font-semibold border-b-4 border-transparent text-base md:text-lg cursor-pointer hover:text-[#DEA90A] hover:lg:text-primary-green-50 hover:lg:border-primary-green-50   transition- duration-200 ${
+              className={`block relative font-semibold border-b-4 border-transparent text-base md:text-lg cursor-pointer hover:border-pink hover:lg:text-primary-green-50 hover:lg:border-primary-green-50   transition- duration-200 ${
                 router.pathname === menu.url
-                  ? "lg:border-white lg:text-primary-green-50"
+                  ? "lg:border-pink lg:text-primary-green-50"
                   : ""
               } `}
               onClick={() => {
