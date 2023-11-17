@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import LogoMark from "../../../assets/svgs/logo.svg";
+import LogoMark from "../../assets/svgs/logo.svg";
 import styles from "./Navbar.module.css";
 
 const navMenuItems = [
