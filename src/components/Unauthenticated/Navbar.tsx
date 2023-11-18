@@ -37,7 +37,7 @@ const Navbar = () => {
   return (
     <div className="z-[999] w-full fixed top-0 bg-darkBlue bg-gray-50">
       <nav className={`px-5 lg:px-12 max-w-[1440px] ${styles.navbarItems}`}>
-        <img src={LogoMark} alt="" />
+        <img src={LogoMark} alt="efiko learning" className="cursor-pointer" onClick={() => navigate("/")} />
         <div
           className={`cursor-pointer pr-2 ${styles.menuIcon}`}
           onClick={() => setMenu(!menu)}
