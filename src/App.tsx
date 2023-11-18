@@ -3,6 +3,7 @@ import { MantineProvider } from "@mantine/core";
 import { Route, Routes } from "react-router-dom";
 import Unauthenticated from "./components/Unauthenticated";
 import Login from "./pages/unauthenticated/auth/Login";
+import ForgotPassword from "./pages/unauthenticated/auth/ForgotPassword";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
     >
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/*" element={<Unauthenticated />} />
       </Routes>
     </MantineProvider>

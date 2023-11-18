@@ -11,12 +11,19 @@ const Login = () => {
         <div>Sign in to your account and start learning.</div>
       </div>
       <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
-        <TextInput required size="md" label="Email" className="w-full" />
+        <TextInput
+          placeholder="Enter your valid email address"
+          required
+          size="md"
+          label="Email"
+          className="w-full"
+        />
         <PasswordInput
           required
           mt={16}
           size="md"
           label="Password"
+          placeholder="Enter your password"
           className="w-full"
         />
         <div className="text-right text-primary hover:underline font-semibold cursor-pointer">
@@ -40,7 +47,11 @@ const Login = () => {
           <FcGoogle /> <div className="ml-2">Sign In with Google</div>
         </Button>
       </div>
-      <div className="my-10">Don’t have an account? <span className="text-primary font-semibold">Create an account </span>now!</div>
+      <div className="my-10">
+        Don’t have an account?{" "}
+        <span className="text-primary font-semibold">Create an account </span>
+        now!
+      </div>
     </div>
   );
 };
