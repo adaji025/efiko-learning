@@ -4,7 +4,7 @@ import Logo from "../../../assets/svgs/logo.svg";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center px-6 lg:px-8">
       <img src={Logo} alt="" className="mt-10" />
@@ -51,7 +51,12 @@ const Login = () => {
       </div>
       <div className="my-10">
         Don’t have an account?{" "}
-        <span className="text-primary font-semibold cursor-pointer" onClick={() => navigate("/register")}>Create an account </span>
+        <span
+          className="text-primary font-semibold cursor-pointer"
+          onClick={() => navigate("/register")}
+        >
+          Create an account{" "}
+        </span>
         now!
       </div>
     </div>
