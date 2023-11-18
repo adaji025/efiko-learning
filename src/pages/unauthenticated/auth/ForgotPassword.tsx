@@ -1,7 +1,9 @@
 import { TextInput, Button } from "@mantine/core";
 import Logo from "../../../assets/svgs/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center px-6 lg:px-8">
       <img src={Logo} alt="" className="mt-10" />
@@ -21,7 +23,12 @@ const ForgotPassword = () => {
           className="w-full"
         />
 
-        <Button size="md" mt={30} className="bg-primary w-full">
+        <Button
+          size="md"
+          mt={30}
+          className="bg-primary w-full"
+          onClick={() => navigate("/reset-password")}
+        >
           Send Link
         </Button>
       </div>
