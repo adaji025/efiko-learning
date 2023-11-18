@@ -2,6 +2,7 @@ import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 import { Route, Routes } from "react-router-dom";
 import Unauthenticated from "./components/Unauthenticated";
+import Login from "./pages/unauthenticated/auth/Login";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       }}
     >
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/*" element={<Unauthenticated />} />
       </Routes>
     </MantineProvider>
