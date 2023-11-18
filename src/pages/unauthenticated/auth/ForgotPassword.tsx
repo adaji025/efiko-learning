@@ -21,7 +21,7 @@ const ForgotPassword = () => {
           className="w-full"
         />
 
-        <Button size="md" mt={24} className="bg-primary w-full">
+        <Button size="md" mt={30} className="bg-primary w-full">
           Send Link
         </Button>
       </div>
