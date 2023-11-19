@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Stepper, Button, TextInput, Select, Textarea } from "@mantine/core";
+import { Stepper, Button, TextInput, Select,  MultiSelect } from "@mantine/core";
 import Logo from "../../../assets/svgs/logo.svg";
 import ImageDropzone from "../../../components/ImageDropzone";
 import { countryList } from "../../../utils/country";
 import { useNavigate } from "react-router-dom";
 
-const ProfilSetup = () => {
+const StudentProfilSetup = () => {
   const [active, setActive] = useState(0);
   const navigate = useNavigate();
   const nextStep = () =>
@@ -13,18 +13,18 @@ const ProfilSetup = () => {
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
   return (
-    <div className="pb-10">
+    <div className="pb-10 bg-gray-50">
       <div className="border-b">
         <img src={Logo} alt="" className="h-[100px]" />
       </div>
       <div className="text-center mt-10">
-        <h2 className="text-3xl font-bold text-primary">Tutor Profile</h2>
+        <h2 className="text-3xl font-bold text-primary">Student Profile</h2>
         <div className="mt-2">
           Setup your profile to start teachin and earning today.
         </div>
       </div>
 
-      <div className="mt-10 max-w-[600px] mx-auto">
+      <div className="mt-10 max-w-[600px] mx-auto px-6 lg:px-8">
         <Stepper active={active} onStepClick={setActive}>
           <Stepper.Step>
             <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
@@ -78,7 +78,7 @@ const ProfilSetup = () => {
                 required
                 mt={16}
                 size="md"
-                label="Teaching Experience"
+                label="Your Majors"
                 data={[
                   { label: "one", value: "1" },
                   { label: "tw0", value: "2" },
@@ -86,41 +86,19 @@ const ProfilSetup = () => {
                 ]}
               />
 
-              <Select
+              <MultiSelect
                 required
                 mt={16}
                 size="md"
-                label="What subject you want to teach?"
+                label="Subjects you are interested in"
                 data={[
                   { label: "one", value: "1" },
                   { label: "tw0", value: "2" },
                   { label: "three", value: "3" },
                 ]}
               />
+              <div className="text-xs">Select at least 6 subjects</div>
 
-              <Select
-                required
-                mt={16}
-                size="md"
-                label="Upload your educational documents"
-                data={[
-                  { label: "one", value: "1" },
-                  { label: "tw0", value: "2" },
-                  { label: "three", value: "3" },
-                ]}
-              />
-
-              <Select
-                required
-                mt={16}
-                size="md"
-                label="Upload your national identity card"
-                data={[
-                  { label: "one", value: "1" },
-                  { label: "tw0", value: "2" },
-                  { label: "three", value: "3" },
-                ]}
-              />
               <div className="flex gap-5 mt-10">
                 <Button
                   size="md"
@@ -142,15 +120,7 @@ const ProfilSetup = () => {
           </Stepper.Step>
           <Stepper.Step>
             <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
-              <Textarea
-                label="Profile Description"
-                placeholder="Enter your valid email address"
-                autosize
-                minRows={6}
-                size="sm"
-                className=""
-              />
-              <div className="mt-6 text-xs">
+              <div className="mt-6">
                 I agree to the{" "}
                 <span className="text-primary hover:underline cursor-pointer">
                   Terms of Service
@@ -181,7 +151,7 @@ const ProfilSetup = () => {
                 className="bg-primary w-full mt-10"
                 onClick={() => navigate("/login")}
               >
-                Log out
+                Login
               </Button>
             </div>
           </Stepper.Completed>
@@ -191,4 +161,4 @@ const ProfilSetup = () => {
   );
 };
 
-export default ProfilSetup;
+export default StudentProfilSetup;
