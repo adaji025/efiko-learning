@@ -6,6 +6,7 @@ import Login from "./pages/unauthenticated/auth/Login";
 import ForgotPassword from "./pages/unauthenticated/auth/ForgotPassword";
 import ResetPassword from "./pages/unauthenticated/auth/ResetPassword";
 import Register from "./pages/unauthenticated/auth/Register";
+import ProfilSetup from "./pages/unauthenticated/auth/ProfilSetup";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile-setup" element={<ProfilSetup />} />
         <Route path="/*" element={<Unauthenticated />} />
       </Routes>
     </MantineProvider>
