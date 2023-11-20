@@ -10,6 +10,7 @@ const Register = () => {
   const [user, setUser] = useState<string | null>(null);
 
   const navigate = useNavigate();
+  console.log(userType);
   return (
     <Fragment>
       <div className="min-h-screen bg-gray-50 flex flex-col items-center px-6 lg:px-8">
@@ -77,7 +78,15 @@ const Register = () => {
                 className="w-full"
               />
 
-              <Button size="md" mt={24} className="bg-primary w-full">
+              <Button
+                size="md"
+                mt={24}
+                className="bg-primary w-full"
+                onClick={() => {
+                  userType === "tutor" && navigate("/tutor-profile-setup");
+                  userType === "student" && navigate("/student-profile-setup");
+                }}
+              >
                 Sign up
               </Button>
               <div className="mt-10 flex gap-3 items-center">
@@ -91,6 +100,10 @@ const Register = () => {
                 color="gray"
                 mt={30}
                 className="border w-full flex gap-5 justify-center items-center text-primary"
+                onClick={() => {
+                  userType === "tutor" && navigate("/tutor-profile-setup");
+                  userType === "student" && navigate("/student-profile-setup");
+                }}
               >
                 <FcGoogle /> <div className="ml-2">Sign In with Google</div>
               </Button>
