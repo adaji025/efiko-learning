@@ -13,7 +13,7 @@ type IProps = {
 
 const SessionCard = ({ item }: IProps) => {
   return (
-    <div className="pt-5 bg-white shadow-lg rounded-xl my-10 border">
+    <div className="pt-5 bg-white shadow-lg rounded-xl mb-10 border">
       <div className="px-5">
         <div className="font-semibold">{item.name}</div>
         <div className="mt-3 flex items-center gap-2 text-sm">

@@ -1,5 +1,4 @@
-import { Avatar, Text } from "@mantine/core";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { BiChevronDown, BiLogOut } from "react-icons/bi";
 import { PiUserBold } from "react-icons/pi";
@@ -7,15 +6,10 @@ import LogoMark from "../../assets/svgs/logo.svg";
 import { Fragment, useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 
-type Props = {
-  openMobileNav?: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const Sidebar = ({ openMobileNav }: Props) => {
+const Sidebar = () => {
   // const [routes, setRoutes] = useState<any[]>([]);
   const [showChildren, setShowChildren] = useState<string>("");
   const location = useLocation();
-  const navigate = useNavigate();
 
   // console.log(users)
 
@@ -158,7 +152,12 @@ const Sidebar = ({ openMobileNav }: Props) => {
                         <NavLink
                           key={child.title}
                           className={({ isActive }) =>
-                            ["ml-5 text-sm", isActive ? "bg-white text-primary p-2 font-bold" : null]
+                            [
+                              "ml-5 text-sm",
+                              isActive
+                                ? "bg-white text-primary p-2 font-bold"
+                                : null,
+                            ]
                               .filter(Boolean)
                               .join(" ")
                           }

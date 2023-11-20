@@ -43,7 +43,7 @@ const Dashboard = () => {
       </div>
       <div className="mt-10">
         <h2 className="text-xl font-semibold">Trending Sessions</h2>
-        <div className="mt-5 gap-10 grid sm:grid-cols-2 md:grid-cols-3">
+        <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
           {sessionData.map((item, index) => (
             <SessionCard key={index} item={item} />
           ))}
