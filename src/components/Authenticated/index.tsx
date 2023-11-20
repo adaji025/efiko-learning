@@ -2,6 +2,8 @@ import { useState } from "react";
 import Sidebar from "./Sidebar";
 import MobileSidebar from "./MobileSidebar";
 import Header from "./Header";
+import { Route, Routes } from "react-router-dom";
+import Dashboard from "../../pages/authenticated/Dashboard/Dashboard";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -16,8 +18,9 @@ const Authenticated = () => {
         <div className="w-full">
           <Header mobileNav={mobileNav} openMobileNav={openMobileNav} />
           <main className="w-full bg-white pt-5 lg:pt-[50px] lg:ml-[300px] lg:w-[calc(100vw-300px)] px-4 lg:px-10 mb-10 mt-[80px] lg:mt-[unset]">
-            {/* <Routes>
-              </Routes> */}
+            <Routes>
+              <Route path="/dashboard" element={<Dashboard />} />
+            </Routes>
           </main>
         </div>
       </div>
