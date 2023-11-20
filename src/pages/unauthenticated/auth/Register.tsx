@@ -1,4 +1,5 @@
 import { useState, Fragment } from "react";
+import { useForm } from "@mantine/form";
 import { TextInput, PasswordInput, Button } from "@mantine/core";
 
 import { FcGoogle } from "react-icons/fc";
@@ -10,7 +11,14 @@ const Register = () => {
   const [user, setUser] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  console.log(userType);
+  const form = useForm({
+    initialValues: {
+      email: "",
+      accountType: "student",
+      password: "pass",
+      confirmPassword: "pass",
+    },
+  });
   return (
     <Fragment>
       <div className="min-h-screen bg-gray-50 flex flex-col items-center px-6 lg:px-8">
@@ -60,6 +68,7 @@ const Register = () => {
                 size="md"
                 label="Email"
                 className="w-full"
+                {...form.getInputProps("email")}
               />
               <PasswordInput
                 required
@@ -68,6 +77,7 @@ const Register = () => {
                 label="Password"
                 placeholder="Enter your password"
                 className="w-full"
+                {...form.getInputProps("password")}
               />
               <PasswordInput
                 required
@@ -76,6 +86,7 @@ const Register = () => {
                 label="Confirm Password"
                 placeholder="Enter your password"
                 className="w-full"
+                {...form.getInputProps("confirmPassword")}
               />
 
               <Button
