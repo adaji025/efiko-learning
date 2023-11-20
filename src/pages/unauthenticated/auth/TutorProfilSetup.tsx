@@ -12,6 +12,7 @@ const TutorProfilSetup = () => {
     setActive((current) => (current < 3 ? current + 1 : current));
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
+    
   return (
     <div className="pb-10 bg-gray-50">
       <div className="border-b">
