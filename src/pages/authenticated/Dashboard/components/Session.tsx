@@ -1,18 +1,16 @@
-
-import {Avatar} from "@mantine/core"  
-import { IoMdTime } from "react-icons/io"
-import { MdDateRange } from "react-icons/md"
+import { Avatar } from "@mantine/core";
+import { IoMdTime } from "react-icons/io";
+import { MdDateRange } from "react-icons/md";
 
 type IProps = {
-    item: {
-      name: string;
-      tutor: string;
-      desc: string;
-      duration: number;
-    };
+  item: {
+    name: string;
+    tutor: string;
+    desc: string;
+    duration: number;
   };
-      
-          
+};
+
 const SessionCard = ({ item }: IProps) => {
   return (
     <div className="pt-5 bg-white shadow-lg rounded-xl my-10 border">
@@ -34,12 +32,11 @@ const SessionCard = ({ item }: IProps) => {
           </div>
         </div>
       </div>
-      <button className="bg-[#F5F5F5] text-primary font-bold w-full border rounded-b-xl py-2 mt-2 mb-0">
+      <button className="bg-[#F5F5F5] text-primary font-bold w-full border-t rounded-b-xl py-2 mt-2 mb-0">
         Book session
       </button>
     </div>
-  
-  )
-}
+  );
+};
 
-export default SessionCard
+export default SessionCard;

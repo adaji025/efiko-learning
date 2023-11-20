@@ -21,13 +21,18 @@ ChartJS.register(
 
 const Chart = () => {
   const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
     "May",
-    "June",
-    "July",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
   ];
 
   const options = {
@@ -44,12 +49,12 @@ const Chart = () => {
     datasets: [
       {
         label: "Amount Spent",
-        data: [5, 10, 20, 6, 10, 20, 9],
+        data: [5, 10, 20, 6, 10, 20, 9, 10, 9, 8, 11, 12],
         backgroundColor: "#00F5C0",
       },
       {
         label: "Joined Sessions",
-        data: [1, 10, 20, 15, 10, 8, 12],
+        data: [1, 10, 20, 15, 10, 8, 12, 12, 11, 9, 8, 5],
         backgroundColor: "#FE66C4",
       },
     ],

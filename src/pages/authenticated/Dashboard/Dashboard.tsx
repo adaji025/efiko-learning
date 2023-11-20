@@ -38,7 +38,7 @@ const Dashboard = () => {
         </div>
         <div className="p-5 border shadow rounded-xl flex-1">
           <div>Total Sessions Joined</div>
-          <div className="mt-6 text-4xl">20</div>
+          <div className="mt-6 text-4xl">$220</div>
         </div>
       </div>
       <div className="mt-10">
