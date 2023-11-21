@@ -6,7 +6,7 @@ const SessionDetails = () => {
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
         Book Sesion
       </div>
-      <div className="md:w-3/4 mx-auto border mt-10 rounded-xl shadow pb-5 mx-4">
+      <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
         <div className="w-full border-b px-10 py-4 font-semibold">
           Algebra 101: Complete beginner guide.{" "}
         </div>
