@@ -3,15 +3,42 @@ import { FaRegUser } from "react-icons/fa";
 import { BiChevronDown, BiLogOut } from "react-icons/bi";
 import { PiUserBold } from "react-icons/pi";
 import LogoMark from "../../assets/svgs/logo.svg";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
+import { getUser } from "../../services/user";
+import useNotification from "../../hooks/useNotification";
 
 const Sidebar = () => {
   // const [routes, setRoutes] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
   const [showChildren, setShowChildren] = useState<string>("");
+  const [user, setUser] = useState();
   const location = useLocation();
 
-  // console.log(users)
+  const id = localStorage.getItem("userId") ?? "";
+
+  const { handleError, logoutUser } = useNotification();
+
+  useEffect(() => {
+    handleGetUser();
+  }, []);
+
+  // console.log(user)
+
+  const handleGetUser = () => {
+    setLoading(true);
+
+    getUser(id)
+      .then((res: any) => {
+        console.log(res.data.data);
+      })
+      .catch((err: any) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const userRoutes = [
     {
@@ -195,12 +222,14 @@ const Sidebar = () => {
           </div>
         </div>
 
-        <div className="flex gap-2 items-center pt-3 text-white">
+        <div
+          className="flex gap-2 items-center pt-3 text-white cursor-pointer"
+          onClick={logoutUser}
+        >
           <BiLogOut
             size={18}
             color="white"
             className="rotate-180 cursor-pointer"
-            onClick={"logoutUser"}
           />
           <div>Logout</div>
         </div>

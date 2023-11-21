@@ -27,16 +27,20 @@ const Register = () => {
       password: "",
       confirmPassword: "",
     },
+    validate: {
+      confirmPassword: (value, values) =>
+        value !== values.password ? "Password does not match" : null,
+    },
   });
 
   const submit = (values: any) => {
     setLoading(true);
-    userRegistration({...values, accountType: userType})
+    userRegistration({ ...values, accountType: userType })
       .then((res: any) => {
         toast.success("Check your email for OTP");
         localStorage.setItem("userEmail", values.email);
         console.log(res);
-        navigate("/verify-user")
+        navigate("/verify-user");
       })
       .catch((err: any) => {
         console.log(err);
@@ -55,7 +59,7 @@ const Register = () => {
           <h1 className="font-bold text-2xl">Sign Up</h1>
           <div>Sign up to your account and start learning.</div>
         </div>
-        <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
+        <div className="mt-10 bg-white border shadow px-[40px] sm:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
           {!userType && (
             <div>
               <div>Select your account type!</div>
