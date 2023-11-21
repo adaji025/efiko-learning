@@ -1,4 +1,4 @@
-export type UserTypes = {
+export type ProfileTypes = {
     studentEducationDetails: StudentEducationDetails
     _id: string
     email: string
