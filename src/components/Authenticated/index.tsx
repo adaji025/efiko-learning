@@ -5,6 +5,7 @@ import Header from "./Header";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../../pages/authenticated/Dashboard/Dashboard";
 import ExploreSession from "../../pages/authenticated/Sesssion/ExploreSession";
+import SessionDetails from "../../pages/authenticated/Sesssion/SessionDetails";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -22,6 +23,7 @@ const Authenticated = () => {
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/explore-sessions" element={<ExploreSession />} />
+              <Route path="/explore-sessions/:id" element={<SessionDetails />} />
             </Routes>
           </main>
         </div>
