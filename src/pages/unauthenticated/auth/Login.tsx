@@ -16,7 +16,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const {handleError} = useNotification()
+  const { handleError } = useNotification();
 
   const form = useForm({
     initialValues: {
@@ -32,12 +32,11 @@ const Login = () => {
       .then((res: any) => {
         localStorage.setItem("userId", res.data.data._id);
         localStorage.setItem("efiko_token", res.data.data.token);
-        navigate("/dashboard")
-        // window.location.reload();
+        navigate("/dashboard");
       })
       .catch((err: any) => {
         handleError(err);
-        console.log(err)
+        console.log(err);
       })
       .finally(() => {
         setLoading(false);
@@ -73,8 +72,10 @@ const Login = () => {
             className="w-full"
             {...form.getInputProps("password")}
           />
-          <div className="text-right text-primary hover:underline font-semibold cursor-pointer"
-          onClick={() => navigate("/forgot-password")}>
+          <div
+            className="text-right text-primary hover:underline font-semibold cursor-pointer"
+            onClick={() => navigate("/forgot-password")}
+          >
             Forgot password?
           </div>
           <Button type="submit" size="md" mt={24} className="bg-primary w-full">

@@ -1,23 +1,30 @@
-import { NavLink, useLocation } from "react-router-dom";
-import {LoadingOverlay} from "@mantine/core"
-import { BiChevronDown, BiLogOut } from "react-icons/bi";
-import LogoMark from "../../assets/svgs/logo.svg";
 import { Fragment, useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { LoadingOverlay } from "@mantine/core";
+import { BiChevronDown, BiLogOut } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
 import { IoHomeOutline } from "react-icons/io5";
-import { getUser } from "../../services/user";
-import useNotification from "../../hooks/useNotification";
-import { UserTypes } from "../../types/auth";
-import { EarningsIcon, NotificationIcon, SessionIcon } from "./svg";
 import { FiSettings, FiUser } from "react-icons/fi";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 
+import LogoMark from "../../assets/svgs/logo.svg";
+import { getUser } from "../../services/user";
+import useNotification from "../../hooks/useNotification";
+import { ProfileTypes } from "../../types/auth";
+import { EarningsIcon, NotificationIcon, SessionIcon } from "./svg";
+import { setUser } from "../../redux/features/userSlice";
+import { RootState } from "../../redux/store";
 
 const Sidebar = () => {
   const [routes, setRoutes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [showChildren, setShowChildren] = useState<string>("");
-  const [user, setUser] = useState<UserTypes | null>(null);
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const userData: ProfileTypes = useSelector(
+    (state: RootState) => state.user.userData
+  );
 
   const id = localStorage.getItem("userId") ?? "";
 
@@ -28,15 +35,17 @@ const Sidebar = () => {
   }, []);
 
   useEffect(() => {
-    user?.accountType === "student" ? setRoutes(userRoutes) : setRoutes(adminRoutes)
-   }, [user])
+    userData?.accountType === "student"
+      ? setRoutes(userRoutes)
+      : setRoutes(adminRoutes);
+  }, []);
 
   const handleGetUser = () => {
     setLoading(true);
 
     getUser(id)
       .then((res: any) => {
-        setUser(res.data.data);
+        dispatch(setUser(res.data.data));
       })
       .catch((err: any) => {
         handleError(err);
