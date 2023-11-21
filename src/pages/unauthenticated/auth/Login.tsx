@@ -33,7 +33,7 @@ const Login = () => {
         localStorage.setItem("userId", res.data.data._id);
         localStorage.setItem("efiko_token", res.data.data.token);
         navigate("/dashboard")
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((err: any) => {
         handleError(err);
