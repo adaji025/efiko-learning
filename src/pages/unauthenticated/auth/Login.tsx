@@ -53,7 +53,7 @@ const Login = () => {
         </div>
         <form
           onSubmit={form.onSubmit((values) => submit(values))}
-          className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full"
+          className="mt-10 bg-white border shadow px-[40px] sm:px-[100px] py-10 rounded-xl max-w-[650px] w-full"
         >
           <TextInput
             placeholder="Enter your valid email address"
@@ -72,7 +72,8 @@ const Login = () => {
             className="w-full"
             {...form.getInputProps("password")}
           />
-          <div className="text-right text-primary hover:underline font-semibold cursor-pointer">
+          <div className="text-right text-primary hover:underline font-semibold cursor-pointer"
+          onClick={() => navigate("/forgot-password")}>
             Forgot password?
           </div>
           <Button type="submit" size="md" mt={24} className="bg-primary w-full">

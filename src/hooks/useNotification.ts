@@ -8,7 +8,7 @@ const useNotification = () => {
     toast.error(`User logged out Login in to continue 😑`);
     localStorage.clear();
     navigate("/");
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleError = (error: any) => {
