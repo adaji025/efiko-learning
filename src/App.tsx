@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import Unauthenticated from "./components/Unauthenticated";
 import Authenticated from "./components/Authenticated";
 import Login from "./pages/unauthenticated/auth/Login";
@@ -13,9 +13,19 @@ import VerifyUser from "./pages/unauthenticated/auth/Verify";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from "react";
 
 export default function App() {
   const token = localStorage.getItem("efiko_token") ?? "";
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/login" && token) {
+      navigate("/dashboard");
+    }
+  }, []);
+
   return (
     <MantineProvider
       theme={{
