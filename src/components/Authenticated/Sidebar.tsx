@@ -1,18 +1,22 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { FaRegUser } from "react-icons/fa";
+import {LoadingOverlay} from "@mantine/core"
 import { BiChevronDown, BiLogOut } from "react-icons/bi";
-import { PiUserBold } from "react-icons/pi";
 import LogoMark from "../../assets/svgs/logo.svg";
 import { Fragment, useEffect, useState } from "react";
 import { IoHomeOutline } from "react-icons/io5";
 import { getUser } from "../../services/user";
 import useNotification from "../../hooks/useNotification";
+import { UserTypes } from "../../types/auth";
+import { EarningsIcon, NotificationIcon, SessionIcon } from "./svg";
+import { FiSettings, FiUser } from "react-icons/fi";
+import { IoIosHelpCircleOutline } from "react-icons/io";
+
 
 const Sidebar = () => {
-  // const [routes, setRoutes] = useState<any[]>([]);
+  const [routes, setRoutes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [showChildren, setShowChildren] = useState<string>("");
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<UserTypes | null>(null);
   const location = useLocation();
 
   const id = localStorage.getItem("userId") ?? "";
@@ -23,14 +27,16 @@ const Sidebar = () => {
     handleGetUser();
   }, []);
 
-  // console.log(user)
+  useEffect(() => {
+    user?.accountType === "student" ? setRoutes(userRoutes) : setRoutes(adminRoutes)
+   }, [user])
 
   const handleGetUser = () => {
     setLoading(true);
 
     getUser(id)
       .then((res: any) => {
-        console.log(res.data.data);
+        setUser(res.data.data);
       })
       .catch((err: any) => {
         handleError(err);
@@ -43,12 +49,12 @@ const Sidebar = () => {
   const userRoutes = [
     {
       title: "Dashboard",
-      icon: <IoHomeOutline />,
+      icon: <IoHomeOutline size={20} />,
       route: "/dashboard",
     },
     {
       title: "Sessions",
-      icon: <FaRegUser />,
+      icon: <SessionIcon />,
       route: "/profile",
       key: ["explore-sessions", "upcoming-sessions", "recorded-sessions"],
       children: [
@@ -68,17 +74,17 @@ const Sidebar = () => {
     },
     {
       title: "Notifications",
-      icon: <IoHomeOutline />,
+      icon: <NotificationIcon />,
       route: "/notifications",
     },
     {
       title: "My Profiles",
-      icon: <IoHomeOutline />,
+      icon: <FiUser size={20} />,
       route: "/my-profile",
     },
     {
       title: "Settings",
-      icon: <IoHomeOutline />,
+      icon: <FiSettings size={20} />,
       route: "/settings",
       key: ["profile", "payments"],
       children: [
@@ -94,7 +100,7 @@ const Sidebar = () => {
     },
     {
       title: "Help & Support",
-      icon: <IoHomeOutline />,
+      icon: <IoIosHelpCircleOutline size={20} />,
       route: "/support",
       key: ["FAQs", "Report Issues"],
       children: [
@@ -113,34 +119,87 @@ const Sidebar = () => {
   const adminRoutes = [
     {
       title: "Dashboard",
-      icon: <IoHomeOutline />,
+      icon: <IoHomeOutline size={20} />,
       route: "/dashboard",
     },
     {
-      title: "User management",
-      icon: <PiUserBold />,
-      route: "/manage-user",
-    },
-    {
-      title: "Profile Page",
-      icon: <FaRegUser />,
+      title: "Sessions",
+      icon: <SessionIcon />,
       route: "/profile",
+      key: ["schedule-sessions", "upcoming-sessions", "recorded-sessions"],
+      children: [
+        {
+          title: "Schedule Sessions",
+          route: "/schedule-sessions",
+        },
+        {
+          title: "Upcoming Sessions",
+          route: "upcoming-sessions",
+        },
+        {
+          title: "Recorded Sessions",
+          route: "recorded-sessions",
+        },
+      ],
     },
     {
-      title: "Manage Environments",
-      icon: <IoHomeOutline />,
-      route: "/manage-environment",
+      title: "Earnings",
+      icon: <EarningsIcon />,
+      route: "/earnings",
+    },
+    {
+      title: "Notifications",
+      icon: <NotificationIcon />,
+      route: "/notifications",
+    },
+    {
+      title: "My Profiles",
+      icon: <FiUser size={20} />,
+      route: "/my-profile",
+    },
+    {
+      title: "Settings",
+      icon: <FiSettings size={20} />,
+      route: "/settings",
+      key: ["profile", "payments"],
+      children: [
+        {
+          title: "Profile",
+          route: "/profile",
+        },
+        {
+          title: "Payments",
+          route: "/payments",
+        },
+      ],
+    },
+    {
+      title: "Help & Support",
+      icon: <IoIosHelpCircleOutline size={20} />,
+      route: "/support",
+      key: ["FAQs", "Report Issues"],
+      children: [
+        {
+          title: "FAQs",
+          route: "/faqs",
+        },
+        {
+          title: "Report Issues",
+          route: "/report-issues",
+        },
+      ],
     },
   ];
 
   return (
     <Fragment>
+      <LoadingOverlay visible={loading} />
       <aside className="flex w-full h-full flex-col">
         <div className="w-full">
           <img src={LogoMark} alt="" className="h-[100px]" />
 
           <div className="grid gap-5 text-sm sm:text-base text-white">
-            {userRoutes.map((item: any) => (
+            {routes.map((item: any) => (
               <Fragment key={item.title}>
                 {item.children ? (
                   <>
