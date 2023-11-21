@@ -1,18 +1,54 @@
 import { useState, Fragment } from "react";
-import { TextInput, PasswordInput, Button } from "@mantine/core";
+import { useForm } from "@mantine/form";
+import {
+  TextInput,
+  PasswordInput,
+  Button,
+  LoadingOverlay,
+} from "@mantine/core";
 
 import { FcGoogle } from "react-icons/fc";
 import Logo from "../../../assets/svgs/logo.svg";
 import { useNavigate } from "react-router-dom";
+import { userRegistration } from "../../../services/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [userType, setUserType] = useState<string | null>(null);
   const [user, setUser] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
-  console.log(userType);
+
+  const form = useForm({
+    initialValues: {
+      email: "",
+      accountType: "",
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const submit = (values: any) => {
+    setLoading(true);
+    userRegistration({...values, accountType: userType})
+      .then((res: any) => {
+        toast.success("Check your email for OTP");
+        localStorage.setItem("userEmail", values.email);
+        console.log(res);
+        navigate("/verify-user")
+      })
+      .catch((err: any) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <Fragment>
+      <LoadingOverlay visible={loading} />
       <div className="min-h-screen bg-gray-50 flex flex-col items-center px-6 lg:px-8">
         <img src={Logo} alt="" className="mt-10" />
         <div className="text-center">
@@ -53,13 +89,14 @@ const Register = () => {
           )}
 
           {userType && (
-            <Fragment>
+            <form onSubmit={form.onSubmit((values) => submit(values))}>
               <TextInput
                 placeholder="Enter your valid email address"
                 required
                 size="md"
                 label="Email"
                 className="w-full"
+                {...form.getInputProps("email")}
               />
               <PasswordInput
                 required
@@ -68,6 +105,7 @@ const Register = () => {
                 label="Password"
                 placeholder="Enter your password"
                 className="w-full"
+                {...form.getInputProps("password")}
               />
               <PasswordInput
                 required
@@ -76,16 +114,18 @@ const Register = () => {
                 label="Confirm Password"
                 placeholder="Enter your password"
                 className="w-full"
+                {...form.getInputProps("confirmPassword")}
               />
 
               <Button
                 size="md"
                 mt={24}
+                type="submit"
                 className="bg-primary w-full"
-                onClick={() => {
-                  userType === "tutor" && navigate("/tutor-profile-setup");
-                  userType === "student" && navigate("/student-profile-setup");
-                }}
+                // onClick={() => {
+                //   userType === "tutor" && navigate("/tutor-profile-setup");
+                //   userType === "student" && navigate("/student-profile-setup");
+                // }}
               >
                 Sign up
               </Button>
@@ -100,14 +140,14 @@ const Register = () => {
                 color="gray"
                 mt={30}
                 className="border w-full flex gap-5 justify-center items-center text-primary"
-                onClick={() => {
-                  userType === "tutor" && navigate("/tutor-profile-setup");
-                  userType === "student" && navigate("/student-profile-setup");
-                }}
+                // onClick={() => {
+                //   userType === "tutor" && navigate("/tutor-profile-setup");
+                //   userType === "student" && navigate("/student-profile-setup");
+                // }}
               >
                 <FcGoogle /> <div className="ml-2">Sign In with Google</div>
               </Button>
-            </Fragment>
+            </form>
           )}
         </div>
         <div className="my-10">

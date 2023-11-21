@@ -5,3 +5,7 @@
 label {
     font-weight: 600 !important;
 }
+
+.mantine-LoadingOverlay-root {
+    position: fixed !important;
+  }

@@ -8,12 +8,12 @@ type Props = {
 const Header = ({ openMobileNav }: Props) => {
   return (
     <div className="bg-white shadow fixed top-0 left-0 w-full z-50 lg:ml-[300px] lg:w-[calc(100vw-300px)] py-3">
-      <div className="flex gap-4 items-center lg:justify-end px-6 lg:px-8">
+      <div className="flex gap-4 items-center justify-between lg:justify-end px-4 lg:px-8">
         <div
-          className="lg:hidden cursor-pointer flex justify-end items-center h-[80px] border-b"
+          className="lg:hidden cursor-pointer flex justify-end items-center border-b"
           onClick={() => openMobileNav(true)}
         >
-          <FaBars color="#157145" size={24} />
+          <FaBars color="#157145" size={18} />
         </div>
         <div className="flex gap-2">
           <Avatar />
