@@ -1,36 +1,12 @@
+import { sessionData } from "../../../components/data";
 import Chart from "./components/Chart";
 import SessionCard from "./components/Session";
 
-const sessionData = [
-  {
-    name: "Algebra 101: Complete beginner guide. ",
-    tutor: "Peter Drury",
-    desc: `Algebra, the language of mathematics,To solve problems and explore new paths.`,
-    duration: 3,
-  },
-  {
-    name: "Algebra 101: Complete beginner guide. ",
-    tutor: "Peter Drury",
-    desc: `Algebra, the language of mathematics,To solve problems and explore new paths.`,
-    duration: 3,
-  },
-  {
-    name: "Algebra 101: Complete beginner guide. ",
-    tutor: "Peter Drury",
-    desc: `Algebra, the language of mathematics,To solve problems and explore new paths.`,
-    duration: 3,
-  },
-  {
-    name: "Algebra 101: Complete beginner guide. ",
-    tutor: "Peter Drury",
-    desc: `Algebra, the language of mathematics,To solve problems and explore new paths.`,
-    duration: 3,
-  },
-];
+
 
 const Dashboard = () => {
   return (
-    <div className="mt-10">
+    <div className="px-4 lg:px-10 mt-[80px] lg:mt-10">
       <div className="flex gap-10 ">
         <div className="p-5 border shadow rounded-xl flex-1">
           <div>Total Sessions Joined</div>

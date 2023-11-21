@@ -4,6 +4,7 @@ import MobileSidebar from "./MobileSidebar";
 import Header from "./Header";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../../pages/authenticated/Dashboard/Dashboard";
+import ExploreSession from "../../pages/authenticated/Sesssion/ExploreSession";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -17,9 +18,10 @@ const Authenticated = () => {
         </div>
         <div className="w-full">
           <Header mobileNav={mobileNav} openMobileNav={openMobileNav} />
-          <main className="w-full bg-white pt-5 lg:pt-[50px] lg:ml-[300px] lg:w-[calc(100vw-300px)] px-4 lg:px-10 mb-10 mt-[80px] lg:mt-[unset]">
+          <main className="w-full bg-white pt-5 lg:pt-[50px] lg:ml-[300px] lg:w-[calc(100vw-300px)] mb-10">
             <Routes>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/explore-sessions" element={<ExploreSession />} />
             </Routes>
           </main>
         </div>
