@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { IoMdTime } from "react-icons/io";
 import { IoArrowBackCircle, IoArrowForwardCircle } from "react-icons/io5";
 import Slider from "react-slick";
+import { sessionData } from "../../../../components/data";
 
 type IProps = {
   item: {
@@ -13,32 +14,7 @@ type IProps = {
   };
 };
 
-const sessionData = [
-  {
-    name: "Algebra 101: Complete beginner guide. ",
-    tutor: "Peter Drury",
-    desc: `Algebra, the language of mathematics,To solve problems and explore new paths.`,
-    duration: 3,
-  },
-  {
-    name: "Algebra 101: Complete beginner guide. ",
-    tutor: "Peter Drury",
-    desc: `Algebra, the language of mathematics,To solve problems and explore new paths.`,
-    duration: 3,
-  },
-  {
-    name: "Algebra 101: Complete beginner guide. ",
-    tutor: "Peter Drury",
-    desc: `Algebra, the language of mathematics,To solve problems and explore new paths.`,
-    duration: 3,
-  },
-  {
-    name: "Algebra 101: Complete beginner guide. ",
-    tutor: "Peter Drury",
-    desc: `Algebra, the language of mathematics,To solve problems and explore new paths.`,
-    duration: 3,
-  },
-];
+
 
 const Card = ({}: IProps) => {
   return (
