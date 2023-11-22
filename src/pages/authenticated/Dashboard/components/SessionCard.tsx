@@ -9,9 +9,11 @@ type IProps = {
     desc: string;
     duration: number;
   };
+  btnText: string;
+  handleBtnClick: () => void;
 };
 
-const SessionCard = ({ item }: IProps) => {
+const SessionCard = ({ item, btnText, handleBtnClick }: IProps) => {
   return (
     <div className="pt-5 bg-white shadow-lg rounded-xl mb-10 border">
       <div className="px-5">
@@ -32,8 +34,11 @@ const SessionCard = ({ item }: IProps) => {
           </div>
         </div>
       </div>
-      <button className="bg-[#F5F5F5] text-primary font-bold w-full border-t rounded-b-xl py-2 mt-2 mb-0">
-        Book session
+      <button
+        className="bg-[#F5F5F5] text-primary font-bold w-full border-t rounded-b-xl py-2 mt-2 mb-0"
+        onClick={handleBtnClick}
+      >
+        {btnText}
       </button>
     </div>
   );
