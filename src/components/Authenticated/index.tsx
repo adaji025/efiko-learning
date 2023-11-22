@@ -8,6 +8,8 @@ import ExploreSession from "../../pages/authenticated/Sesssion/ExploreSession";
 import SessionDetails from "../../pages/authenticated/Sesssion/SessionDetails";
 import UpcomingSession from "../../pages/authenticated/Sesssion/UpcomingSession";
 import RedcordedSession from "../../pages/authenticated/Sesssion/RecordedSession";
+import Notification from "../../pages/authenticated/Notification/Notification";
+import Profile from "../../pages/authenticated/Profile/Profile";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -28,6 +30,8 @@ const Authenticated = () => {
               <Route path="/explore-sessions/:id" element={<SessionDetails />} />
               <Route path="/upcoming-sessions" element={<UpcomingSession />} />
               <Route path="/recorded-sessions" element={<RedcordedSession />} />
+              <Route path="/notifications" element={<Notification />} />
+              <Route path="/my-profile" element={<Profile />} />
             </Routes>
           </main>
         </div>
