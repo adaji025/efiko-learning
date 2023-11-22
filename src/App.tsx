@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import StudentLogin from "./pages/unauthenticated/auth/StudentLogin";
+import BookClass from "./pages/unauthenticated/auth/BookClass";
 
 export default function App() {
   const token = localStorage.getItem("efiko_token") ?? "";
@@ -39,6 +40,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/student-login" element={<StudentLogin />} />
+        <Route path="/book-class" element={<BookClass />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/register" element={<Register />} />
