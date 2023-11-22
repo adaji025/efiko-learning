@@ -9,3 +9,9 @@ label {
 .mantine-LoadingOverlay-root {
     position: fixed !important;
   }
+
+  .sign-in {
+    background: url(./assets/images/sign-in.png);
+    background-position: center;
+    background-size: cover;
+  }
