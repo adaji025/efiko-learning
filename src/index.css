@@ -2,16 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+
 label {
-    font-weight: 600 !important;
+  font-weight: 600 !important;
 }
 
 .mantine-LoadingOverlay-root {
-    position: fixed !important;
-  }
+  position: fixed !important;
+}
 
-  .sign-in {
-    background: url(./assets/images/sign-in.png);
-    background-position: center;
-    background-size: cover;
-  }
+.sign-in {
+  background: url(./assets/images/sign-in.png);
+  background-position: center;
+  background-size: cover;
+}
