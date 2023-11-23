@@ -13,6 +13,8 @@ export const APIS = {
     SEND_OTP: `${api}/auth/verify-otp`,
     LOGIN_CODE: `${api}/auth/login-code`,
   },
-  ENVIRONMENT: {},
+  SESSION: {
+    SESSION: `${api}/session`,
+  },
   AUTOMATION: {},
 };
