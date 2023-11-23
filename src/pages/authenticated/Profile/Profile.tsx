@@ -1,6 +1,6 @@
 import { Avatar, Button } from "@mantine/core";
 
-const VerifiedIcon = () => {
+export const VerifiedIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

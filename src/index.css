@@ -4,11 +4,12 @@
 
 
 label {
-  font-weight: 600 !important;
+  font-weight: 500 !important;
 }
 
 .mantine-LoadingOverlay-root {
   position: fixed !important;
+  z-index: 1000 !important;
 }
 
 .sign-in {
