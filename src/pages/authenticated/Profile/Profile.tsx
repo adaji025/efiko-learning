@@ -1,4 +1,7 @@
-import { Avatar, Button } from "@mantine/core";
+import { Avatar, Button, Rating } from "@mantine/core";
+import { ProfileTypes } from "../../../types/auth";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 export const VerifiedIcon = () => {
   return (
@@ -17,7 +20,21 @@ export const VerifiedIcon = () => {
   );
 };
 
+const ReviewCard = () => {
+  return (
+    <div className="p-5 border rounded-xl">
+      <Rating value={3.5} fractions={2} readOnly />
+      <div className="mt-2">Algebra 101: Complete Beginner Guide</div>
+      <div className="mt-4">Read Remarks from all the students</div>
+    </div>
+  );
+};
+
 const Profile = () => {
+  const userData: ProfileTypes = useSelector(
+    (state: RootState) => state.user.userData
+  );
+
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -38,14 +55,38 @@ const Profile = () => {
             </Button>
           </div>
           <div className="flex-1">
-            <div className="p-5 border-b">
-              <div className="font-semibold mt-5 text-lg">Personal Details</div>
+            {userData?.accountType === "tutor" && (
+              <div className="p-5 border-b">
+                <div className="font-semibold mt-5 text-lg text-primary">
+                  Profile Description
+                </div>
+                <div>
+                  I am passionate about teaching and learning, and I enjoy
+                  working with students of all ages and abilities. I am also
+                  committed to providing my students with the best possible
+                  tutoring experience. I am always looking for new ways to
+                  improve my teaching methods and to provide my students with
+                  the resources they need to succeed. If you are interested in
+                  learning more about my tutoring services, please contact me
+                  today. I would be happy to discuss your individual needs and
+                  to answer any questions you may have.
+                </div>
+              </div>
+            )}
+            <div
+              className={`p-5 ${
+                userData?.accountType === "tutor" && "border-b"
+              }`}
+            >
+              <div className="font-semibold mt-5 text-lg text-primary">
+                Personal Details
+              </div>
               <div className="mt-2 text-sm">Name: Mark Johnson </div>
               <div className="mt-2 text-sm">Age: 20 Years</div>
               <div className="mt-2 text-sm">Country: Nigeria</div>
             </div>
-            <div className="p-5">
-              <div className="font-semibold mt-5 text-lg">
+            <div className="p-5 border-b">
+              <div className="font-semibold mt-5 text-lg text-primary">
                 Educational Details
               </div>
               <div className="mt-2 text-sm">Education: Bachelors </div>
@@ -61,6 +102,13 @@ const Profile = () => {
                 ))}
               </div>
             </div>
+            {userData?.accountType === "tutor" && (
+              <div className="p-2 grid gap-5">
+                {[...Array(4)].map((_, i) => (
+                  <ReviewCard key={i} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
