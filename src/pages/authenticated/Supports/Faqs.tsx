@@ -1,23 +1,13 @@
-import Line from "../../../assets/svgs/underline.svg";
 import { Accordion } from "@mantine/core";
 import { learningData, paymentData } from "../../../components/data";
 
-const LearnMore = () => {
-  
-
-  
+const Faqs = () => {
   return (
-    <div className="px-6 lg:px-8">
-      <div className="flex flex-col items-center justify-end min-h-[50vh]">
-        <h2 className="font-bold text-4xl">FAQs</h2>
-        <img src={Line} alt="line" />
-        <div className="mt-5">
-          We have already answered your most asked questions. Have a look at the
-          FAQs below.
-        </div>
-      </div>
-      <div className="mt-20 max-w-[1000px] mx-auto">
-        <h2 className="text-center font-bold text-2xl text-primary">Leaning</h2>
+    <div className="mt-[50px] lg:mt-5">
+      <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">FAQs</div>
+
+      <div className="mt-10 max-w-[1000px] mx-auto px-6 lg:px-8">
+        <h2 className=" font-medium text-2xl text-primary">Leaning</h2>
         <Accordion defaultValue="Apples" className="mt-5">
           {learningData.map((data, index) => (
             <Accordion.Item
@@ -31,10 +21,8 @@ const LearnMore = () => {
           ))}
         </Accordion>
       </div>
-      <div className="mt-20 max-w-[1000px] mx-auto">
-        <h2 className="text-center font-bold text-2xl text-primary">
-          Payments
-        </h2>
+      <div className="mt-20 max-w-[1000px] mx- px-6 lg:px-8">
+        <h2 className=" font-medium text-2xl text-primary">Payments</h2>
         <Accordion defaultValue="Apples" className="mt-5">
           {paymentData.map((data, index) => (
             <Accordion.Item
@@ -52,4 +40,4 @@ const LearnMore = () => {
   );
 };
 
-export default LearnMore;
+export default Faqs;
