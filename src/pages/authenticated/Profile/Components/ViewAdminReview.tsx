@@ -9,7 +9,10 @@ const Card = () => {
         lot. Not only I recommend him but whould like to join future sessions as
         well.
       </div>
-      <div className="mt-2 font-medium">Adam Palm - Student</div>
+      <div className="flex items-center justify-between">
+        <div className="mt-2 font-medium">Adam Palm - Student</div>
+        <div className="text-sm">Sept 17, 2023</div>
+      </div>
     </div>
   );
 };
