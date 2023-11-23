@@ -11,6 +11,7 @@ import RedcordedSession from "../../pages/authenticated/Sesssion/RecordedSession
 import Notification from "../../pages/authenticated/Notification/Notification";
 import Profile from "../../pages/authenticated/Profile/Profile";
 import EditProfile from "../../pages/authenticated/Settings/EditProfile";
+import Payments from "../../pages/authenticated/Settings/Payments";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -34,6 +35,7 @@ const Authenticated = () => {
               <Route path="/notifications" element={<Notification />} />
               <Route path="/my-profile" element={<Profile />} />
               <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/payments" element={<Payments />} />
             </Routes>
           </main>
         </div>
