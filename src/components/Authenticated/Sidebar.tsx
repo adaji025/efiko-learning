@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { LoadingOverlay } from "@mantine/core";
 import { BiChevronDown, BiLogOut } from "react-icons/bi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { IoHomeOutline } from "react-icons/io5";
 import { FiSettings, FiUser } from "react-icons/fi";
 import { IoIosHelpCircleOutline } from "react-icons/io";
@@ -13,21 +13,19 @@ import useNotification from "../../hooks/useNotification";
 import { ProfileTypes } from "../../types/auth";
 import { EarningsIcon, NotificationIcon, SessionIcon } from "./svg";
 import { setUser } from "../../redux/features/userSlice";
-import { RootState } from "../../redux/store";
 import { useDisclosure } from "@mantine/hooks";
 import ConfirmLogout from "./ConfirmLogout";
 
 const Sidebar = () => {
   const [routes, setRoutes] = useState<any[]>([]);
+  const  [profile, setProfile] = useState<ProfileTypes | null>(null)
   const [loading, setLoading] = useState(false);
   const [showChildren, setShowChildren] = useState<string>("");
   const [opened, { open, close }] = useDisclosure(false);
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const userData: ProfileTypes = useSelector(
-    (state: RootState) => state.user.userData
-  );
+ 
 
   const id = localStorage.getItem("userId") ?? "";
 
@@ -38,10 +36,9 @@ const Sidebar = () => {
   }, []);
 
   useEffect(() => {
-    userData?.accountType === "student"
-      ? setRoutes(userRoutes)
-      : setRoutes(adminRoutes);
-  }, []);
+    profile?.accountType === "student" && setRoutes(userRoutes);
+    profile?.accountType === "tutor" && setRoutes(adminRoutes);
+  }, [profile]);
 
   const handleGetUser = () => {
     setLoading(true);
@@ -49,6 +46,7 @@ const Sidebar = () => {
     getUser(id)
       .then((res: any) => {
         dispatch(setUser(res.data.data));
+        setProfile(res.data.data)
       })
       .catch((err: any) => {
         handleError(err);
