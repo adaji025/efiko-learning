@@ -18,6 +18,7 @@ import ReviewSession from "../../pages/authenticated/Sesssion/ReviewSession";
 import ViewUpcomingSession from "../../pages/authenticated/Sesssion/ViewUpcomingSession";
 import ScheduleSession from "../../pages/authenticated/Sesssion/ScheduleSession";
 import EditSession from "../../pages/authenticated/Sesssion/EditSession";
+import Earning from "../../pages/authenticated/Earning";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -61,6 +62,7 @@ const Authenticated = () => {
               <Route path="/payments" element={<Payments />} />
               <Route path="/faqs" element={<Faqs />} />
               <Route path="/report-issues" element={<ReportIssues />} />
+              <Route path="/earnings" element={<Earning />} />
             </Routes>
           </main>
         </div>
