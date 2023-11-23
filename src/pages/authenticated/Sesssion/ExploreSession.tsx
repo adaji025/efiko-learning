@@ -3,8 +3,10 @@ import { CiSearch } from "react-icons/ci";
 import { sessionData } from "../../../components/data";
 import SessionCard from "../Dashboard/components/SessionCard";
 import EmptyIcon from "../../../assets/svgs/empty.svg";
+import { useNavigate } from "react-router-dom";
 
 const ExploreSession = () => {
+  const navigate = useNavigate()
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -17,7 +19,7 @@ const ExploreSession = () => {
         {sessionData.length !== 0 && (
           <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
             {sessionData.map((item, index) => (
-              <SessionCard btnText="Book session" handleBtnClick={() => {}} key={index} item={item} />
+              <SessionCard btnText="Book session" handleBtnClick={() => navigate("/explore-sessions/first")} key={index} item={item} />
             ))}
           </div>
         )}

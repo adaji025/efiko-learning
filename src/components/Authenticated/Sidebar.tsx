@@ -215,10 +215,10 @@ const Sidebar = () => {
                 {item.children ? (
                   <>
                     <div
-                      className={`flex gap-2 items-center transition-all duration-300 ${
+                      className={`flex gap-2 items-center transition-all duration-300 cursor-pointer ${
                         item.key.includes(location.pathname.split("/")[1]) &&
                         showChildren !== item.title
-                          ? "bg-white text-primary p-2 font-bold"
+                          ? "bg-[#2F1792] rounded-md p-2 font-bold"
                           : ""
                       }`}
                       key={item.title}
@@ -250,9 +250,9 @@ const Sidebar = () => {
                           key={child.title}
                           className={({ isActive }) =>
                             [
-                              "ml-5 text-sm",
+                              "pl-5 text-sm",
                               isActive
-                                ? "bg-white text-primary p-2 font-bold"
+                                ? "bg-[#2F1792] rounded-md py-2 font-bold"
                                 : null,
                             ]
                               .filter(Boolean)
@@ -274,7 +274,7 @@ const Sidebar = () => {
                         isActive ||
                         (item.route === "/dashboard" &&
                           location.pathname === "/")
-                          ? "text-primary font-bold bg-white p-2"
+                          ? "rounded-md font-bold bg-[#2F1792] p-2"
                           : null,
                       ]
                         .filter(Boolean)
