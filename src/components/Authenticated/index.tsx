@@ -14,6 +14,7 @@ import EditProfile from "../../pages/authenticated/Settings/EditProfile";
 import Payments from "../../pages/authenticated/Settings/Payments";
 import Faqs from "../../pages/authenticated/Supports/Faqs";
 import ReportIssues from "../../pages/authenticated/Supports/ReportIssues";
+import ReviewSession from "../../pages/authenticated/Sesssion/ReviewSession";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -34,6 +35,7 @@ const Authenticated = () => {
               <Route path="/explore-sessions/:id" element={<SessionDetails />} />
               <Route path="/upcoming-sessions" element={<UpcomingSession />} />
               <Route path="/recorded-sessions" element={<RedcordedSession />} />
+              <Route path="/recorded-sessions/:id" element={<ReviewSession />} />
               <Route path="/notifications" element={<Notification />} />
               <Route path="/my-profile" element={<Profile />} />
               <Route path="/edit-profile" element={<EditProfile />} />
