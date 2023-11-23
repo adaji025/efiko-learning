@@ -5,6 +5,7 @@
 
 label {
   font-weight: 500 !important;
+  margin-bottom: 2px;
 }
 
 .mantine-LoadingOverlay-root {
