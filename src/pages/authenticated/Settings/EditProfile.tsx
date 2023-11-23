@@ -1,10 +1,23 @@
-import { Button, TextInput, Select, PasswordInput } from "@mantine/core";
+import {
+  Button,
+  TextInput,
+  Select,
+  PasswordInput,
+  Textarea,
+} from "@mantine/core";
 import { MdEdit } from "react-icons/md";
 import ImageDropzone from "../../../components/ImageDropzone";
 import { VerifiedIcon } from "../Profile/Profile";
 import { countryList } from "../../../utils/country";
+import { ProfileTypes } from "../../../types/auth";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const EditProfile = () => {
+  const userData: ProfileTypes = useSelector(
+    (state: RootState) => state.user.userData
+  );
+
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -26,6 +39,24 @@ const EditProfile = () => {
           </div>
 
           <div className="flex-1">
+            {userData?.accountType === "tutor" && (
+              <div className="p-5 border-b">
+                <div className="font-semibold mt-5 text-lg flex items-center gap-2">
+                  <div>Update Personal Details</div>
+                  <MdEdit />
+                </div>
+                <Textarea
+                  mt={16}
+                  label="Profile Description"
+                  autosize
+                  minRows={8}
+                  size="sm"
+                  className=""
+                  value="I am passionate about teaching and learning, and I enjoy working with students of all ages and abilities. I am also committed to providing my students with the best possible tutoring experience. I am always looking for new ways to improve my teaching methods and to provide my students with the resources they need to succeed. If you are interested in learning more about my tutoring services, please contact me today. I would be happy to discuss your individual needs and to answer any questions you may have"
+                />
+              </div>
+            )}
+
             <div className="p-5 border-b">
               <div className="font-semibold mt-5 text-lg flex items-center gap-2">
                 <div>Update Personal Details</div>
