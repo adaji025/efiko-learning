@@ -6,8 +6,10 @@ import SessionCard from "./components/SessionCard";
 import { RootState } from "../../../redux/store";
 import { Menu, Button } from "@mantine/core";
 import { BiChevronDown } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate= useNavigate()
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
   );
@@ -37,8 +39,15 @@ const Dashboard = () => {
             <SessionCard
               key={index}
               item={item}
-              btnText="Book session"
-              handleBtnClick={() => {}}
+              btnText={
+                userData.accountType === "student"
+                  ? "Book session"
+                  : "Update Details"
+              }
+              handleBtnClick={() => {
+                userData.accountType === "student" && navigate("/explore-sessions")
+                userData.accountType === "tutor" && navigate("/schedule-sessions")
+              }}
             />
           ))}
         </div>
@@ -56,10 +65,10 @@ const Dashboard = () => {
               </Button>
             </Menu.Target>
             <Menu.Dropdown>
-            <Menu.Item>2023</Menu.Item>
-            <Menu.Item>2022</Menu.Item>
-            <Menu.Item>2021</Menu.Item>
-            <Menu.Item>2020</Menu.Item>
+              <Menu.Item>2023</Menu.Item>
+              <Menu.Item>2022</Menu.Item>
+              <Menu.Item>2021</Menu.Item>
+              <Menu.Item>2020</Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </div>

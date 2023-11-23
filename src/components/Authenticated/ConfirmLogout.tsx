@@ -15,7 +15,7 @@ const ConfirmLogout = ({ close, opened }: Props) => {
         Are you sure you want to log out?
       </div>
       <div className="flex gap-5 mb-5 mt-10 justify-center">
-        <Button variant="outline">Cancel</Button>
+        <Button variant="outline" onClick={close}>Cancel</Button>
         <Button className="bg-primary" onClick={logoutUser}>
           Log Out
         </Button>
