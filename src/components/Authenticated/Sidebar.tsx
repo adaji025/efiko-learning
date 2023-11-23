@@ -95,11 +95,11 @@ const Sidebar = () => {
       title: "Settings",
       icon: <FiSettings size={20} />,
       route: "/settings",
-      key: ["profile", "payments"],
+      key: ["edit-profile", "payments"],
       children: [
         {
           title: "Profile",
-          route: "/profile",
+          route: "/edit-profile",
         },
         {
           title: "Payments",
