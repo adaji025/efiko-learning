@@ -3,30 +3,30 @@ import { useForm } from "@mantine/form";
 import Logo from "../../../assets/svgs/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { userVerification } from "../../../services/auth";
+import { studentLogin } from "../../../services/auth";
 import { toast } from "react-toastify";
 import { Fragment } from "react";
 
-const VerifyUser = () => {
+const VerifyCode = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const email = localStorage.getItem("userEmail") ?? "";
 
   const form = useForm({
     initialValues: {
-      otp: "",
-      email: "alfadaji@gmail.com",
+        loginCode: "",
     },
   });
 
   const submit = (values: any) => {
     setLoading(true);
 
-    userVerification({ ...values, email })
-      .then(() => {
+    studentLogin({ ...values })
+      .then((res: any) => {
         toast.success("Account verified successfully");
-        navigate("/login");
+        localStorage.setItem("userId", res.data.data._id);
+        localStorage.setItem("efiko_token", res.data.data.token);
+        navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err);
@@ -43,7 +43,7 @@ const VerifyUser = () => {
         <div className="text-center">
           <h1 className="font-bold text-2xl">Verify User</h1>
           <div className="mt-3 max-w-[400px]">
-            Enter the OTP sent to your Email
+            Enter the Login code sent to your Email
           </div>
         </div>
         <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
@@ -51,7 +51,7 @@ const VerifyUser = () => {
             onSubmit={form.onSubmit((values) => submit(values))}
             className="mx-auto flex flex-col items-center"
           >
-            <PinInput size="md" className="" {...form.getInputProps("otp")} />
+            <PinInput size="md" className="" {...form.getInputProps("loginCode")} />
 
             <Button
               type="submit"
@@ -68,4 +68,4 @@ const VerifyUser = () => {
   );
 };
 
-export default VerifyUser;
+export default VerifyCode;

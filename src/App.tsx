@@ -9,13 +9,14 @@ import ResetPassword from "./pages/unauthenticated/auth/ResetPassword";
 import Register from "./pages/unauthenticated/auth/Register";
 import TutorProfilSetup from "./pages/unauthenticated/auth/TutorProfilSetup";
 import StudentProfilSetup from "./pages/unauthenticated/auth/StudentProfileSetup";
-import VerifyUser from "./pages/unauthenticated/auth/Verify";
+import VerifyUser from "./pages/unauthenticated/auth/VerifyUser";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
 import StudentLogin from "./pages/unauthenticated/auth/StudentLogin";
 import BookClass from "./pages/unauthenticated/auth/BookClass";
+import VerifyCode from "./pages/unauthenticated/auth/VerifyCode";
 
 export default function App() {
   const token = localStorage.getItem("efiko_token") ?? "";
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify-user" element={<VerifyUser />} />
+        <Route path="/verify-code" element={<VerifyCode />} />
         <Route path="/tutor-profile-setup" element={<TutorProfilSetup />} />
         <Route path="/student-profile-setup" element={<StudentProfilSetup />} />
         <Route

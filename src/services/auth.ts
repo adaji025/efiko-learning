@@ -25,6 +25,30 @@ export const userlogin = (data: any) => {
   });
 };
 
+export const loginCode = (data: any) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.post(APIS.AUTH.LOGIN_CODE, data)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const studentLogin = (data: any) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.post(APIS.USER.STUDENT_LOGIN, data)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export const userVerification = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(APIS.AUTH.VERIFY_USER, data)

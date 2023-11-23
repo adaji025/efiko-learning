@@ -4,12 +4,14 @@ export const APIS = {
   USER: {
     USER: `${api}/user`,
     LOGIN: `${api}/user/login`,
+    STUDENT_LOGIN: `${api}/user/student-login`,
   },
   AUTH: {
     RESET_PASSWORD: `${api}/auth/reset-password`,
     FORGOT_PASSWORD: `${api}/auth/forgot-password`,
     VERIFY_USER: `${api}/auth/verify`,
     SEND_OTP: `${api}/auth/verify-otp`,
+    LOGIN_CODE: `${api}/auth/login-code`,
   },
   ENVIRONMENT: {},
   AUTOMATION: {},
