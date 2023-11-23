@@ -14,11 +14,14 @@ import { ProfileTypes } from "../../types/auth";
 import { EarningsIcon, NotificationIcon, SessionIcon } from "./svg";
 import { setUser } from "../../redux/features/userSlice";
 import { RootState } from "../../redux/store";
+import { useDisclosure } from "@mantine/hooks";
+import ConfirmLogout from "./ConfirmLogout";
 
 const Sidebar = () => {
   const [routes, setRoutes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [showChildren, setShowChildren] = useState<string>("");
+  const [opened, { open, close }] = useDisclosure(false);
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -28,7 +31,7 @@ const Sidebar = () => {
 
   const id = localStorage.getItem("userId") ?? "";
 
-  const { handleError, logoutUser } = useNotification();
+  const { handleError } = useNotification();
 
   useEffect(() => {
     handleGetUser();
@@ -202,6 +205,7 @@ const Sidebar = () => {
 
   return (
     <Fragment>
+      <ConfirmLogout close={close} opened={opened} />
       <LoadingOverlay visible={loading} />
       <aside className="flex w-full h-full flex-col">
         <div className="w-full">
@@ -292,7 +296,7 @@ const Sidebar = () => {
 
         <div
           className="flex gap-2 items-center pt-3 text-white cursor-pointer"
-          onClick={logoutUser}
+          onClick={open}
         >
           <BiLogOut
             size={18}
