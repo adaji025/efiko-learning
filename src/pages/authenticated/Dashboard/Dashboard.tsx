@@ -40,13 +40,13 @@ const Dashboard = () => {
               key={index}
               item={item}
               btnText={
-                userData.accountType === "student"
+                userData?.accountType === "student"
                   ? "Book session"
                   : "Update Details"
               }
               handleBtnClick={() => {
-                userData.accountType === "student" && navigate("/explore-sessions")
-                userData.accountType === "tutor" && navigate("/schedule-sessions")
+                userData?.accountType === "student" && navigate("/explore-sessions")
+                userData?.accountType === "tutor" && navigate("/schedule-sessions/1")
               }}
             />
           ))}
