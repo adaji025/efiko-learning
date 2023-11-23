@@ -39,6 +39,10 @@ const Authenticated = () => {
                 path="/explore-sessions/:id"
                 element={<SessionDetails />}
               />
+              <Route
+                path="/recorded-sessions-details/:id"
+                element={<SessionDetails />}
+              />
               <Route path="/upcoming-sessions" element={<UpcomingSession />} />
               <Route path="/recorded-sessions" element={<RedcordedSession />} />
               <Route path="/schedule-sessions" element={<ScheduleSession />} />
