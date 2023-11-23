@@ -1,6 +1,13 @@
 import { Button } from "@mantine/core";
+import { useSelector } from "react-redux";
+import { ProfileTypes } from "../../../types/auth";
+import { RootState } from "../../../redux/store";
 
 const SessionDetails = () => {
+  const userData: ProfileTypes = useSelector(
+    (state: RootState) => state.user.userData
+  );
+
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -52,9 +59,13 @@ const SessionDetails = () => {
         </div>
       </div>
 
-      <div className="mt-10 flex justify-center">
-        <Button size="md" className=" bg-primary w-1/2 sm:w-1/3 mx-auto">Book Session</Button>
-      </div>
+      {userData?.accountType === "student" && (
+        <div className="mt-10 flex justify-center">
+          <Button size="md" className=" bg-primary w-1/2 sm:w-1/3 mx-auto">
+            Book Session
+          </Button>
+        </div>
+      )}
     </div>
   );
 };

@@ -3,9 +3,16 @@ import { CiSearch } from "react-icons/ci";
 import { sessionData } from "../../../components/data";
 import SessionCard from "../Dashboard/components/SessionCard";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { ProfileTypes } from "../../../types/auth";
+import { RootState } from "../../../redux/store";
 
 const RedcordedSession = () => {
-  const navigate = useNavigate()
+  const userData: ProfileTypes = useSelector(
+    (state: RootState) => state.user.userData
+  );
+
+  const navigate = useNavigate();
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -24,8 +31,17 @@ const RedcordedSession = () => {
           <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
             {sessionData.map((item, index) => (
               <SessionCard
-                btnText="Review Session"
-                handleBtnClick={() => navigate("/recorded-sessions/63ednecdsth")}
+                btnText={
+                  userData?.accountType === "student"
+                    ? "Review Session"
+                    : "View Recorded Session"
+                }
+                handleBtnClick={() => {
+                  userData?.accountType === "student" &&
+                    navigate("/recorded-sessions/63ednecdsth");
+                  userData?.accountType === "tutor" &&
+                    navigate("/recorded-sessions-details/63ednecdsth");
+                }}
                 key={index}
                 item={item}
               />

@@ -11,10 +11,10 @@ import UpcomingSessionCard from "./components/UpcomingSessionCard";
 import { toast } from "react-toastify";
 
 const UpcomingSession = () => {
-  const navigate = useNavigate();
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
   );
+  const navigate = useNavigate();
 
   return (
     <div className="mt-[50px] lg:mt-5">
