@@ -1,9 +1,16 @@
 import { Fragment, useState } from "react";
 import { Button, TextInput } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
+import { useSelector } from "react-redux";
+import { ProfileTypes } from "../../../types/auth";
+import { RootState } from "../../../redux/store";
 
 const Payments = () => {
   const [cards, setCards] = useState(false);
+  const userData: ProfileTypes = useSelector(
+    (state: RootState) => state.user.userData
+  );
+
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -20,7 +27,9 @@ const Payments = () => {
             className="bg-primary"
             onClick={() => setCards(true)}
           >
-            Add Payment Method
+            {userData?.accountType === "student"
+              ? "Add Payment Method"
+              : "Withdraw Money"}
           </Button>
         </div>
       )}
@@ -62,10 +71,9 @@ const Payments = () => {
             />
           </div>
           <div className="flex justify-center">
-
-          <Button type="submit" size="md" mt={30} className="bg-primary">
-            Save Card Details
-          </Button>
+            <Button type="submit" size="md" mt={30} className="bg-primary">
+              Save Card Details
+            </Button>
           </div>
         </Fragment>
       )}
