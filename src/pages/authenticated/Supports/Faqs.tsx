@@ -21,7 +21,7 @@ const Faqs = () => {
           ))}
         </Accordion>
       </div>
-      <div className="mt-20 max-w-[1000px] mx- px-6 lg:px-8">
+      <div className="mt-20 max-w-[1000px] mx-auto px-6 lg:px-8">
         <h2 className=" font-medium text-2xl text-primary">Payments</h2>
         <Accordion defaultValue="Apples" className="mt-5">
           {paymentData.map((data, index) => (
