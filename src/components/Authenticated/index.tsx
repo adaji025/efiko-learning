@@ -13,6 +13,7 @@ import Profile from "../../pages/authenticated/Profile/Profile";
 import EditProfile from "../../pages/authenticated/Settings/EditProfile";
 import Payments from "../../pages/authenticated/Settings/Payments";
 import Faqs from "../../pages/authenticated/Supports/Faqs";
+import ReportIssues from "../../pages/authenticated/Supports/ReportIssues";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -38,6 +39,7 @@ const Authenticated = () => {
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/payments" element={<Payments />} />
               <Route path="/faqs" element={<Faqs />} />
+              <Route path="/report-issues" element={<ReportIssues />} />
             </Routes>
           </main>
         </div>
