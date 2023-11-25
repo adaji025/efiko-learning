@@ -11,10 +11,9 @@ const VerifyCode = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-
   const form = useForm({
     initialValues: {
-        loginCode: "",
+      loginCode: "",
     },
   });
 
@@ -26,7 +25,8 @@ const VerifyCode = () => {
         toast.success("Account verified successfully");
         localStorage.setItem("userId", res.data.data._id);
         localStorage.setItem("efiko_token", res.data.data.token);
-        navigate("/dashboard");
+        res.data.data.updatedProfile && navigate("/dashboard");
+        !res.data.data.updatedProfile && navigate("/student-profile-setup");
       })
       .catch((err) => {
         console.log(err);
@@ -51,7 +51,11 @@ const VerifyCode = () => {
             onSubmit={form.onSubmit((values) => submit(values))}
             className="mx-auto flex flex-col items-center"
           >
-            <PinInput size="md" className="" {...form.getInputProps("loginCode")} />
+            <PinInput
+              size="md"
+              className=""
+              {...form.getInputProps("loginCode")}
+            />
 
             <Button
               type="submit"
