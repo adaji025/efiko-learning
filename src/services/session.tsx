@@ -12,3 +12,15 @@ export const getSession = () => {
       });
   });
 };
+
+export const addSession = (data: any) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.post(APIS.SESSION.SESSION, data)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
