@@ -95,6 +95,16 @@ const ScheduleSession = () => {
             className=""
             {...form.getInputProps("description")}
           />
+
+          <Textarea
+            mt={16}
+            label="Learning Outcome"
+            autosize
+            minRows={6}
+            size="sm"
+            className=""
+            {...form.getInputProps("outcome")}
+          />
           <div className="grid grid-cols-2 gap-[16px]">
             <DatePickerInput
               required
@@ -113,8 +123,8 @@ const ScheduleSession = () => {
               label="Session Time"
               placeholder="Pick time"
               className="flex-1"
-              {...form.getInputProps("time")}
               rightSection={pickerControl}
+              {...form.getInputProps("time")}
             />
             <NumberInput
               hideControls
