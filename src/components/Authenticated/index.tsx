@@ -35,6 +35,7 @@ const Authenticated = () => {
           <Header mobileNav={mobileNav} openMobileNav={openMobileNav} />
           <main className="w-full bg-white pt-5 lg:pt-[50px] lg:ml-[300px] lg:w-[calc(100vw-300px)] mb-10">
             <Routes>
+              <Route path="/" element={<Dashboard />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/explore-sessions" element={<ExploreSession />} />
               <Route
