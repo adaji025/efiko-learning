@@ -14,7 +14,7 @@ import ImageDropzone from "../../../components/ImageDropzone";
 import { countryList } from "../../../utils/country";
 import { useNavigate } from "react-router-dom";
 import { majors, qaulification, subjects } from "../../../components/data";
-import { updateStudent } from "../../../services/user";
+import { profileSetUp } from "../../../services/user";
 import useNotification from "../../../hooks/useNotification";
 import { toast } from "react-toastify";
 
@@ -83,7 +83,7 @@ const StudentProfilSetup = () => {
       formData.append(`studentEducationDetails.subject[${index}]`, subject);
     });
 
-    updateStudent(id, formData)
+    profileSetUp(id, formData)
       .then(() => {
         toast.success("Profile set up was successful");
       })

@@ -13,7 +13,7 @@ export const getUser = (id: string) => {
   });
 };
 
-export const updateStudent = (id: string, data: any) => {
+export const profileSetUp = (id: string, data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.patch(`${APIS.USER.USER}/update/${id}`, data, {
       headers: {
