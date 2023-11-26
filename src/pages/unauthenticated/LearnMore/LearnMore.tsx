@@ -1,11 +1,16 @@
 import Line from "../../../assets/svgs/underline.svg";
 import { Accordion } from "@mantine/core";
 import { learningData, paymentData } from "../../../components/data";
+import { useEffect } from "react";
 
 const LearnMore = () => {
-  
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+  useEffect(() => {
+    scrollToTop();
+  }, []);
 
-  
   return (
     <div className="px-6 lg:px-8">
       <div className="flex flex-col items-center justify-end min-h-[50vh]">

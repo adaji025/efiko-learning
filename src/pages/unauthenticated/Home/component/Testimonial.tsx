@@ -1,4 +1,5 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import AOS from "aos";
 import Quote from "../../../../assets/svgs/quote.svg";
 import { Rating } from "@mantine/core";
 import Slider from "react-slick";
@@ -27,6 +28,9 @@ const Card = () => {
 };
 const Testimonial = () => {
   const sliderRef = useRef(null);
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   const next = () => {
     if (sliderRef.current) {
@@ -69,7 +73,7 @@ const Testimonial = () => {
     ],
   };
   return (
-    <div className="mt-32 max-w-[1400px] mx-auto px-6 lg:px-8">
+    <div data-aos="fade-up" className="mt-32 max-w-[1400px] mx-auto px-6 lg:px-8">
       <div className="overflow-hidden py-10">
         <Slider {...settings} ref={sliderRef}>
           {[...Array(7)].map((_, index) => (

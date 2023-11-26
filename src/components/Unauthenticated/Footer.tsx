@@ -1,11 +1,17 @@
+import { useEffect } from "react";
 import Logo from "../../assets/svgs/logo.svg";
 import FB from "../../assets/svgs/fb.svg";
 import IG from "../../assets/svgs/ig.svg";
 import LinkedIN from "../../assets/svgs/linkedin.svg";
+import AOS from "aos";
+
 const Footer = () => {
   const year = new Date().getFullYear();
+  useEffect(() => { 
+    AOS.init();
+  },[])
   return (
-    <footer className="bg-primary px-6 lg:px-8 py-10 mt-32 text-white">
+    <footer data-aos="fade-up" className="bg-primary px-6 lg:px-8 py-10 mt-32 text-white">
       <div className="max-w-[1400px] mx-auto grid gap-10 sm:grid-cols-4">
         <div className="sm:col-span-2 text-white">
           <div className="sm:max-w-[200px]">

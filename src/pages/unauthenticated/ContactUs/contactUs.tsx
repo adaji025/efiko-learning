@@ -1,7 +1,14 @@
+import { useEffect } from "react";
 import Line from "../../../assets/svgs/underline.svg";
 import { TextInput, Select, Textarea, Button } from "@mantine/core";
 
 const ContactUs = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+  useEffect(() => {
+    scrollToTop();
+  }, []);
   return (
     <div className="px-6 lg:px-8">
       <div className="flex flex-col items-center justify-end min-h-[40vh] sm:min-h-[50vh]">

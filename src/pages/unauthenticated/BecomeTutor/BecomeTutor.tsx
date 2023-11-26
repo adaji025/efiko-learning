@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import FeaturedTutors from "../Home/component/FeaturedTutors";
 import Teach from "../Home/component/Teach";
 import Testimonial from "../Home/component/Testimonial";
@@ -5,6 +6,12 @@ import Banner from "./components/Banner";
 import { Button } from "@mantine/core";
 
 const BecomeTutor = () => {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  };
+  useEffect(() => {
+    scrollToTop();
+  }, []);
   return (
     <div>
       <Banner />

@@ -17,6 +17,8 @@ import { useEffect } from "react";
 import StudentLogin from "./pages/unauthenticated/auth/StudentLogin";
 import BookClass from "./pages/unauthenticated/auth/BookClass";
 import VerifyCode from "./pages/unauthenticated/auth/VerifyCode";
+import "aos/dist/aos.css";
+
 
 export default function App() {
   const token = localStorage.getItem("efiko_token") ?? "";
