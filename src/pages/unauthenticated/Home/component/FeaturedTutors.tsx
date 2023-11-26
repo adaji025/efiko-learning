@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import AOS from 'aos';
 import FeatureIcon from "../../../../assets/svgs/feature.svg";
 import David from "../../../../assets/images/david-joe.png";
 import Mark from "../../../../assets/images/mark.png";
@@ -38,8 +40,11 @@ const tutorData = [
 ];
 
 const Card = ({ item }: IProps) => {
+  useEffect(() => {
+    AOS.init();
+  }, [])
   return (
-    <div>
+    <div data-aos="fade-up">
       <div className="h-[350px]">
         <img src={item.image} alt="" className="object-cover" />
       </div>
@@ -56,7 +61,7 @@ const Card = ({ item }: IProps) => {
 };
 const FeaturedTutors = () => {
   return (
-    <div className="max-w-[1400px] mx-auto px-6 lg:px-8 mt-32">
+    <div className="max-w-[1400px] mx-auto px-6 lg:px-8 mt-32" data-aos="fade-up">
       <div className="flex gap-5 justify-center items-center">
         <img src={FeatureIcon} alt="" />
         <h2 className="font-bold text-primary text-2xl md:text-4xl">

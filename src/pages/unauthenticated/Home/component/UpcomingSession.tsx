@@ -1,5 +1,6 @@
+import { useRef, useEffect } from "react";
+import AOS from "aos";
 import { Avatar } from "@mantine/core";
-import { useRef } from "react";
 import { IoMdTime } from "react-icons/io";
 import { IoArrowBackCircle, IoArrowForwardCircle } from "react-icons/io5";
 import Slider from "react-slick";
@@ -13,8 +14,6 @@ type IProps = {
     duration: number;
   };
 };
-
-
 
 const Card = ({}: IProps) => {
   return (
@@ -36,8 +35,11 @@ const Card = ({}: IProps) => {
 };
 
 const UpcomingSession = () => {
-    const sliderRef = useRef(null);
-    
+  const sliderRef = useRef(null);
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   const next = () => {
     if (sliderRef.current) {
       // @ts-ignore
@@ -79,7 +81,7 @@ const UpcomingSession = () => {
     ],
   };
   return (
-    <div className="mt-32 max-w-[1400px] mx-auto px-6 lg:px-8">
+    <div data-aos="fade-up" className="mt-32 max-w-[1400px] mx-auto px-6 lg:px-8">
       <div className="flex items-center gap-5">
         <IoArrowBackCircle size={30} onClick={previous} />
         <div className="overflow-hidden w-[90%] mx-auto py-10">

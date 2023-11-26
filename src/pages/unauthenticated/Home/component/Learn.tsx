@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import AOS from 'aos';
 import Line from "../../../../assets/svgs/underline.svg";
 import AccessIcon from "../../../../assets/svgs/access.svg";
 import AccessOneIcon from "../../../../assets/svgs/access1.svg";
@@ -5,8 +7,11 @@ import LearnIcon from "../../../../assets/svgs/learn.svg";
 import LearnOneIcon from "../../../../assets/svgs/learn1.svg";
 
 const Learn = () => {
+  useEffect(() => {
+    AOS.init();
+  }, [])
   return (
-    <div className="mt-32 min-h-screen gap-10 flex flex-col lg:flex-row justify-center items-center max-w-[1400px] mx-auto px-6 lg:px-8">
+    <div data-aos="fade-up" className="mt-32 min-h-screen gap-10 flex flex-col lg:flex-row justify-center items-center max-w-[1400px] mx-auto px-6 lg:px-8">
       <div className="flex-1">
         <div>
           <h2 className="text-2xl md:text-4xl font-bold text-primary">
