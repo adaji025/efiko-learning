@@ -3,9 +3,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import { IoChevronDownOutline } from "react-icons/io5";
 import LogoMark from "../../assets/svgs/logo.svg";
 import styles from "./Navbar.module.css";
+import LoginDropdown from "./LoginDropdown";
+import ProgramsDropdown from "../ProgramsDropdown";
 
 const navMenuItems = [
   {
@@ -32,12 +33,11 @@ const navMenuItems = [
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
-  const [toggle, setToggle] = useState(false);
   const router = useLocation();
   const navigate = useNavigate();
 
   return (
-    <div className="z-[999] w-full fixed top-0 bg-darkBlue bg-gray-50">
+    <div className="z-[999] w-full fixed top-0 bg-gray-50">
       <nav className={`px-5 lg:px-12 max-w-[1440px] ${styles.navbarItems}`}>
         <img
           src={LogoMark}
@@ -69,29 +69,20 @@ const Navbar = () => {
                   : ""
               } `}
               onClick={() => {
-                menu.title !== "Login" && navigate(menu.url);
-                menu.title === "Login" && setToggle(!toggle);
-                setMenu(false);
+                menu.title !== "Login" &&
+                  menu.title !== "Our Program" &&
+                  navigate(menu.url);
+                menu.title !== "Login" &&
+                  menu.title !== "Our Program" &&
+                  setMenu(false);
               }}
             >
-              {menu.title}
-              {menu.title === "Login" && <IoChevronDownOutline />}
-              {toggle && menu.title === "Login" && (
-                <div className="p-3 grid gap-2 text-start min-w-[150px] border absolute top-12 bg-white text-sm">
-                  <div
-                    className="cursor-pointer"
-                    onClick={() => navigate("/student-login")}
-                  >
-                    Student Login
-                  </div>
-                  <div
-                    className="cursor-pointer"
-                    onClick={() => navigate("/login")}
-                  >
-                    Tutor Login
-                  </div>
-                </div>
-              )}
+              {menu.title !== "Login" &&
+                menu.title !== "Our Program" &&
+                menu.title}
+
+              {menu.title === "Login" && <LoginDropdown />}
+              {menu.title === "Our Program" && <ProgramsDropdown />}
             </div>
           ))}
           <TextInput
