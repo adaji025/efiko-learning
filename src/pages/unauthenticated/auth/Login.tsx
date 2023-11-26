@@ -32,7 +32,8 @@ const Login = () => {
       .then((res: any) => {
         localStorage.setItem("userId", res.data.data._id);
         localStorage.setItem("efiko_token", res.data.data.token);
-        navigate("/dashboard");
+        res.data.data.updatedProfile && navigate("/dashboard");
+        !res.data.data.updatedProfile && navigate("/tutor-profile-setup");
       })
       .catch((err: any) => {
         handleError(err);
