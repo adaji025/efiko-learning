@@ -31,7 +31,7 @@ const Banner = () => {
           mt={24}
           size="md"
           leftSection={<CiPlay1 />}
-          className="bg-primary"
+          className="bg-primary hover:scale-95 transition-all duration-300"
         >
           Watch Demo
         </Button>
