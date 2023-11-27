@@ -59,7 +59,7 @@ const StudentLogin = () => {
                 color="gray"
                 size="md"
                 variant="outline"
-                className="w-full mt-5 text-primary font-bold"
+                className="w-full mt-5 text-primary font-bold hover:text-primary/50 transition-all duration-300"
               >
                 Send Login Code
               </Button>

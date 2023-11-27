@@ -8,10 +8,10 @@ import { RootState } from "../../../redux/store";
 import Chart from "./components/Chart";
 import SessionCard from "./components/SessionCard";
 import { SessionTypes } from "../../../types/session";
-import { getSession } from "../../../services/session";
+import { getTutorSession } from "../../../services/session";
 import useNotification from "../../../hooks/useNotification";
 
-const Dashboard = () => {
+const TutorDashboard = () => {
   const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +21,8 @@ const Dashboard = () => {
     (state: RootState) => state.user.userData
   );
 
+  const userId = localStorage.getItem("userId") ?? "";
+
   useEffect(() => {
     handleGetSessions();
   }, []);
@@ -28,7 +30,7 @@ const Dashboard = () => {
   const handleGetSessions = () => {
     setLoading(true);
 
-    getSession()
+    getTutorSession(userId)
       .then((res: any) => {
         setSessions(res.data.data);
       })
@@ -110,4 +112,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default TutorDashboard;

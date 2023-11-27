@@ -7,9 +7,11 @@ import EmptyIcon from "../../../assets/svgs/empty.svg";
 import { useNavigate } from "react-router-dom";
 import { getSession } from "../../../services/session";
 import useNotification from "../../../hooks/useNotification";
+import { SessionTypes } from "../../../types/session";
 
 const ExploreSession = () => {
   const [loading, setLoading] = useState(false);
+  const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
   const navigate = useNavigate();
   const { handleError } = useNotification();
 
@@ -22,7 +24,7 @@ const ExploreSession = () => {
 
     getSession()
       .then((res: any) => {
-        console.log(res.data.data);
+        setSessions(res.data.data);
       })
       .catch((err: any) => {
         handleError(err);
@@ -49,14 +51,15 @@ const ExploreSession = () => {
           </div>
           {sessionData.length !== 0 && (
             <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
-              {sessionData.map((item, index) => (
-                <SessionCard
-                  btnText="Book session"
-                  handleBtnClick={() => navigate("/explore-sessions/first")}
-                  key={index}
-                  item={item}
-                />
-              ))}
+              {sessions &&
+                sessions.map((session, index) => (
+                  <SessionCard
+                    btnText="Book session"
+                    handleBtnClick={() => navigate("/explore-sessions/first")}
+                    key={index}
+                    item={session}
+                  />
+                ))}
             </div>
           )}
 

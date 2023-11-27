@@ -20,9 +20,17 @@ import ScheduleSession from "../../pages/authenticated/Sesssion/ScheduleSession"
 import EditSession from "../../pages/authenticated/Sesssion/EditSession";
 import Earning from "../../pages/authenticated/Earning";
 import ViewAdminReview from "../../pages/authenticated/Profile/Components/ViewAdminReview";
+import { ProfileTypes } from "../../types/auth";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import TutorDashboard from "../../pages/authenticated/Dashboard/TutorDashbaord";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
+
+  const userData: ProfileTypes = useSelector(
+    (state: RootState) => state.user.userData
+  );
 
   return (
     <>
@@ -35,8 +43,26 @@ const Authenticated = () => {
           <Header mobileNav={mobileNav} openMobileNav={openMobileNav} />
           <main className="w-full bg-white pt-5 lg:pt-[50px] lg:ml-[300px] lg:w-[calc(100vw-300px)] mb-10">
             <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route
+                path="/"
+                element={
+                  userData.accountType === "student" ? (
+                    <Dashboard />
+                  ) : (
+                    <TutorDashboard />
+                  )
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  userData.accountType === "student" ? (
+                    <Dashboard />
+                  ) : (
+                    <TutorDashboard />
+                  )
+                }
+              />
               <Route path="/explore-sessions" element={<ExploreSession />} />
               <Route
                 path="/explore-sessions/:id"

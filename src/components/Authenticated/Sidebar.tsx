@@ -23,9 +23,7 @@ const Sidebar = () => {
   const [showChildren, setShowChildren] = useState<string>("");
   const [opened, { open, close }] = useDisclosure(false);
   const location = useLocation();
-  const dispatch = useDispatch();
-
- 
+  const dispatch = useDispatch(); 
 
   const id = localStorage.getItem("userId") ?? "";
 
