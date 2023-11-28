@@ -24,6 +24,7 @@ import { ProfileTypes } from "../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import TutorDashboard from "../../pages/authenticated/Dashboard/TutorDashbaord";
+import PreviewSession from "../../pages/authenticated/Sesssion/PreviewSession";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -67,6 +68,10 @@ const Authenticated = () => {
               <Route
                 path="/explore-sessions/:id"
                 element={<SessionDetails />}
+              />
+              <Route
+                path="/schedule-sessions/preview"
+                element={<PreviewSession />}
               />
               <Route
                 path="/recorded-sessions-details/:id"

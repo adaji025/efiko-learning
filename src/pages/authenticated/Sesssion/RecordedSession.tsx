@@ -45,7 +45,7 @@ const RedcordedSession = () => {
       <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-          Recorded Sesion
+          Recorded Sesions
         </div>
         <div className="px-4 lg:px-10">
           <div className="flex justify-end">

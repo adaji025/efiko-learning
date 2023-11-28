@@ -59,8 +59,8 @@ const Payments = () => {
               required
               size="md"
               mt={16}
-              label="Pick date"
-              placeholder="Pick date"
+              label="Exp Date"
+              placeholder="Enter exp date"
             />
             <TextInput
               required

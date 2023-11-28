@@ -4,6 +4,7 @@ import Teach from "../Home/component/Teach";
 import Testimonial from "../Home/component/Testimonial";
 import Banner from "./components/Banner";
 import { Button } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 
 const BecomeTutor = () => {
   const scrollToTop = () => {
@@ -12,6 +13,7 @@ const BecomeTutor = () => {
   useEffect(() => {
     scrollToTop();
   }, []);
+  const navigate = useNavigate();
   return (
     <div>
       <Banner />
@@ -34,7 +36,9 @@ const BecomeTutor = () => {
 
       <FeaturedTutors />
       <div className="mt-10 flex justify-center">
-        <Button className="bg-primary">Become a tutor</Button>
+        <Button className="bg-primary" onClick={() => navigate("/register")}>
+          Become a tutor
+        </Button>
       </div>
 
       <Teach />
