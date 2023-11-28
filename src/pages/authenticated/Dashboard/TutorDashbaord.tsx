@@ -63,7 +63,7 @@ const TutorDashboard = () => {
           </div>
         </div>
         <div className="mt-10">
-          <h2 className="text-xl font-semibold">Trending Sessions</h2>
+          <h2 className="text-xl font-semibold">My Upcoming Sessions</h2>
           <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
             {sessions &&
               sessions.map((item, index) => (

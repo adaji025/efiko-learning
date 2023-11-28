@@ -14,11 +14,14 @@ import { FaRegClock } from "react-icons/fa";
 import { addSession } from "../../../services/session";
 import useNotification from "../../../hooks/useNotification";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ScheduleSession = () => {
   const [loading, setLoading] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
   const { handleError } = useNotification();
+
+  const navigate = useNavigate()
 
   const pickerControl = (
     <ActionIcon
@@ -62,7 +65,7 @@ const ScheduleSession = () => {
       <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-          Schedule Sesion
+          Schedule Sesions
         </div>
         <form
           onSubmit={form.onSubmit((values) => submit(values))}
@@ -137,11 +140,18 @@ const ScheduleSession = () => {
             />
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex gap-10 mt-12 justify-btween">
+            <Button
+              variant="outline"
+              size="md"
+              className="text-primary w-1/2 mx-auto"
+              onClick={() => navigate("/schedule-sessions/preview")}
+            >
+              Preview Session Details
+            </Button>
             <Button
               type="submit"
               size="md"
-              mt={30}
               className="bg-primary w-1/2 mx-auto"
             >
               Schedule Session

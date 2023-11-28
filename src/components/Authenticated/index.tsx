@@ -24,6 +24,8 @@ import { ProfileTypes } from "../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import TutorDashboard from "../../pages/authenticated/Dashboard/TutorDashbaord";
+import PreviewSession from "../../pages/authenticated/Sesssion/PreviewSession";
+import UpcomingSessionTutor from "../../pages/authenticated/Sesssion/UpcomingSessionsTutor";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -69,10 +71,20 @@ const Authenticated = () => {
                 element={<SessionDetails />}
               />
               <Route
+                path="/schedule-sessions/preview"
+                element={<PreviewSession />}
+              />
+              <Route
                 path="/recorded-sessions-details/:id"
                 element={<SessionDetails />}
               />
-              <Route path="/upcoming-sessions" element={<UpcomingSession />} />
+              <Route path="/upcoming-sessions" element={
+                  userData?.accountType === "student" ? (
+                    <UpcomingSession />
+                  ) : (
+                    <UpcomingSessionTutor />
+                  )
+                }  />
               <Route path="/recorded-sessions" element={<RedcordedSession />} />
               <Route path="/schedule-sessions" element={<ScheduleSession />} />
               <Route

@@ -127,7 +127,7 @@ const TutorProfilSetup = () => {
                   required
                   mt={16}
                   size="md"
-                  label="Full Name"
+                  label="Age"
                   {...form.getInputProps("age")}
                 />
 

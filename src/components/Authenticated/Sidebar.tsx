@@ -63,7 +63,7 @@ const Sidebar = () => {
     {
       title: "Sessions",
       icon: <SessionIcon />,
-      route: "/profile",
+      route: "/session",
       key: ["explore-sessions", "upcoming-sessions", "recorded-sessions"],
       children: [
         {
@@ -133,8 +133,8 @@ const Sidebar = () => {
     {
       title: "Sessions",
       icon: <SessionIcon />,
-      route: "/profile",
-      key: ["schedule-sessions", "upcoming-sessions", "recorded-sessions"],
+      route: "/session",
+      key: ["schedule-sessions", "upcoming-sessions", "recorded-sessions", "preview-sessions"],
       children: [
         {
           title: "Schedule Sessions",
