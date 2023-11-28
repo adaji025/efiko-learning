@@ -1,8 +1,10 @@
-export type ProfileTypes = {
+
+
+  export type ProfileTypes = {
+    tutorEducationDetails: TutorEducationDetails
     studentEducationDetails: StudentEducationDetails
     _id: string
     email: string
-    password: string
     accountType: string
     isDelete: boolean
     isVerified: boolean
@@ -11,9 +13,19 @@ export type ProfileTypes = {
     createdAt: string
     updatedAt: string
     __v: number
+    loginCode: string
+    age: number
+    country: string
+    fullName: string
+  }
+  
+  export interface TutorEducationDetails {
+    educationDoc: any[]
   }
   
   export interface StudentEducationDetails {
-    subject: any[]
+    subject: string[]
+    education: string
+    majors: string
   }
   

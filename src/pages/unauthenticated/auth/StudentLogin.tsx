@@ -77,7 +77,7 @@ const StudentLogin = () => {
               className="bg-primary w-full rounded-full"
               onClick={() => navigate("/register")}
             >
-              Are you a new student?
+              Sign up and Book a free trial class now
             </Button>
           </div>
         </div>
