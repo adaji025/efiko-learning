@@ -16,5 +16,7 @@ export const APIS = {
   SESSION: {
     SESSION:`${api}/session`,
   },
-  AUTOMATION: {},
+  REPORT: {
+    SEND_REPORT: `${api}/report`
+  },
 };

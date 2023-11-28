@@ -4,7 +4,7 @@ import { APIS } from "../api/api";
 export const userRegistration = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(APIS.USER.USER, data)
-      .then((res: any) => {
+      .then((res) => {
         resolve(res);
       })
       .catch((error) => {
@@ -16,7 +16,7 @@ export const userRegistration = (data: any) => {
 export const userlogin = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(APIS.USER.LOGIN, data)
-      .then((res: any) => {
+      .then((res) => {
         resolve(res);
       })
       .catch((error) => {
@@ -28,7 +28,7 @@ export const userlogin = (data: any) => {
 export const loginCode = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(APIS.AUTH.LOGIN_CODE, data)
-      .then((res: any) => {
+      .then((res) => {
         resolve(res);
       })
       .catch((error) => {
@@ -40,7 +40,7 @@ export const loginCode = (data: any) => {
 export const studentLogin = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(APIS.USER.STUDENT_LOGIN, data)
-      .then((res: any) => {
+      .then((res) => {
         resolve(res);
       })
       .catch((error) => {
@@ -52,7 +52,7 @@ export const studentLogin = (data: any) => {
 export const userVerification = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(APIS.AUTH.VERIFY_USER, data)
-      .then((res: any) => {
+      .then((res) => {
         resolve(res);
       })
       .catch((error) => {
@@ -64,7 +64,7 @@ export const userVerification = (data: any) => {
 export const forgotPassword = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(APIS.AUTH.FORGOT_PASSWORD, data)
-      .then((res: any) => {
+      .then((res) => {
         resolve(res);
       })
       .catch((error) => {
@@ -76,7 +76,7 @@ export const forgotPassword = (data: any) => {
 export const resetPassword = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.patch(APIS.AUTH.RESET_PASSWORD, data)
-      .then((res: any) => {
+      .then((res) => {
         resolve(res);
       })
       .catch((error) => {

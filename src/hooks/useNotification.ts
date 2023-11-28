@@ -8,7 +8,6 @@ const useNotification = () => {
     toast.warn(`User logged out Login in to continue 😑`);
     localStorage.clear();
     navigate("/");
-    // window.location.reload();
   };
 
   const handleError = (error: any) => {
@@ -27,7 +26,7 @@ const useNotification = () => {
       error.response.data.errors &&
       Array.isArray(error.response.data.errors)
     ) {
-     return error.response.data.errors?.map((item: any) => item.msg);
+      return error.response.data.errors?.map((item: any) => item.msg);
     }
 
     if (error) {
