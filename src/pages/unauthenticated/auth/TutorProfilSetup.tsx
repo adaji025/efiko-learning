@@ -1,4 +1,4 @@
-import { useRef, useState, Fragment } from "react";
+import {  useState, Fragment, useCallback } from "react";
 import {
   Stepper,
   Button,
@@ -16,14 +16,20 @@ import { countryList } from "../../../utils/country";
 import { useNavigate } from "react-router-dom";
 import useNotification from "../../../hooks/useNotification";
 import { qaulification, subjects } from "../../../components/data";
-import { profileSetUp } from "../../../services/user";
-import {toast} from "react-toastify"
+import {
+  profileSetUp,
+  uploadNationalId,
+  uploadEducationalDoc,
+} from "../../../services/user";
+import { toast } from "react-toastify";
 
 const TutorProfilSetup = () => {
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(false);
-  const { handleError } = useNotification();
+  const [edDocvalue, setEdDocValue] = useState<File[]>([]);
+  const [natIdvalue, setNatIdValue] = useState<File | null>(null);
 
+  const { handleError } = useNotification();
   const id = localStorage.getItem("userId") ?? "";
   const navigate = useNavigate();
 
@@ -31,15 +37,6 @@ const TutorProfilSetup = () => {
     setActive((current) => (current < 3 ? current + 1 : current));
   const prevStep = () =>
     setActive((current) => (current > 0 ? current - 1 : current));
-
-  const inputRefs = [
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-  ];
 
   const form = useForm({
     initialValues: {
@@ -49,6 +46,7 @@ const TutorProfilSetup = () => {
       description: "",
       education: "",
       teachingExperience: "",
+      subject: "",
       image: [],
     },
     validate: {
@@ -61,25 +59,60 @@ const TutorProfilSetup = () => {
     },
   });
 
+  const validate = useCallback((): boolean => {
+    if (
+      form.values.fullName === "" ||
+      form.values.age === "" ||
+      form.values.country === ""
+    )
+      return true;
+    return false;
+  }, [form.values]);
+
+  const validateTwo = useCallback((): boolean => {
+    if (
+      form.values.education === "" ||
+      form.values.teachingExperience === "" ||
+      form.values.subject === "" ||
+      edDocvalue.length === 0 ||
+      natIdvalue === null
+    )
+      return true;
+    return false;
+  }, [form.values, edDocvalue, natIdvalue]);
+
+  const validateThree = useCallback((): boolean => {
+    if (form.values.description === "") return true;
+    return false;
+  }, [form]);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setLoading(true);
 
     const formData = new FormData();
+    const educationFormData = new FormData();
+    const identityFormData = new FormData();
 
     // Append regular key-value pairs
     formData.append("fullName", form.values.fullName);
     formData.append("age", form.values.age);
     formData.append("country", form.values.country);
+    formData.append("description", form.values.description);
 
     // Append nested object key-value pairs
-    formData.append("studentEducationDetails.education", form.values.education);
-    formData.append("studentEducationDetails.majors", form.values.teachingExperience);
+    formData.append("tutorEducationDetails.education", form.values.education);
+    formData.append(
+      "tutorEducationDetails.majors",
+      form.values.teachingExperience
+    );
 
     // Append array elements
-    form.values.image.forEach((img, index) => {
-      formData.append(`studentEducationDetails.subject[${index}]`, img);
+    edDocvalue.forEach((img, index) => {
+      educationFormData.append(`educationImage[${index}]`, img);
     });
+
+    identityFormData.append("natIdvalue", form.values.description);
 
     profileSetUp(id, formData)
       .then(() => {
@@ -91,9 +124,14 @@ const TutorProfilSetup = () => {
       .finally(() => {
         setLoading(false);
       });
-  };
 
-  console.log(handleSubmit)
+    uploadEducationalDoc(id, educationFormData).catch((err) => {
+      handleError(err);
+    });
+    uploadNationalId(id, identityFormData).catch((err) => {
+      handleError(err);
+    });
+  };
 
   return (
     <Fragment>
@@ -145,6 +183,7 @@ const TutorProfilSetup = () => {
                   size="md"
                   className="bg-primary w-full mt-10"
                   onClick={nextStep}
+                  disabled={validate()}
                 >
                   Next step
                 </Button>
@@ -153,7 +192,6 @@ const TutorProfilSetup = () => {
             <Stepper.Step>
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
                 <Select
-                  ref={inputRefs[3]}
                   required
                   size="md"
                   label="Education"
@@ -167,6 +205,7 @@ const TutorProfilSetup = () => {
                   mt={16}
                   size="md"
                   label="Teaching Experience"
+                  {...form.getInputProps("teachingExperience")}
                 />
 
                 <Select
@@ -180,15 +219,20 @@ const TutorProfilSetup = () => {
                 />
 
                 <FileInput
+                  multiple
                   required
                   size="md"
                   mt={16}
+                  value={edDocvalue}
+                  onChange={setEdDocValue}
                   label="Upload your educational documents"
                 />
                 <FileInput
                   required
                   size="md"
                   mt={16}
+                  value={natIdvalue}
+                  onChange={setNatIdValue}
                   label="Upload your national identity card"
                 />
 
@@ -204,6 +248,7 @@ const TutorProfilSetup = () => {
                   <Button
                     size="md"
                     className="bg-primary w-full"
+                    disabled={validateTwo()}
                     onClick={nextStep}
                   >
                     Next step
@@ -220,6 +265,7 @@ const TutorProfilSetup = () => {
                   minRows={6}
                   size="sm"
                   className=""
+                  {...form.getInputProps("description")}
                 />
                 <div className="mt-6 text-xs">
                   I agree to the{" "}
@@ -234,8 +280,13 @@ const TutorProfilSetup = () => {
                 </div>
                 <Button
                   size="md"
+                  type="submit"
+                  disabled={validateThree()}
                   className="bg-primary w-full mt-10"
-                  onClick={nextStep}
+                  onClick={(e) => {
+                    handleSubmit(e);
+                    nextStep();
+                  }}
                 >
                   Confirm
                 </Button>
@@ -251,9 +302,9 @@ const TutorProfilSetup = () => {
                 <Button
                   size="md"
                   className="bg-primary w-full mt-10"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => navigate("/login")}
                 >
-                  Go to Dashboard
+                  Login
                 </Button>
               </div>
             </Stepper.Completed>
