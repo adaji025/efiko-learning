@@ -46,7 +46,7 @@ const Authenticated = () => {
               <Route
                 path="/"
                 element={
-                  userData.accountType === "student" ? (
+                  userData?.accountType === "student" ? (
                     <Dashboard />
                   ) : (
                     <TutorDashboard />
@@ -56,7 +56,7 @@ const Authenticated = () => {
               <Route
                 path="/dashboard"
                 element={
-                  userData.accountType === "student" ? (
+                  userData?.accountType === "student" ? (
                     <Dashboard />
                   ) : (
                     <TutorDashboard />

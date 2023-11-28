@@ -12,12 +12,14 @@ import Logo from "../../../assets/svgs/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { userRegistration } from "../../../services/auth";
 import { toast } from "react-toastify";
+import useNotification from "../../../hooks/useNotification";
 
 const Register = () => {
   const [userType, setUserType] = useState<string | null>(null);
   const [user, setUser] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { handleError } = useNotification();
   const navigate = useNavigate();
 
   const form = useForm({
@@ -44,7 +46,8 @@ const Register = () => {
         userType === "student" && navigate("/student-login");
       })
       .catch((err: any) => {
-        console.log(err);
+        handleError(err);
+        console.log(err.response.data.errors);
       })
       .finally(() => {
         setLoading(false);
