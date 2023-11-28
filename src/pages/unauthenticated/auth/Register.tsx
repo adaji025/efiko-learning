@@ -12,12 +12,14 @@ import Logo from "../../../assets/svgs/logo.svg";
 import { useNavigate } from "react-router-dom";
 import { userRegistration } from "../../../services/auth";
 import { toast } from "react-toastify";
+import useNotification from "../../../hooks/useNotification";
 
 const Register = () => {
   const [userType, setUserType] = useState<string | null>(null);
   const [user, setUser] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { handleError } = useNotification();
   const navigate = useNavigate();
 
   const form = useForm({
@@ -36,14 +38,16 @@ const Register = () => {
   const submit = (values: any) => {
     setLoading(true);
     userRegistration({ ...values, accountType: userType })
-      .then((res: any) => {
-        toast.success("Check your email for OTP");
+      .then(() => {
+        userType === "tutor" && toast.success("Check your email for OTP");
+        userType === "student" && toast.success("Registration successful");
         localStorage.setItem("userEmail", values.email);
-        console.log(res);
-        navigate("/verify-user");
+        userType === "tutor" && navigate("/verify-user");
+        userType === "student" && navigate("/student-login");
       })
       .catch((err: any) => {
-        console.log(err);
+        handleError(err);
+        console.log(err.response.data.errors);
       })
       .finally(() => {
         setLoading(false);
@@ -125,11 +129,7 @@ const Register = () => {
                 size="md"
                 mt={24}
                 type="submit"
-                className="bg-primary w-full"
-                // onClick={() => {
-                //   userType === "tutor" && navigate("/tutor-profile-setup");
-                //   userType === "student" && navigate("/student-profile-setup");
-                // }}
+                className="bg-primary w-full hover:bg-primary/90"
               >
                 Sign up
               </Button>

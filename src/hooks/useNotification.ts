@@ -8,7 +8,7 @@ const useNotification = () => {
     toast.error(`User logged out Login in to continue 😑`);
     localStorage.clear();
     navigate("/");
-    window.location.reload();
+    // window.location.reload();
   };
 
   const handleError = (error: any) => {
@@ -21,6 +21,13 @@ const useNotification = () => {
     if (error.response.data.error === "Invalid Token") {
       logoutUser();
       return toast.error("Route not found");
+    }
+
+    if (
+      error.response.data.errors &&
+      Array.isArray(error.response.data.errors)
+    ) {
+     return error.response.data.errors?.map((item: any) => item.msg);
     }
 
     if (error) {

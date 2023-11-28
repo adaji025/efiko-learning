@@ -14,7 +14,7 @@ export const APIS = {
     LOGIN_CODE: `${api}/auth/login-code`,
   },
   SESSION: {
-    SESSION: `${api}/session`,
+    SESSION:`${api}/session`,
   },
   AUTOMATION: {},
 };
