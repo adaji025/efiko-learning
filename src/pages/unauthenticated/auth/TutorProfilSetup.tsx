@@ -1,4 +1,4 @@
-import {  useState, Fragment, useCallback } from "react";
+import { useState, Fragment, useCallback } from "react";
 import {
   Stepper,
   Button,
@@ -47,7 +47,6 @@ const TutorProfilSetup = () => {
       education: "",
       teachingExperience: "",
       subject: "",
-      image: [],
     },
     validate: {
       fullName: (value) => (value === "" ? "Input full name" : null),
@@ -55,7 +54,6 @@ const TutorProfilSetup = () => {
       age: (value) => (value === "" ? "Input age" : null),
       education: (value) => (value === "" ? "Input Education" : null),
       teachingExperience: (value) => (value === "" ? "Input Majors" : null),
-      image: (value) => (value.length === 0 ? "Input Majors" : null),
     },
   });
 
@@ -112,7 +110,7 @@ const TutorProfilSetup = () => {
       educationFormData.append(`educationImage[${index}]`, img);
     });
 
-    identityFormData.append("natIdvalue", form.values.description);
+    if (natIdvalue) identityFormData.append("nationalId", natIdvalue);
 
     profileSetUp(id, formData)
       .then(() => {

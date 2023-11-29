@@ -13,6 +13,18 @@ export const getUser = (id: string) => {
   });
 };
 
+export const getUserProfile = (id: string) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(`${APIS.USER.USER}/profile-session/${id}`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export const profileSetUp = (id: string, data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.patch(`${APIS.USER.USER}/update/${id}`, data, {
@@ -61,3 +73,5 @@ export const uploadNationalId = (id: string, data: any) => {
       });
   });
 };
+
+

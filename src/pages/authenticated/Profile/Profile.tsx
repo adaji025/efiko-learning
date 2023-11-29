@@ -1,7 +1,11 @@
-import { Avatar, Button, Rating } from "@mantine/core";
+import { useState, Fragment, useEffect } from "react";
+import { Avatar, Button, LoadingOverlay } from "@mantine/core";
 import { ProfileTypes } from "../../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import {  UserProfileTypes } from "../../../types/user";
+import useNotification from "../../../hooks/useNotification";
+import { getUserProfile } from "../../../services/user";
 
 export const VerifiedIcon = () => {
   return (
@@ -20,99 +24,135 @@ export const VerifiedIcon = () => {
   );
 };
 
-const ReviewCard = () => {
-  return (
-    <div className="p-5 border rounded-xl">
-      <Rating value={3.5} fractions={2} readOnly />
-      <div className="mt-2">Algebra 101: Complete Beginner Guide</div>
-      <div className="mt-4">Read Remarks from all the students</div>
-    </div>
-  );
-};
+// type RProps = {
+//   rating: RatingTypes;
+// };
+
+// const ReviewCard = ({ rating }: RProps) => {
+//   console.log(rating)
+//   return (
+//     <div className="p-5 border rounded-xl">
+//       <Rating value={3.5} fractions={2} readOnly />
+//       <div className="mt-2">Algebra 101: Complete Beginner Guide</div>
+//       <div className="mt-4">Read Remarks from all the students</div>
+//     </div>
+//   );
+// };
 
 const Profile = () => {
+  const [loading, setLoading] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfileTypes | null>(null);
+
+  const userId = localStorage.getItem("userId") ?? "";
+  const { handleError } = useNotification();
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
   );
 
+  useEffect(() => {
+    handleGetUserProfile();
+  }, []);
+
+  const handleGetUserProfile = () => {
+    setLoading(true);
+
+    getUserProfile(userId)
+      .then((res: any) => {
+        setUserProfile(res.data);
+      })
+      .catch((err: any) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
-    <div className="mt-[50px] lg:mt-5">
-      <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-        My Profile
-      </div>
-      <div className="mt-10 px-4 lg:px-8">
-        <div className="border rounded-2xl flex flex-col md:flex-row">
-          <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
-            <Avatar size="xl" className="mt-5" />
-            <div className="font-semibold mt-5">M_Johnson</div>
-            <div className="text-sm mt-2">Student</div>
-            <div className="text-sm mt-2">markjohnson12@gmail.com</div>
-            <Button
-              className="bg-secondary text-primary font-bold mt-5"
-              leftSection={<VerifiedIcon />}
-            >
-              Verified Account
-            </Button>
-          </div>
-          <div className="flex-1">
-            {userData?.accountType === "tutor" && (
+    <Fragment>
+      <LoadingOverlay visible={loading} />
+      <div className="mt-[50px] lg:mt-5">
+        <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
+          My Profile
+        </div>
+        <div className="mt-10 px-4 lg:px-8">
+          <div className="border rounded-2xl flex flex-col md:flex-row">
+            <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
+              <Avatar size="xl" className="mt-5" />
+              <div className="font-semibold mt-5">
+                {userProfile?.data.fullName}
+              </div>
+              <div className="text-sm mt-2">
+                {userProfile?.data.accountType}
+              </div>
+              <div className="text-sm mt-2">{userProfile?.data.email}</div>
+              {userProfile?.data.isVerified && (
+                <Button
+                  className="bg-secondary text-primary font-bold mt-5"
+                  leftSection={<VerifiedIcon />}
+                >
+                  Verified Account
+                </Button>
+              )}
+            </div>
+            <div className="flex-1">
+              {userData?.accountType === "tutor" && (
+                <div className="p-5 border-b">
+                  <div className="font-semibold mt-5 text-lg text-primary">
+                    Profile Description
+                  </div>
+                  <div>{userProfile?.data.description}</div>
+                </div>
+              )}
+              <div
+                className={`p-5 ${
+                  userData?.accountType === "tutor" && "border-b"
+                }`}
+              >
+                <div className="font-semibold mt-5 text-lg text-primary">
+                  Personal Details
+                </div>
+                <div className="mt-2 text-sm">
+                  Name: {userProfile?.data.fullName}{" "}
+                </div>
+                <div className="mt-2 text-sm">
+                  Age: {userProfile?.data.age} Years
+                </div>
+                <div className="mt-2 text-sm">
+                  Country: {userProfile?.data.country}
+                </div>
+              </div>
               <div className="p-5 border-b">
                 <div className="font-semibold mt-5 text-lg text-primary">
-                  Profile Description
+                  Educational Details
                 </div>
-                <div>
-                  I am passionate about teaching and learning, and I enjoy
-                  working with students of all ages and abilities. I am also
-                  committed to providing my students with the best possible
-                  tutoring experience. I am always looking for new ways to
-                  improve my teaching methods and to provide my students with
-                  the resources they need to succeed. If you are interested in
-                  learning more about my tutoring services, please contact me
-                  today. I would be happy to discuss your individual needs and
-                  to answer any questions you may have.
+                <div className="mt-2 text-sm">Education: Bachelors </div>
+                <div className="mt-2 text-sm">
+                  Your Majors: Computer Science
+                </div>
+                <div className="mt-2 text-sm">
+                  Subjects you are interested in:{" "}
+                </div>
+                <div className="mt-2 flex flex-wrap gap-5 ">
+                  {[...Array(7)].map((_, i) => (
+                    <div key={i} className="bg-secondary p-2 rounded-md">
+                      Mathematics
+                    </div>
+                  ))}
                 </div>
               </div>
-            )}
-            <div
-              className={`p-5 ${
-                userData?.accountType === "tutor" && "border-b"
-              }`}
-            >
-              <div className="font-semibold mt-5 text-lg text-primary">
-                Personal Details
-              </div>
-              <div className="mt-2 text-sm">Name: Mark Johnson </div>
-              <div className="mt-2 text-sm">Age: 20 Years</div>
-              <div className="mt-2 text-sm">Country: Nigeria</div>
+              {/* {userData?.accountType === "tutor" && (
+                <div className="p-2 grid gap-5">
+                  {userProfile?.ratings.map((rating, i) => (
+                    <ReviewCard key={i} rating={rating} />
+                  ))}
+                </div>
+              )} */}
             </div>
-            <div className="p-5 border-b">
-              <div className="font-semibold mt-5 text-lg text-primary">
-                Educational Details
-              </div>
-              <div className="mt-2 text-sm">Education: Bachelors </div>
-              <div className="mt-2 text-sm">Your Majors: Computer Science</div>
-              <div className="mt-2 text-sm">
-                Subjects you are interested in:{" "}
-              </div>
-              <div className="mt-2 flex flex-wrap gap-5 ">
-                {[...Array(7)].map((_, i) => (
-                  <div key={i} className="bg-secondary p-2 rounded-md">
-                    Mathematics
-                  </div>
-                ))}
-              </div>
-            </div>
-            {userData?.accountType === "tutor" && (
-              <div className="p-2 grid gap-5">
-                {[...Array(4)].map((_, i) => (
-                  <ReviewCard key={i} />
-                ))}
-              </div>
-            )}
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 
