@@ -14,9 +14,12 @@ export const APIS = {
     LOGIN_CODE: `${api}/auth/login-code`,
   },
   SESSION: {
-    SESSION:`${api}/session`,
+    SESSION: `${api}/session`,
   },
   REPORT: {
-    SEND_REPORT: `${api}/report`
+    SEND_REPORT: `${api}/report`,
+  },
+  NOTIFICATION: {
+    GET_NOTIFICATION: (id: string) => `${api}/notification?recipientId=${id}`,
   },
 };

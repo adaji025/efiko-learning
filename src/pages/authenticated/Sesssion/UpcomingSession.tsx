@@ -3,17 +3,14 @@ import { TextInput, LoadingOverlay } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { sessionData } from "../../../components/data";
 import { useNavigate } from "react-router-dom";
-import UpcomingSessionCard from "./components/UpcomingSessionCard";
-import { toast } from "react-toastify";
 import { SessionTypes } from "../../../types/session";
 import useNotification from "../../../hooks/useNotification";
 import { getUpcomingSession } from "../../../services/session";
+import SessionCard from "../Dashboard/components/SessionCard";
 
 const UpcomingSession = () => {
   const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
   const [loading, setLoading] = useState(false);
-
-  
 
   const { handleError } = useNotification();
   const navigate = useNavigate();
@@ -56,13 +53,11 @@ const UpcomingSession = () => {
           {sessions?.length !== 0 && (
             <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
               {sessions?.map((item, index) => (
-                <UpcomingSessionCard
+                <SessionCard
                   key={index}
                   item={item}
-                  btnEditText="Edit"
-                  btnStartText="Start"
-                  handleEditClick={() => navigate("/schedule-sessions/first")}
-                  handleStartClick={() => toast.success("Session has started")}
+                  btnText="Join session"
+                  handleBtnClick={() => navigate("/upcoming-sessions/first")}
                 />
               ))}
             </div>

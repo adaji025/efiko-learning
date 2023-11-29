@@ -2,18 +2,18 @@ import { Fragment, useEffect, useState } from "react";
 import { TextInput, LoadingOverlay } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { sessionData } from "../../../components/data";
-import SessionCard from "../Dashboard/components/SessionCard";
 import { useNavigate } from "react-router-dom";
 import { SessionTypes } from "../../../types/session";
 import useNotification from "../../../hooks/useNotification";
 import { getTutorUpcomingSession } from "../../../services/session";
+import UpcomingSessionCard from "./components/UpcomingSessionCard";
+import { toast } from "react-toastify";
 
 const UpcomingSessionTutor = () => {
   const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
   const [loading, setLoading] = useState(false);
 
   const userId = localStorage.getItem("userId") ?? "";
-  
 
   const { handleError } = useNotification();
   const navigate = useNavigate();
@@ -56,11 +56,13 @@ const UpcomingSessionTutor = () => {
           {sessions?.length !== 0 && (
             <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
               {sessions?.map((item, index) => (
-                <SessionCard
+                <UpcomingSessionCard
                   key={index}
                   item={item}
-                  btnText="Join session"
-                  handleBtnClick={() => navigate("/upcoming-sessions/first")}
+                  btnEditText="Edit"
+                  btnStartText="Start"
+                  handleEditClick={() => navigate("/schedule-sessions/first")}
+                  handleStartClick={() => toast.success("Session has started")}
                 />
               ))}
             </div>
