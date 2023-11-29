@@ -77,7 +77,9 @@ const Dashboard = () => {
                     userData?.accountType === "student" &&
                       navigate("/explore-sessions");
                     userData?.accountType === "tutor" &&
-                      navigate("/schedule-sessions/1");
+                      navigate(`/schedule-sessions/edit/${item._id}`, {
+                        state: item,
+                      });
                   }}
                 />
               ))}

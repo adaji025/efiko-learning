@@ -20,7 +20,7 @@ import { useCallback } from "react";
 
 const ScheduleSession = () => {
   const [loading, setLoading] = useState(false);
-  const ref = useRef<HTMLInputElement>(null);
+  const timeRef = useRef<HTMLInputElement>(null);
   const { handleError } = useNotification();
 
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ const ScheduleSession = () => {
     <ActionIcon
       variant="subtle"
       color="gray"
-      onClick={() => ref.current?.showPicker()}
+      onClick={() => timeRef.current?.showPicker()}
     >
       <FaRegClock />
     </ActionIcon>
@@ -131,7 +131,7 @@ const ScheduleSession = () => {
               {...form.getInputProps("date")}
             />
             <TimeInput
-              ref={ref}
+              ref={timeRef}
               size="md"
               required
               mt={16}

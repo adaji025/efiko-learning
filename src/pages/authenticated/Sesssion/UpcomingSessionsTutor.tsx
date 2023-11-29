@@ -61,7 +61,9 @@ const UpcomingSessionTutor = () => {
                   item={item}
                   btnEditText="Edit"
                   btnStartText="Start"
-                  handleEditClick={() => navigate("/schedule-sessions/first")}
+                  handleEditClick={() =>
+                    navigate(`/schedule-sessions/edit/${item._id}`, { state: item })
+                  }
                   handleStartClick={() => toast.success("Session has started")}
                 />
               ))}
