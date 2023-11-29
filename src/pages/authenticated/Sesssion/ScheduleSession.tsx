@@ -15,13 +15,15 @@ import { addSession } from "../../../services/session";
 import useNotification from "../../../hooks/useNotification";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { subjects } from "../../../components/data";
+import { useCallback } from "react";
 
 const ScheduleSession = () => {
   const [loading, setLoading] = useState(false);
   const ref = useRef<HTMLInputElement>(null);
   const { handleError } = useNotification();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const pickerControl = (
     <ActionIcon
@@ -44,6 +46,19 @@ const ScheduleSession = () => {
       charges: null,
     },
   });
+
+  const validate = useCallback((): boolean => {
+    if (
+      form.values.title === "" ||
+      form.values.category === "" ||
+      form.values.outcome === "" ||
+      form.values.time === "" ||
+      form.values.charges === "" ||
+      form.values.description === ""
+    )
+      return true;
+    return false;
+  }, [form.values]);
 
   const submit = (values: any) => {
     setLoading(true);
@@ -82,11 +97,8 @@ const ScheduleSession = () => {
             size="md"
             mt={16}
             label="Subject Category"
-            data={[
-              { label: "English", value: "english" },
-              { label: "Mathematics", value: "mathematics" },
-              { label: "Biology", value: "Biology" },
-            ]}
+            data={subjects.map((subject) => subject)}
+            searchable
             {...form.getInputProps("category")}
           />
           <Textarea
@@ -144,8 +156,15 @@ const ScheduleSession = () => {
             <Button
               variant="outline"
               size="md"
-              className="text-primary w-1/2 mx-auto"
-              onClick={() => navigate("/schedule-sessions/preview")}
+              className="text-primary w-1/2 mx-auto disabled:border border-primary disabled:text-primary/80"
+              disabled={validate()}
+              onClick={() => {
+                navigate(`/schedule-sessions/preview`);
+                localStorage.setItem(
+                  "scheduled_sessions",
+                  JSON.stringify(form.values)
+                );
+              }}
             >
               Preview Session Details
             </Button>
