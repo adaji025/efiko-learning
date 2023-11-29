@@ -95,7 +95,7 @@ const Authenticated = () => {
                 path="/upcoming-sessions/:id"
                 element={<ViewUpcomingSession />}
               />
-              <Route path="/schedule-sessions/:id" element={<EditSession />} />
+              <Route path="/schedule-sessions/edit/:id" element={<EditSession />} />
               <Route path="/notifications" element={<Notification />} />
               <Route path="/my-profile" element={<Profile />} />
               <Route path="/my-profile/:id" element={<ViewAdminReview />} />

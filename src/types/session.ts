@@ -9,7 +9,7 @@ export type SessionTypes = {
   start: boolean
   date: string
   time: string
-  charges: number
+  charges: number | null
   status: string
   type: string
   rating: Rating[]

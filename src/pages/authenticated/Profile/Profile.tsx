@@ -3,7 +3,7 @@ import { Avatar, Button, LoadingOverlay } from "@mantine/core";
 import { ProfileTypes } from "../../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import {  UserProfileTypes } from "../../../types/user";
+import { UserProfileTypes } from "../../../types/user";
 import useNotification from "../../../hooks/useNotification";
 import { getUserProfile } from "../../../services/user";
 
