@@ -10,7 +10,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SessionTypes } from "../../../types/session";
 import { subjects } from "../../../components/data";
 import { FaRegClock } from "react-icons/fa6";
@@ -26,6 +26,7 @@ const EditSession = () => {
 
   const userId = localStorage.getItem("userId") ?? "";
   const { handleError } = useNotification();
+  const navigate = useNavigate();
 
   const pickerControl = (
     <ActionIcon
@@ -69,6 +70,7 @@ const EditSession = () => {
       .then(() => {
         toast.success("Session updated successfully");
         form.reset();
+        navigate("/upcoming-sessions");
       })
       .catch((err) => {
         handleError(err);

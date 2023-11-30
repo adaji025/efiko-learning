@@ -37,7 +37,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="z-[999] w-full fixed top-0 bg-gray-50">
+    <div className="z-[999] text-white w-full fixed top-0 bg-primary">
       <nav className={`px-5 lg:px-12 max-w-[1440px] ${styles.navbarItems}`}>
         <img
           src={LogoMark}

@@ -83,7 +83,7 @@ const UpcomingSession = () => {
   return (
     <div data-aos="fade-up" className="mt-32 max-w-[1400px] mx-auto px-6 lg:px-8">
       <div className="flex items-center gap-5">
-        <IoArrowBackCircle size={30} onClick={previous} />
+        <IoArrowBackCircle color="#1B086A" size={30} onClick={previous} />
         <div className="overflow-hidden w-[90%] mx-auto py-10">
           <Slider {...settings} ref={sliderRef}>
             {sessionData.map((item, index) => (
@@ -91,7 +91,7 @@ const UpcomingSession = () => {
             ))}
           </Slider>
         </div>
-        <IoArrowForwardCircle size={30} onClick={next} />
+        <IoArrowForwardCircle color="#1B086A" size={30} onClick={next} />
       </div>
     </div>
   );
