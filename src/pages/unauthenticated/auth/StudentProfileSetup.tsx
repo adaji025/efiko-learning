@@ -130,7 +130,6 @@ const StudentProfilSetup = () => {
         </div>
 
         <div className="mt-10 max-w-[600px] mx-auto px-6 lg:px-8">
-          {/* <form> */}
           <Stepper active={active} onStepClick={setActive}>
             <Stepper.Step disabled>
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
@@ -275,7 +274,6 @@ const StudentProfilSetup = () => {
               </div>
             </Stepper.Completed>
           </Stepper>
-          {/* </form> */}
         </div>
       </div>
     </Fragment>

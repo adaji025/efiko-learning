@@ -19,9 +19,9 @@ const Card = () => {
         love that I can create and deliver courses, track learner progress, and
         provide feedback all in one place.
       </div>
-      <div className="flex gap-2 mt-3">
+      <div className="flex items-center gap-2 mt-3">
         <img src={David} alt="" className="h-[52px] w-[52px] rounded-md" />
-        <div className="font-semibold">Ammy John</div>
+        <div className="font-semibold text-primary">Ammy John</div>
       </div>
     </div>
   );
