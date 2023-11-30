@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import AOS from 'aos';
+import AOS from "aos";
 import Line from "../../../../assets/svgs/underline.svg";
 import AccessIcon from "../../../../assets/svgs/access.svg";
 import AccessOneIcon from "../../../../assets/svgs/access1.svg";
@@ -9,9 +9,12 @@ import LearnOneIcon from "../../../../assets/svgs/learn1.svg";
 const Learn = () => {
   useEffect(() => {
     AOS.init();
-  }, [])
+  }, []);
   return (
-    <div data-aos="fade-up" className="mt-32 min-h-screen gap-10 flex flex-col lg:flex-row justify-center items-center max-w-[1400px] mx-auto px-6 lg:px-8">
+    <div
+      data-aos="fade-up"
+      className="mt-32 min-h-screen gap-10 flex flex-col lg:flex-row justify-center items-center max-w-[1400px] mx-auto px-6 lg:px-8"
+    >
       <div className="flex-1">
         <div>
           <h2 className="text-2xl md:text-4xl font-bold text-primary">
@@ -21,21 +24,18 @@ const Learn = () => {
         </div>
         <ul className="list-disc pl-5 grid gap-5">
           <li>
-            A stay-at-home parent can take online courses to develop new skills
-            and prepare for a career return.
+            Bringing kids of African descent in the diaspora closer to their
+            culture of origin.
           </li>
           <li>
-            A working adult can take online courses to earn a degree or
-            certification to advance their career.
+            Bridging the gaps between Western Education and the African cultural
+            heritage.
           </li>
           <li>
-            A person with a disability can take online courses to learn new
-            skills and improve their quality of life.
+            Embrace your inherent uniqueness as you learn traditional cultures,
+            languages and religion.
           </li>
-          <li>
-            A senior citizen can take online courses to stay active and engaged
-            in learning.
-          </li>
+          <li>Learn and experience education from an African point-of-view.</li>
         </ul>
       </div>
       <div className="flex-1 flex gap-10">
@@ -43,15 +43,15 @@ const Learn = () => {
           <div className="p-5 bg-e-yellow rounded-xl">
             <img src={AccessIcon} alt="access" />
             <div className="mt-12">
-              Access to wide range of courses with increased flexibility and
-              convivence.
+              Access to a wide range of interactive topics with increased
+              flexibility and convenience
             </div>
           </div>
           <div className="p-5 bg-e-green rounded-xl">
             <img src={LearnIcon} alt="access" />
             <div className="mt-12">
-              Access to wide range of courses with increased flexibility and
-              convivence.
+              Learn from World-Class instructors with best-in-class industrial
+              experience
             </div>
           </div>
         </div>
@@ -60,15 +60,14 @@ const Learn = () => {
           <div className="p-5 bg-e-green rounded-xl">
             <img src={AccessOneIcon} alt="access" />
             <div className="mt-12">
-              Access to wide range of courses with increased flexibility and
-              convivence.
+              Excellence in class as you learn in a personalized setting
             </div>
           </div>
           <div className="p-5 bg-e-yellow rounded-xl">
             <img src={LearnOneIcon} alt="access" />
             <div className="mt-12">
-              Access to wide range of courses with increased flexibility and
-              convivence.
+              For the lowest of cost, enjoy the immediate and eventual benefits
+              of your cultural uniqueness.
             </div>
           </div>
         </div>
