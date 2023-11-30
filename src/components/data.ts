@@ -1,3 +1,7 @@
+import David from "../assets/images/david-joe.png";
+import Mark from "../assets/images/mark.png";
+import Amber from "../assets/images/amber.png";
+
 export const sessionData = [
   {
     name: "Algebra 101: Complete beginner guide. ",
@@ -142,10 +146,17 @@ export const qaulification = [
 
 export const freeSessions = [
   {
-    name: "Introduction to A",
+    name: "Introduction to AI",
     tutor: "Michael Igbinigun",
     desc: `World-renowned IT specalist with experiences at Amazon, Microsoft etc. 
     Basics of AI & Web Design clinics for Kids`,
+    duration: 20,
+  },
+  {
+    name: `Tech Talk`,
+    tutor: `Benedict Egboiyi, PhD`,
+    desc: `World-renowned Scientist & Inventor
+    Solve everyday problems with Maths & Science`,
     duration: 20,
   },
   {
@@ -162,11 +173,57 @@ export const freeSessions = [
     Solve everyday problems with Maths & Science`,
     duration: 20,
   },
+];
+
+export const featuredTutorsData = [
   {
-    name: `Tech Talk`,
-    tutor: `Benedict Egboiyi, PhD`,
-    desc: `World-renowned Scientist & Inventor
-    Solve everyday problems with Maths & Science`,
-    duration: 20,
+    name: `Dr Efosa Igbinigun`,
+    image: David,
+    description: `Over 12 years of teaching experience delivering 5K+ successful lectures in Nigeria , Togo and the United States
+  3K+ Students`,
+    role: `Teaches Mathematics and Science`,
+  },
+  {
+    name: `Mr. Iyke Orji`,
+    image: Amber,
+    description: `Over 8 years of teaching experience and over 1K lectures delivered in Nigeria and the United States.
+  2k+ Students`,
+    role: `Teaches ICT`,
+  },
+  {
+    name: `Esther Egboiyi, RN, BSN`,
+    image: Mark,
+    description: `Over 3 years of teaching experience and sucessfully delivering 100+ lectures in Ghana, Nigeria and the United States.
+  1k+ Students`,
+    role: `Teaches Health Science`,
+  },
+];
+
+export const testimoinialData = [
+  {
+    name: `Mr. Ndu`,
+    text: `The personalised online live tutoring sessions makes it easier to learn with Efiko learning. It’s convenient and affordable, I will want to sign up for all the courses they are ready to offer….. I’m glad I discovered the platform.
+    I recommend it anyday!`,
+    role: `Parent`,
+    image: David,
+  },
+  {
+    name: `Mrs Edith`,
+    text: `The Igbo & Yoruba language teachers are exceptional. Their style of teaching keep my children glued to their screen. They all look forward to having an awesome and enjoyable time with their teachers connecting them with their culture and heritage.`,
+    role: `Parent`,
+    image: David,
+  },
+  {
+    name: `Jonathan Egboiyi, US AirForce`,
+    text: `I have been using the EL platform for a few months now, and I am really impressed with it. It's easy to use, both for me and for my learners. I love that I can create and deliver courses, track learner progress, and provide feedback all in one place.`,
+    role: `Instructor`,
+    image: David,
+  },
+  {
+    name: `Tobiloba Jacob`,
+    text: `My tutor has made Maths very interesting to me. He is always on time, makes me comfortable and makes me believe I can do anything if i put my mind to it.
+    He is amazing!`,
+    role: `Student`,
+    image: David,
   },
 ];

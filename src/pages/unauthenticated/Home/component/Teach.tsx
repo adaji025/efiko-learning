@@ -11,21 +11,24 @@ const Teach = () => {
     AOS.init();
   }, []);
   return (
-    <div data-aos="fade-up" className="mt-32 min-h-screen gap-10 flex flex-col lg:flex-row justify-center items-center max-w-[1400px] mx-auto px-6 lg:px-8">
+    <div
+      data-aos="fade-up"
+      className="mt-32 min-h-screen gap-10 flex flex-col lg:flex-row justify-center items-center max-w-[1400px] mx-auto px-6 lg:px-8"
+    >
       <div className="flex-1 flex flex-col sm:flex-row gap-10">
         <div className="flex-1 grid gap-5">
           <div className="p-5 bg-e-yellow rounded-xl">
             <img src={AccessIcon} alt="access" />
             <div className="mt-12">
-              Empower the new generation with what you have learned. And spread
-              the word.
+              Share your knowledge with the nextgen and help them thrive
             </div>
           </div>
           <div className="p-5 bg-e-green rounded-xl">
             <img src={LearnIcon} alt="access" />
             <div className="mt-12">
-              Teach the students from the comfort of the home. And bring ease
-              for yourself and your students.
+              Educate your students conveniently right from your home, ensuring
+              comfort and convenience for both yourself and your esteemed
+              students.
             </div>
           </div>
         </div>
@@ -34,14 +37,15 @@ const Teach = () => {
           <div className="p-5 bg-e-green rounded-xl">
             <img src={AccessOneIcon} alt="access" />
             <div className="mt-12">
-              Grow your network. Provide value and be visible to your students.
+              Utilize the knowledge you have acquired to empower others,
+              guaranteeing that the message resonates across boundaries and
+              beyond
             </div>
           </div>
           <div className="p-5 bg-e-yellow rounded-xl">
             <img src={LearnOneIcon} alt="access" />
             <div className="mt-12">
-              Now teach more and earn more. A great way for you to increase your
-              income.
+              Earn competitive compensation for teaching kids in the diaspora.
             </div>
           </div>
         </div>
@@ -55,20 +59,17 @@ const Teach = () => {
         </div>
         <ul className="list-disc pl-5 grid gap-5">
           <li>
-            A tutor can use an eLearning platform to create and deliver online
-            courses on a variety of topics.
+            Create and deliver classes on a variety of topics at your
+            convenience.
+          </li>
+          <li>Increase your earning power teaching what you love.</li>
+          <li>
+            This opportunity is an excellent pathway for you to take your income
+            to the next level.
           </li>
           <li>
-            A tutor can use an eLearning platform to provide one-on-one tutoring
-            to students in remote locations.
-          </li>
-          <li>
-            A tutor can use an eLearning platform to supplement their in-person
-            tutoring sessions with online resources and activities.
-          </li>
-          <li>
-            A tutor can use an eLearning platform to track student progress and
-            provide feedback to students and their parents.
+            Expand your network by actively engaging with others. Offer valuable
+            insights and make sure your presence is noticed by your students
           </li>
         </ul>
       </div>

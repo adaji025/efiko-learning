@@ -4,24 +4,31 @@ import Quote from "../../../../assets/svgs/quote.svg";
 import { Rating } from "@mantine/core";
 import Slider from "react-slick";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
-import David from "../../../../assets/images/david-joe.png";
+import { testimoinialData } from "../../../../components/data";
 
-const Card = () => {
+type IProps = {
+  item: {
+    name: string;
+    text: string;
+    role: string;
+    image: string;
+  };
+};
+
+const Card = ({ item }: IProps) => {
   return (
     <div className="p-5 bg-white mr-10">
       <div className="flex gap-2">
         <img src={Quote} alt="quote" />
         <Rating defaultValue={5} />
       </div>
-      <div className="mt-3">
-        I've been using the LMS platform for a few months now, and I'm really
-        impressed with it. It's easy to use, both for me and for my learners. I
-        love that I can create and deliver courses, track learner progress, and
-        provide feedback all in one place.
-      </div>
-      <div className="flex items-center gap-2 mt-3">
-        <img src={David} alt="" className="h-[52px] w-[52px] rounded-md" />
-        <div className="font-semibold text-primary">Ammy John</div>
+      <div className="mt-3">{item.text}</div>
+      <div className="flex items-center gap-3 mt-3">
+        <img src={item.image} alt="" className="h-[52px] w-[52px] rounded-md" />
+        <div>
+          <div className="font-semibold text-primary">{item.name}</div>
+          <div>{item.role}</div>
+        </div>
       </div>
     </div>
   );
@@ -73,11 +80,14 @@ const Testimonial = () => {
     ],
   };
   return (
-    <div data-aos="fade-up" className="mt-32 max-w-[1400px] mx-auto px-6 lg:px-8">
+    <div
+      data-aos="fade-up"
+      className="mt-32 max-w-[1400px] mx-auto px-6 lg:px-8"
+    >
       <div className="overflow-hidden py-10">
         <Slider {...settings} ref={sliderRef}>
-          {[...Array(7)].map((_, index) => (
-            <Card key={index} />
+          {testimoinialData.map((item, index) => (
+            <Card item={item} key={index} />
           ))}
         </Slider>
       </div>
