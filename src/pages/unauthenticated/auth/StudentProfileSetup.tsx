@@ -132,7 +132,7 @@ const StudentProfilSetup = () => {
         <div className="mt-10 max-w-[600px] mx-auto px-6 lg:px-8">
           {/* <form> */}
           <Stepper active={active} onStepClick={setActive}>
-            <Stepper.Step>
+            <Stepper.Step disabled>
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
                 <ImageDropzone />
                 <TextInput
@@ -174,7 +174,7 @@ const StudentProfilSetup = () => {
                 </Button>
               </div>
             </Stepper.Step>
-            <Stepper.Step>
+            <Stepper.Step disabled>
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
                 <Select
                   ref={inputRefs[3]}
@@ -232,7 +232,7 @@ const StudentProfilSetup = () => {
                 </div>
               </div>
             </Stepper.Step>
-            <Stepper.Step>
+            <Stepper.Step disabled>
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
                 <div className="mt-6">
                   I agree to the{" "}

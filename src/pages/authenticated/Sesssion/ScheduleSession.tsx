@@ -66,6 +66,7 @@ const ScheduleSession = () => {
     addSession(values)
       .then(() => {
         toast.success("Session created successfully");
+        form.reset()
       })
       .catch((err) => {
         handleError(err);
@@ -129,6 +130,8 @@ const ScheduleSession = () => {
               placeholder="Pick date"
               className="flex-1"
               {...form.getInputProps("date")}
+              // @ts-ignore
+              minDate={new Date().toJSON().slice(0, 10)}
             />
             <TimeInput
               ref={timeRef}

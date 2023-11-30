@@ -60,3 +60,15 @@ export const addSession = (data: any) => {
       });
   });
 };
+
+export const updateSession = (id: string, data: any) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.patch(`${APIS.SESSION.SESSION}/${id}`, data)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
