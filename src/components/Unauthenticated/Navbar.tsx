@@ -50,9 +50,9 @@ const Navbar = () => {
           onClick={() => setMenu(!menu)}
         >
           {menu ? (
-            <AiOutlineClose size={25} color="#157145" />
+            <AiOutlineClose size={25} color="white" />
           ) : (
-            <AiOutlineMenu size={25} color="#157145" />
+            <AiOutlineMenu size={25} color="white" />
           )}
         </div>
         <div

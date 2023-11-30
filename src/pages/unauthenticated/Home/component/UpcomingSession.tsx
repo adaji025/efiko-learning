@@ -4,7 +4,9 @@ import { Avatar } from "@mantine/core";
 import { IoMdTime } from "react-icons/io";
 import { IoArrowBackCircle, IoArrowForwardCircle } from "react-icons/io5";
 import Slider from "react-slick";
-import { sessionData } from "../../../../components/data";
+// import { freeSessions } from "../../../../components/data";
+import SearchIcon from "../../../../assets/svgs/search.svg";
+import { freeSessions } from "../../../../components/data";
 
 type IProps = {
   item: {
@@ -15,20 +17,17 @@ type IProps = {
   };
 };
 
-const Card = ({}: IProps) => {
+const Card = ({ item }: IProps) => {
   return (
-    <div className="p-5 bg-white ml-10 shadow-lg rounded-md my-10">
-      <div className="font-semibold">Algebra 101: Complete beginner guide.</div>
+    <div className="p-5 bg-white ml-10 shadow-lg min-h-[250px] rounded-md my-10">
+      <div className="font-semibold">{item.name}</div>
       <div className="mt-3 flex items-center gap-2 text-sm">
         <Avatar />
-        <div>by: Adaji Mukhtar</div>
+        <div>By: {item.tutor}</div>
       </div>
-      <div className="mt-2">
-        Algebra, the language of mathematics,To solve problems and explore new
-        paths.
-      </div>
-      <div>
-        <IoMdTime />
+      <div className="mt-2">{item.desc}</div>
+      <div className="flex gap-2 items-center justify-end">
+        <IoMdTime /> {item.duration} mins
       </div>
     </div>
   );
@@ -81,12 +80,24 @@ const UpcomingSession = () => {
     ],
   };
   return (
-    <div data-aos="fade-up" className="mt-32 max-w-[1400px] mx-auto px-6 lg:px-8">
+    <div
+      data-aos="fade-up"
+      className="mt-32 max-w-[1400px] mx-auto px-6 lg:px-8"
+    >
+      <div className="flex gap-2 justify-center items-center">
+        <h2 className="font-bold mb-3 text-primary text-2xl md:text-4xl">
+          Upcoming Free Sessions
+        </h2>
+        <img src={SearchIcon} alt="" />
+      </div>
+      <div className="text-center text-lg">
+        Learn from our 20 mins live sessions with our world-renowned experts.
+      </div>
       <div className="flex items-center gap-5">
         <IoArrowBackCircle color="#1B086A" size={30} onClick={previous} />
         <div className="overflow-hidden w-[90%] mx-auto py-10">
           <Slider {...settings} ref={sliderRef}>
-            {sessionData.map((item, index) => (
+            {freeSessions.map((item, index) => (
               <Card key={index} item={item} />
             ))}
           </Slider>

@@ -139,3 +139,34 @@ export const qaulification = [
   "Master's Degree",
   "Doctorate",
 ];
+
+export const freeSessions = [
+  {
+    name: "Introduction to A",
+    tutor: "Michael Igbinigun",
+    desc: `World-renowned IT specalist with experiences at Amazon, Microsoft etc. 
+    Basics of AI & Web Design clinics for Kids`,
+    duration: 20,
+  },
+  {
+    name: `Health Talk/Training Sessions`,
+    tutor: `Esther Egboiyi, BSN, RN`,
+    desc: `World-class Health practitioner 
+    Learn about First Aid and CPR Procedures training.`,
+    duration: 20,
+  },
+  {
+    name: `Tech Talk`,
+    tutor: `Benedict Egboiyi, PhD`,
+    desc: `World-renowned Scientist & Inventor
+    Solve everyday problems with Maths & Science`,
+    duration: 20,
+  },
+  {
+    name: `Tech Talk`,
+    tutor: `Benedict Egboiyi, PhD`,
+    desc: `World-renowned Scientist & Inventor
+    Solve everyday problems with Maths & Science`,
+    duration: 20,
+  },
+];
