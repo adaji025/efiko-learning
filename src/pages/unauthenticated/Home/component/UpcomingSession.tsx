@@ -2,11 +2,10 @@ import { useRef, useEffect } from "react";
 import AOS from "aos";
 import { Avatar } from "@mantine/core";
 import { IoMdTime } from "react-icons/io";
-import { IoArrowBackCircle, IoArrowForwardCircle } from "react-icons/io5";
 import Slider from "react-slick";
-// import { freeSessions } from "../../../../components/data";
 import SearchIcon from "../../../../assets/svgs/search.svg";
 import { freeSessions } from "../../../../components/data";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 
 type IProps = {
   item: {
@@ -19,7 +18,7 @@ type IProps = {
 
 const Card = ({ item }: IProps) => {
   return (
-    <div className="p-5 bg-white ml-10 shadow-lg min-h-[250px] rounded-md my-10">
+    <div className="p-5 bg-white ml-10 shadow-lg md:min-h-[250px] rounded-md my-10">
       <div className="font-semibold">{item.name}</div>
       <div className="mt-3 flex items-center gap-2 text-sm">
         <Avatar />
@@ -71,7 +70,7 @@ const UpcomingSession = () => {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 768,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
@@ -94,7 +93,12 @@ const UpcomingSession = () => {
         Learn from our 20 mins live sessions with our world-renowned experts.
       </div>
       <div className="flex items-center gap-5">
-        <IoArrowBackCircle color="#1B086A" size={30} onClick={previous} />
+        <div
+          className="flex justify-center items-center h-[30px] w-[30px] rounded-full bg-secondary cursor-pointer"
+          onClick={previous}
+        >
+          <FaArrowLeftLong color="#1B086A" />
+        </div>
         <div className="overflow-hidden w-[90%] mx-auto py-10">
           <Slider {...settings} ref={sliderRef}>
             {freeSessions.map((item, index) => (
@@ -102,7 +106,12 @@ const UpcomingSession = () => {
             ))}
           </Slider>
         </div>
-        <IoArrowForwardCircle color="#1B086A" size={30} onClick={next} />
+        <div
+          className="flex justify-center items-center h-[30px] w-[30px] rounded-full bg-secondary cursor-pointer"
+          onClick={next}
+        >
+          <FaArrowRightLong color="#1B086A" />
+        </div>
       </div>
     </div>
   );
