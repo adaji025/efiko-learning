@@ -127,9 +127,16 @@ const Profile = () => {
                   Educational Details
                 </div>
                 <div className="mt-2 text-sm">Education: Bachelors </div>
-                <div className="mt-2 text-sm">
-                  Your Majors: Computer Science
-                </div>
+                {userData.accountType === "student" && (
+                  <div className="mt-2 text-sm">
+                    Career Interests: Computer Science
+                  </div>
+                )}
+                {userData.accountType === "tutor" && (
+                  <div className="mt-2 text-sm">
+                    Your Majors: Computer Science
+                  </div>
+                )}
                 <div className="mt-2 text-sm">
                   Subjects you are interested in:{" "}
                 </div>

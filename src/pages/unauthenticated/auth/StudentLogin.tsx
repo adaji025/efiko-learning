@@ -47,7 +47,7 @@ const StudentLogin = () => {
             </h1>
             <form onSubmit={form.onSubmit((values) => submit(values))}>
               <TextInput
-                placeholder="Enter your valid email address"
+                placeholder="Enter your valid email address or phone number"
                 required
                 size="md"
                 label="Email"
