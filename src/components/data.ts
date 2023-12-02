@@ -32,7 +32,11 @@ export const sessionData = [
 export const learningData = [
   {
     title: `What is Efiko Learning? `,
-    text: `An eLearning platform is a software application that provides a virtual learning environment for students and learners to access educational resources and take online courses. It enables instructors to create and manage online courses, deliver learning materials, track student progress, and assess student performance.`,
+    text: `A live tutoring online platform that allows you to embrace your 
+    inherent uniqueness as you learn traditional cultures, languages and religion.
+    You experience the tough rigorous teaching and study habits that immerse you in
+    the rich tapestry of your African heritage which makes you excel…..especially
+    because you learn from World-Class instructors with best-in-class industrial experience!`,
   },
   {
     title: `How to use Efiko Learning? `,

@@ -22,7 +22,7 @@ const Card = ({ item }: IProps) => {
         <img src={Quote} alt="quote" />
         <Rating defaultValue={5} />
       </div>
-      <div className="mt-3">{item.text}</div>
+      <div className="mt-3 text-justify">{item.text}</div>
       <div className="flex items-center gap-3 mt-3">
         <img src={item.image} alt="" className="h-[52px] w-[52px] rounded-md" />
         <div>

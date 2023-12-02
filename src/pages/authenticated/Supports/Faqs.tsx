@@ -8,6 +8,10 @@ const Faqs = () => {
 
       <div className="mt-10 max-w-[1000px] mx-auto px-6 lg:px-8">
         <h2 className=" font-medium text-2xl text-primary">Leaning</h2>
+        <div className="mt-2">
+          How can Efiko Learning benefit me? What payment method can I use at
+          Efiko Learning?
+        </div>
         <Accordion defaultValue="Apples" className="mt-5">
           {learningData.map((data, index) => (
             <Accordion.Item

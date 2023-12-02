@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, Fragment } from "react";
+import { useState, useCallback, Fragment } from "react";
 import {
   Stepper,
   Button,
@@ -26,15 +26,6 @@ const StudentProfilSetup = () => {
   const id = localStorage.getItem("userId") ?? "";
 
   const navigate = useNavigate();
-
-  const inputRefs = [
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-    useRef<HTMLInputElement>(null),
-  ];
 
   const nextStep = () => {
     setActive((current) => (current < 3 ? current + 1 : current));
@@ -124,8 +115,9 @@ const StudentProfilSetup = () => {
         </div>
         <div className="text-center mt-10">
           <h2 className="text-3xl font-bold text-primary">Student Profile</h2>
-          <div className="mt-2">
-            Setup your profile to start teachin and earning today.
+          <div className="mt-2 max-w-[350px] mx-auto">
+            Sign up with Efiko Learning and start your connection to your
+            heritage
           </div>
         </div>
 
@@ -135,15 +127,19 @@ const StudentProfilSetup = () => {
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
                 <ImageDropzone />
                 <TextInput
-                  ref={inputRefs[0]}
                   required
                   mt={16}
                   size="md"
-                  label="Full Name"
+                  label="First Name"
                   {...form.getInputProps("fullName")}
                 />
+                <TextInput
+                  required
+                  mt={16}
+                  size="md"
+                  label="Last Name"
+                />
                 <NumberInput
-                  ref={inputRefs[1]}
                   hideControls
                   required
                   mt={16}
@@ -153,7 +149,6 @@ const StudentProfilSetup = () => {
                 />
 
                 <Select
-                  ref={inputRefs[2]}
                   required
                   mt={16}
                   size="md"
@@ -176,7 +171,6 @@ const StudentProfilSetup = () => {
             <Stepper.Step disabled>
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
                 <Select
-                  ref={inputRefs[3]}
                   required
                   size="md"
                   label="Education"
@@ -185,18 +179,16 @@ const StudentProfilSetup = () => {
                 />
 
                 <Select
-                  ref={inputRefs[4]}
                   required
                   mt={16}
                   size="md"
-                  label="Your Majors"
+                  label="Career Interests"
                   searchable
                   data={majors.map((major) => major)}
                   {...form.getInputProps("majors")}
                 />
 
                 <MultiSelect
-                  ref={inputRefs[5]}
                   required
                   mt={16}
                   size="md"

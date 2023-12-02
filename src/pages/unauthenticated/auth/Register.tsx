@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { userRegistration } from "../../../services/auth";
 import { toast } from "react-toastify";
 import useNotification from "../../../hooks/useNotification";
+import { IoLogoApple } from "react-icons/io";
 
 const Register = () => {
   const [userType, setUserType] = useState<string | null>(null);
@@ -47,7 +48,6 @@ const Register = () => {
       })
       .catch((err: any) => {
         handleError(err);
-        console.log(err.response.data.errors);
       })
       .finally(() => {
         setLoading(false);
@@ -57,13 +57,16 @@ const Register = () => {
   return (
     <Fragment>
       <LoadingOverlay visible={loading} />
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center px-5 lg:px-8">
         <img src={Logo} alt="" className="mt-10" />
         <div className="text-center">
           <h1 className="font-bold text-2xl">Sign Up</h1>
-          <div>Sign up to your account and start learning.</div>
+          <div className="mt-1 max-w-[350px] mx-auto">
+            Sign up with Efiko Learning and start your connection to your
+            heritage
+          </div>
         </div>
-        <div className="mt-10 bg-white border shadow px-[40px] sm:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
+        <div className="mt-10 bg-white border shadow px-[20px] sm:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
           {!userType && (
             <div>
               <div>Select your account type!</div>
@@ -138,19 +141,26 @@ const Register = () => {
                 <div className="text-secondary font-bold">Or</div>
                 <div className="w-[45%] h-[1px] bg-secondary" />
               </div>
-              <Button
-                size="md"
-                variant="outline"
-                color="gray"
-                mt={30}
-                className="border w-full flex gap-5 justify-center items-center text-primary"
-                // onClick={() => {
-                //   userType === "tutor" && navigate("/tutor-profile-setup");
-                //   userType === "student" && navigate("/student-profile-setup");
-                // }}
-              >
-                <FcGoogle /> <div className="ml-2">Sign In with Google</div>
-              </Button>
+              <div className="flex mt-8 flex-col sm:flex-row gap-5">
+                <Button
+                  size="md"
+                  variant="outline"
+                  color="gray"
+                  className="border w-full flex gap-5 justify-center items-center text-xs text-primary"
+                >
+                  <FcGoogle size={24} />{" "}
+                  <div className="ml-2">Sign In with Google</div>
+                </Button>
+                <Button
+                  size="md"
+                  variant="outline"
+                  color="gray"
+                  className="border w-full flex gap-5 justify-center text-xs items-center text-primary"
+                >
+                  <IoLogoApple size={24} />{" "}
+                  <div className="ml-2">Sign In with Apple ID</div>
+                </Button>
+              </div>
             </form>
           )}
         </div>
