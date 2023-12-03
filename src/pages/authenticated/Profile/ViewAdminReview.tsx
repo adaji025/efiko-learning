@@ -1,4 +1,6 @@
 import { Rating } from "@mantine/core";
+import { useLocation } from "react-router-dom";
+import { SessionTypes } from "../../../types/session";
 
 const Card = () => {
   return (
@@ -18,6 +20,8 @@ const Card = () => {
 };
 
 const ViewAdminReview = () => {
+  const location = useLocation()
+  const state: SessionTypes = location.state
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -25,7 +29,7 @@ const ViewAdminReview = () => {
       </div>
       <div className="mt-10 px-4 lg:px-10">
         <div className="font-semibold mt-5 text-lg">
-          Algebra 101: Complete Beginner Guide
+          {state.title}
         </div>
         <div className="mt-4">200 students attended the session.</div>
         <div className="mt-1">200 students added reviews.</div>

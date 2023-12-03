@@ -19,7 +19,7 @@ import ViewUpcomingSession from "../../pages/authenticated/Sesssion/ViewUpcoming
 import ScheduleSession from "../../pages/authenticated/Sesssion/ScheduleSession";
 import EditSession from "../../pages/authenticated/Sesssion/EditSession";
 import Earning from "../../pages/authenticated/Earning";
-import ViewAdminReview from "../../pages/authenticated/Profile/Components/ViewAdminReview";
+import ViewAdminReview from "../../pages/authenticated/Profile/ViewAdminReview";
 import { ProfileTypes } from "../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
