@@ -1,11 +1,13 @@
 import { useState, Fragment, useEffect } from "react";
-import { Avatar, Button, LoadingOverlay } from "@mantine/core";
+import { Avatar, Button, LoadingOverlay, Rating } from "@mantine/core";
 import { ProfileTypes } from "../../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { UserProfileTypes } from "../../../types/user";
 import useNotification from "../../../hooks/useNotification";
 import { getUserProfile } from "../../../services/user";
+import { useNavigate } from "react-router-dom";
+import { SessionTypes } from "../../../types/session";
 
 export const VerifiedIcon = () => {
   return (
@@ -24,20 +26,27 @@ export const VerifiedIcon = () => {
   );
 };
 
-// type RProps = {
-//   rating: RatingTypes;
-// };
+type RProps = {
+  session: SessionTypes;
+};
 
-// const ReviewCard = ({ rating }: RProps) => {
-//   console.log(rating)
-//   return (
-//     <div className="p-5 border rounded-xl">
-//       <Rating value={3.5} fractions={2} readOnly />
-//       <div className="mt-2">Algebra 101: Complete Beginner Guide</div>
-//       <div className="mt-4">Read Remarks from all the students</div>
-//     </div>
-//   );
-// };
+const ReviewCard = ({ session }: RProps) => {
+  const navigate = useNavigate();
+  return (
+    <div className="p-5 border rounded-xl">
+      <Rating value={session.averageRating} fractions={2} readOnly />
+      <div className="mt-2">{session.title}</div>
+      <div
+        className="mt-4 cursor-pointer hover:underline hover:text-primary"
+        onClick={() =>
+          navigate(`/my-profile/${session._id}`, { state: session})
+        }
+      >
+        Read Remarks from all the students
+      </div>
+    </div>
+  );
+};
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
@@ -52,6 +61,8 @@ const Profile = () => {
   useEffect(() => {
     handleGetUserProfile();
   }, []);
+
+  console.log(userProfile);
 
   const handleGetUserProfile = () => {
     setLoading(true);
@@ -79,10 +90,10 @@ const Profile = () => {
           <div className="border rounded-2xl flex flex-col md:flex-row">
             <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
               <Avatar size="xl" className="mt-5" />
-              <div className="font-semibold mt-5">
+              <div className="font-semibold mt-5 capitalize">
                 {userProfile?.data.fullName}
               </div>
-              <div className="text-sm mt-2">
+              <div className="text-sm mt-2 capitalize">
                 {userProfile?.data.accountType}
               </div>
               <div className="text-sm mt-2">{userProfile?.data.email}</div>
@@ -148,13 +159,13 @@ const Profile = () => {
                   ))}
                 </div>
               </div>
-              {/* {userData?.accountType === "tutor" && (
+              {userData?.accountType === "tutor" && (
                 <div className="p-2 grid gap-5">
-                  {userProfile?.ratings.map((rating, i) => (
-                    <ReviewCard key={i} rating={rating} />
+                  {userProfile?.sessions.map((session, i) => (
+                    <ReviewCard key={i} session={session} />
                   ))}
                 </div>
-              )} */}
+              )}
             </div>
           </div>
         </div>
