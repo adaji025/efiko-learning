@@ -12,6 +12,7 @@ import ConfirmLogout from "./ConfirmLogout";
 import { LoginResponseType } from "../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { FaUsers } from "react-icons/fa";
 
 const Sidebar = () => {
   const [routes, setRoutes] = useState<any[]>([]);
@@ -187,24 +188,19 @@ const Sidebar = () => {
       route: "/dashboard",
     },
     {
-      title: "Sessions",
+      title: "Manage Sessions",
       icon: <SessionIcon />,
-      route: "/session",
+      route: "/manage-sessions",
     },
     {
       title: "Manage Admin",
-      icon: <EarningsIcon />,
-      route: "/earnings",
+      icon: <FaUsers />,
+      route: "/manage-admins",
     },
     {
-      title: "Notifications",
+      title: "Manage Students",
       icon: <NotificationIcon />,
-      route: "/notifications",
-    },
-    {
-      title: "My Profiles",
-      icon: <FiUser size={20} />,
-      route: "/my-profile",
+      route: "/manage-students",
     },
     {
       title: "Settings",
@@ -213,12 +209,8 @@ const Sidebar = () => {
       key: ["edit-profile", "payments"],
       children: [
         {
-          title: "Profile",
-          route: "/edit-profile",
-        },
-        {
-          title: "Payments",
-          route: "/payments",
+          title: "Manage Payments",
+          route: "/manage-payments",
         },
       ],
     },
@@ -226,17 +218,6 @@ const Sidebar = () => {
       title: "Help & Support",
       icon: <IoIosHelpCircleOutline size={20} />,
       route: "/support",
-      key: ["FAQs", "Report Issues"],
-      children: [
-        {
-          title: "FAQs",
-          route: "/faqs",
-        },
-        {
-          title: "Report Issues",
-          route: "/report-issues",
-        },
-      ],
     },
   ];
 

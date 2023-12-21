@@ -27,6 +27,10 @@ import TutorDashboard from "../../pages/authenticated/Dashboard/TutorDashbaord";
 import PreviewSession from "../../pages/authenticated/Sesssion/PreviewSession";
 import UpcomingSessionTutor from "../../pages/authenticated/Sesssion/UpcomingSessionsTutor";
 import AdminDashboard from "../../pages/authenticated/Admin/Dashboard/AdminDashboard";
+import ManageStudents from "../../pages/authenticated/Admin/ManageStudents/ManageStudents";
+import ManageSession from "../../pages/authenticated/Admin/Session/ManageSession";
+import AdminProfile from "../../pages/authenticated/Admin/Profile/AdminProfile";
+import ManageAdmin from "../../pages/authenticated/Admin/ManageAdmin/ManageAdmin";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -51,8 +55,10 @@ const Authenticated = () => {
                 element={
                   userData?.accountType === "student" ? (
                     <Dashboard />
-                  ) : (
+                  ) : userData?.accountType === "tutor" ? (
                     <TutorDashboard />
+                  ) : (
+                    <AdminDashboard />
                   )
                 }
               />
@@ -61,8 +67,10 @@ const Authenticated = () => {
                 element={
                   userData?.accountType === "student" ? (
                     <Dashboard />
-                  ) : (
+                  ) : userData?.accountType === "tutor" ? (
                     <TutorDashboard />
+                  ) : (
+                    <AdminDashboard />
                   )
                 }
               />
@@ -114,6 +122,9 @@ const Authenticated = () => {
 
               {/* Admin Pages */}
               <Route path="/dashboard" element={<AdminDashboard />} />
+              <Route path="/manage-students" element={<ManageStudents />} />
+              <Route path="/manage-admins" element={<ManageAdmin />} />
+              <Route path="/manage-sessions" element={<ManageSession />} />
             </Routes>
           </main>
         </div>
