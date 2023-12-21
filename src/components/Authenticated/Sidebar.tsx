@@ -190,29 +190,9 @@ const Sidebar = () => {
       title: "Sessions",
       icon: <SessionIcon />,
       route: "/session",
-      key: [
-        "schedule-sessions",
-        "upcoming-sessions",
-        "recorded-sessions",
-        "preview-sessions",
-      ],
-      children: [
-        {
-          title: "Schedule Sessions",
-          route: "/schedule-sessions",
-        },
-        {
-          title: "Upcoming Sessions",
-          route: "upcoming-sessions",
-        },
-        {
-          title: "Recorded Sessions",
-          route: "recorded-sessions",
-        },
-      ],
     },
     {
-      title: "Earnings",
+      title: "Manage Admin",
       icon: <EarningsIcon />,
       route: "/earnings",
     },
