@@ -1,9 +1,9 @@
 import { Fragment } from "react";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { Menu, Button } from "@mantine/core";
 import { BiChevronDown } from "react-icons/bi";
-import { ProfileTypes } from "../../../../types/auth";
-import { RootState } from "../../../../redux/store";
+// import { ProfileTypes } from "../../../../types/auth";
+// import { RootState } from "../../../../redux/store";
 import Chart from "./components/Chart";
 // import { getTutorSession } from "../../../../services/session";
 // import useNotification from "../../../../hooks/useNotification";
@@ -12,9 +12,9 @@ const AdminDashboard = () => {
   // const [loading, setLoading] = useState(false);
 
   // const { handleError } = useNotification();
-  const userData: ProfileTypes = useSelector(
-    (state: RootState) => state.user.userData
-  );
+  // const userData: ProfileTypes = useSelector(
+  //   (state: RootState) => state.user.userData
+  // );
 
   // const userId = localStorage.getItem("userId") ?? "";
 
