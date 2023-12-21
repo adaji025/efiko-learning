@@ -28,4 +28,14 @@
     education: string
     majors: string
   }
+
+  export type LoginResponseType = {
+    fullName: string
+    age: number
+    country: string
+    email: string
+    accountType: string
+    updatedProfile: boolean
+    token: string
+  }
   

@@ -6,15 +6,14 @@ import {
 } from "@mantine/core";
 import { Fragment, useState } from "react";
 import { useForm } from "@mantine/form";
-import { FcGoogle } from "react-icons/fc";
 import Logo from "../../../assets/svgs/logo.svg";
 import { useNavigate } from "react-router-dom";
-import { userlogin } from "../../../services/auth";
+import { adminlogin } from "../../../services/auth";
 import useNotification from "../../../hooks/useNotification";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../redux/features/userSlice";
 
-const Login = () => {
+const AdminLogin = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -31,13 +30,12 @@ const Login = () => {
   const submit = (values: any) => {
     setLoading(true);
 
-    userlogin(values)
+    adminlogin(values)
       .then((res: any) => {
         localStorage.setItem("userId", res.data.data._id);
         localStorage.setItem("efiko_token", res.data.data.token);
         dispatch(setUser(res.data.data));
-        res.data.data.updatedProfile && navigate("/dashboard");
-        !res.data.data.updatedProfile && navigate("/tutor-profile-setup");
+        navigate("/dashboard");
       })
       .catch((err: any) => {
         handleError(err);
@@ -49,8 +47,8 @@ const Login = () => {
   return (
     <Fragment>
       <LoadingOverlay visible={loading} />
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center px-6 lg:px-8">
-        <img src={Logo} alt="" className="mt-10" />
+      <div className="min-h-screen bg-gray-50 flex flex-col items-center pb-10 px-6 lg:px-8">
+        <img src={Logo} alt="" className="mt-6" />
         <div className="text-center">
           <h1 className="font-bold text-2xl">Sign In</h1>
           <div>Sign in to your account and start learning.</div>
@@ -90,29 +88,10 @@ const Login = () => {
             <div className="text-secondary font-bold">Or</div>
             <div className="w-[45%] h-[1px] bg-secondary" />
           </div>
-          <Button
-            size="md"
-            variant="outline"
-            color="gray"
-            mt={30}
-            className="border w-full flex gap-5 justify-center items-center text-primary"
-          >
-            <FcGoogle /> <div className="ml-2">Sign In with Google</div>
-          </Button>
         </form>
-        <div className="my-10">
-          Don’t have an account?{" "}
-          <span
-            className="text-primary font-semibold cursor-pointer"
-            onClick={() => navigate("/register")}
-          >
-            Create an account{" "}
-          </span>
-          now!
-        </div>
       </div>
     </Fragment>
   );
 };
 
-export default Login;
+export default AdminLogin;

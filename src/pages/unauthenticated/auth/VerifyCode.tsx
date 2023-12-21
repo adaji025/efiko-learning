@@ -6,10 +6,16 @@ import { useState } from "react";
 import { studentLogin } from "../../../services/auth";
 import { toast } from "react-toastify";
 import { Fragment } from "react";
+import { setUser } from "../../../redux/features/userSlice";
+import { useDispatch } from "react-redux";
+import useNotification from "../../../hooks/useNotification";
 
 const VerifyCode = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const { handleError } = useNotification();
 
   const form = useForm({
     initialValues: {
@@ -25,11 +31,12 @@ const VerifyCode = () => {
         toast.success("Account verified successfully");
         localStorage.setItem("userId", res.data.data._id);
         localStorage.setItem("efiko_token", res.data.data.token);
+        dispatch(setUser(res.data.data));
         res.data.data.updatedProfile && navigate("/dashboard");
         !res.data.data.updatedProfile && navigate("/student-profile-setup");
       })
       .catch((err) => {
-        console.log(err);
+        handleError(err);
       })
       .finally(() => {
         setLoading(false);

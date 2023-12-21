@@ -18,6 +18,7 @@ import StudentLogin from "./pages/unauthenticated/auth/StudentLogin";
 import BookClass from "./pages/unauthenticated/auth/BookClass";
 import VerifyCode from "./pages/unauthenticated/auth/VerifyCode";
 import "aos/dist/aos.css";
+import AdminLogin from "./pages/unauthenticated/auth/AdminLogin";
 
 
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
       <ToastContainer />
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/book-class" element={<BookClass />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
