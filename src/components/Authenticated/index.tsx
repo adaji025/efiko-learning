@@ -29,7 +29,6 @@ import UpcomingSessionTutor from "../../pages/authenticated/Sesssion/UpcomingSes
 import AdminDashboard from "../../pages/authenticated/Admin/Dashboard/AdminDashboard";
 import ManageStudents from "../../pages/authenticated/Admin/ManageStudents/ManageStudents";
 import ManageSession from "../../pages/authenticated/Admin/Session/ManageSession";
-import AdminProfile from "../../pages/authenticated/Admin/Profile/AdminProfile";
 import ManageAdmin from "../../pages/authenticated/Admin/ManageAdmin/ManageAdmin";
 
 const Authenticated = () => {
