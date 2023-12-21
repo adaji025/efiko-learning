@@ -1,58 +1,34 @@
 import { Fragment, useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { LoadingOverlay } from "@mantine/core";
 import { BiChevronDown, BiLogOut } from "react-icons/bi";
-import { useDispatch } from "react-redux";
 import { IoHomeOutline } from "react-icons/io5";
 import { FiSettings, FiUser } from "react-icons/fi";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 
 import LogoMark from "../../assets/svgs/logo.svg";
-import { getUser } from "../../services/user";
-import useNotification from "../../hooks/useNotification";
-import { ProfileTypes } from "../../types/auth";
 import { EarningsIcon, NotificationIcon, SessionIcon } from "./svg";
-import { setUser } from "../../redux/features/userSlice";
 import { useDisclosure } from "@mantine/hooks";
 import ConfirmLogout from "./ConfirmLogout";
+import { LoginResponseType } from "../../types/auth";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const Sidebar = () => {
   const [routes, setRoutes] = useState<any[]>([]);
-  const  [profile, setProfile] = useState<ProfileTypes | null>(null)
-  const [loading, setLoading] = useState(false);
   const [showChildren, setShowChildren] = useState<string>("");
   const [opened, { open, close }] = useDisclosure(false);
+
+  const userData: LoginResponseType = useSelector(
+    (state: RootState) => state.user.userData
+  );
   const location = useLocation();
-  const dispatch = useDispatch(); 
-
-  const id = localStorage.getItem("userId") ?? "";
-
-  const { handleError } = useNotification();
 
   useEffect(() => {
-    handleGetUser();
+    userData?.accountType === "student" && setRoutes(userRoutes);
+    userData?.accountType === "tutor" && setRoutes(tutorRoutes);
+    userData?.accountType === "superAdmin" && setRoutes(superAdminRoutes);
+    userData?.accountType === "normalAdmin" && setRoutes(normalAdminRoutes);
   }, []);
-
-  useEffect(() => {
-    profile?.accountType === "student" && setRoutes(userRoutes);
-    profile?.accountType === "tutor" && setRoutes(adminRoutes);
-  }, [profile]);
-
-  const handleGetUser = () => {
-    setLoading(true);
-
-    getUser(id)
-      .then((res: any) => {
-        dispatch(setUser(res.data.data));
-        setProfile(res.data.data)
-      })
-      .catch((err: any) => {
-        handleError(err);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
 
   const userRoutes = [
     {
@@ -124,7 +100,7 @@ const Sidebar = () => {
     },
   ];
 
-  const adminRoutes = [
+  const tutorRoutes = [
     {
       title: "Dashboard",
       icon: <IoHomeOutline size={20} />,
@@ -134,7 +110,172 @@ const Sidebar = () => {
       title: "Sessions",
       icon: <SessionIcon />,
       route: "/session",
-      key: ["schedule-sessions", "upcoming-sessions", "recorded-sessions", "preview-sessions"],
+      key: [
+        "schedule-sessions",
+        "upcoming-sessions",
+        "recorded-sessions",
+        "preview-sessions",
+      ],
+      children: [
+        {
+          title: "Schedule Sessions",
+          route: "/schedule-sessions",
+        },
+        {
+          title: "Upcoming Sessions",
+          route: "upcoming-sessions",
+        },
+        {
+          title: "Recorded Sessions",
+          route: "recorded-sessions",
+        },
+      ],
+    },
+    {
+      title: "Earnings",
+      icon: <EarningsIcon />,
+      route: "/earnings",
+    },
+    {
+      title: "Notifications",
+      icon: <NotificationIcon />,
+      route: "/notifications",
+    },
+    {
+      title: "My Profiles",
+      icon: <FiUser size={20} />,
+      route: "/my-profile",
+    },
+    {
+      title: "Settings",
+      icon: <FiSettings size={20} />,
+      route: "/settings",
+      key: ["edit-profile", "payments"],
+      children: [
+        {
+          title: "Profile",
+          route: "/edit-profile",
+        },
+        {
+          title: "Payments",
+          route: "/payments",
+        },
+      ],
+    },
+    {
+      title: "Help & Support",
+      icon: <IoIosHelpCircleOutline size={20} />,
+      route: "/support",
+      key: ["FAQs", "Report Issues"],
+      children: [
+        {
+          title: "FAQs",
+          route: "/faqs",
+        },
+        {
+          title: "Report Issues",
+          route: "/report-issues",
+        },
+      ],
+    },
+  ];
+
+  const superAdminRoutes = [
+    {
+      title: "Dashboard",
+      icon: <IoHomeOutline size={20} />,
+      route: "/dashboard",
+    },
+    {
+      title: "Sessions",
+      icon: <SessionIcon />,
+      route: "/session",
+      key: [
+        "schedule-sessions",
+        "upcoming-sessions",
+        "recorded-sessions",
+        "preview-sessions",
+      ],
+      children: [
+        {
+          title: "Schedule Sessions",
+          route: "/schedule-sessions",
+        },
+        {
+          title: "Upcoming Sessions",
+          route: "upcoming-sessions",
+        },
+        {
+          title: "Recorded Sessions",
+          route: "recorded-sessions",
+        },
+      ],
+    },
+    {
+      title: "Earnings",
+      icon: <EarningsIcon />,
+      route: "/earnings",
+    },
+    {
+      title: "Notifications",
+      icon: <NotificationIcon />,
+      route: "/notifications",
+    },
+    {
+      title: "My Profiles",
+      icon: <FiUser size={20} />,
+      route: "/my-profile",
+    },
+    {
+      title: "Settings",
+      icon: <FiSettings size={20} />,
+      route: "/settings",
+      key: ["edit-profile", "payments"],
+      children: [
+        {
+          title: "Profile",
+          route: "/edit-profile",
+        },
+        {
+          title: "Payments",
+          route: "/payments",
+        },
+      ],
+    },
+    {
+      title: "Help & Support",
+      icon: <IoIosHelpCircleOutline size={20} />,
+      route: "/support",
+      key: ["FAQs", "Report Issues"],
+      children: [
+        {
+          title: "FAQs",
+          route: "/faqs",
+        },
+        {
+          title: "Report Issues",
+          route: "/report-issues",
+        },
+      ],
+    },
+  ];
+
+  const normalAdminRoutes = [
+    {
+      title: "Dashboard",
+      icon: <IoHomeOutline size={20} />,
+      route: "/dashboard",
+    },
+    {
+      title: "Sessions",
+      icon: <SessionIcon />,
+      route: "/session",
+      key: [
+        "schedule-sessions",
+        "upcoming-sessions",
+        "recorded-sessions",
+        "preview-sessions",
+      ],
       children: [
         {
           title: "Schedule Sessions",
@@ -202,7 +343,6 @@ const Sidebar = () => {
   return (
     <Fragment>
       <ConfirmLogout close={close} opened={opened} />
-      <LoadingOverlay visible={loading} />
       <aside className="flex w-full h-full flex-col">
         <div className="w-full">
           <img src={LogoMark} alt="" className="h-[100px]" />

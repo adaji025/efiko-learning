@@ -26,6 +26,7 @@ import { RootState } from "../../redux/store";
 import TutorDashboard from "../../pages/authenticated/Dashboard/TutorDashbaord";
 import PreviewSession from "../../pages/authenticated/Sesssion/PreviewSession";
 import UpcomingSessionTutor from "../../pages/authenticated/Sesssion/UpcomingSessionsTutor";
+import AdminDashboard from "../../pages/authenticated/Admin/Dashboard/AdminDashboard";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -78,13 +79,16 @@ const Authenticated = () => {
                 path="/recorded-sessions-details/:id"
                 element={<SessionDetails />}
               />
-              <Route path="/upcoming-sessions" element={
+              <Route
+                path="/upcoming-sessions"
+                element={
                   userData?.accountType === "student" ? (
                     <UpcomingSession />
                   ) : (
                     <UpcomingSessionTutor />
                   )
-                }  />
+                }
+              />
               <Route path="/recorded-sessions" element={<RedcordedSession />} />
               <Route path="/schedule-sessions" element={<ScheduleSession />} />
               <Route
@@ -95,7 +99,10 @@ const Authenticated = () => {
                 path="/upcoming-sessions/:id"
                 element={<ViewUpcomingSession />}
               />
-              <Route path="/schedule-sessions/edit/:id" element={<EditSession />} />
+              <Route
+                path="/schedule-sessions/edit/:id"
+                element={<EditSession />}
+              />
               <Route path="/notifications" element={<Notification />} />
               <Route path="/my-profile" element={<Profile />} />
               <Route path="/my-profile/:id" element={<ViewAdminReview />} />
@@ -104,6 +111,9 @@ const Authenticated = () => {
               <Route path="/faqs" element={<Faqs />} />
               <Route path="/report-issues" element={<ReportIssues />} />
               <Route path="/earnings" element={<Earning />} />
+
+              {/* Admin Pages */}
+              <Route path="/dashboard" element={<AdminDashboard />} />
             </Routes>
           </main>
         </div>

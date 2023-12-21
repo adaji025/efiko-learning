@@ -25,6 +25,18 @@ export const userlogin = (data: any) => {
   });
 };
 
+export const adminlogin = (data: any) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.post(APIS.ADMIN.LOGIN, data)
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export const loginCode = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(APIS.AUTH.LOGIN_CODE, data)
