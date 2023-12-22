@@ -13,6 +13,9 @@ table {
   color: #475467;
   font-size: 14px;
 }
+.m-326d024a[data-active] {
+  color: black !important;
+}
 
 td {
   border: none !important;
