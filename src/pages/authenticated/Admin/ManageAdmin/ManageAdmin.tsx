@@ -1,10 +1,52 @@
+import { Button, TextInput } from "@mantine/core";
+import { CiSearch } from "react-icons/ci";
+import AdminTable from "./components/AdminTable";
+import { Fragment } from "react";
+import AddAdmin from "./components/AddAdmin";
+import { useDisclosure } from "@mantine/hooks";
+
+const dummyAdmins = [
+  {
+    name: "admin Admin",
+    email: "admin@gmail.com",
+    status: "active",
+  },
+  {
+    name: "Test Admin",
+    email: "admin@gmail.com",
+    status: "inactive",
+  },
+];
 
 const ManageAdmin = () => {
+  const [opened, { open, close }] = useDisclosure(false);
   return (
-    <div className="px-4 lg:px-10 mt-[80px] lg:mt-10">
-      <div>ManageAdmin</div>
-    </div>
-  )
-}
+    <Fragment>
+      <AddAdmin opened={opened} close={close} callback={() => {}} />
+      <div className="mt-[50px] lg:mt-5">
+        <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
+          Manage Admins
+        </div>
+        <div className="px-4 lg:px-10 mt-5">
+          <div className="flex w-full flex-col sm:flex-row justify-between items-center">
+            <div className="flex w-full justify-end sm:justify-start">
+              <Button size="md" className="bg-primary" onClick={open}>
+                Create Admin
+              </Button>
+            </div>
+            <div className="flex w-full justify-start sm:justify-end">
+              <TextInput
+                leftSection={<CiSearch />}
+                size="md"
+                placeholder="search.."
+              />
+            </div>
+          </div>
+          <AdminTable admins={dummyAdmins} />
+        </div>
+      </div>
+    </Fragment>
+  );
+};
 
-export default ManageAdmin
+export default ManageAdmin;
