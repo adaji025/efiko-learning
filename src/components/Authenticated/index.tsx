@@ -35,6 +35,7 @@ import ManagePayments from "../../pages/authenticated/Admin/ManagePayments/Manag
 import ScheduleSession from "../../pages/authenticated/Admin/Session/ScheduleSession";
 import ManageRecordedSession from "../../pages/authenticated/Admin/Session/ManageRecordedSession";
 import ManageUpcomingSession from "../../pages/authenticated/Admin/Session/ManageUpcomingSession";
+import CreateStudent from "../../pages/authenticated/Admin/ManageStudents/CreateStudent";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -139,6 +140,7 @@ const Authenticated = () => {
                 path="/manage-upcoming-sessions"
                 element={<ManageUpcomingSession />}
               />
+              <Route path="/manage-students/create-student" element={<CreateStudent />} />
             </Routes>
           </main>
         </div>
