@@ -36,6 +36,7 @@ import ScheduleSession from "../../pages/authenticated/Admin/Session/ScheduleSes
 import ManageRecordedSession from "../../pages/authenticated/Admin/Session/ManageRecordedSession";
 import ManageUpcomingSession from "../../pages/authenticated/Admin/Session/ManageUpcomingSession";
 import CreateStudent from "../../pages/authenticated/Admin/ManageStudents/CreateStudent";
+import ManageTutors from "../../pages/authenticated/Admin/ManageTutors/ManageTutors";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -141,6 +142,7 @@ const Authenticated = () => {
                 element={<ManageUpcomingSession />}
               />
               <Route path="/manage-students/create-student" element={<CreateStudent />} />
+              <Route path="/manage-tutors" element={<ManageTutors />} />
             </Routes>
           </main>
         </div>
