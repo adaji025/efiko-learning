@@ -216,6 +216,11 @@ const Sidebar = () => {
       route: "/manage-students",
     },
     {
+      title: "Manage Tutors",
+      icon: <FaUsers />,
+      route: "/manage-tutors",
+    },
+    {
       title: "Curriculum",
       icon: <GiSecretBook />,
       route: "/curriculum",

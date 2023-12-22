@@ -20,6 +20,7 @@ table {
 td {
   border: none !important;
   white-space: nowrap !important;
+  text-transform: capitalize;
 }
 
 thead {
