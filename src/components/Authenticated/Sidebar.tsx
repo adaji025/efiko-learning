@@ -13,6 +13,8 @@ import { LoginResponseType } from "../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { FaUsers } from "react-icons/fa";
+import { IoSchool } from "react-icons/io5";
+import { GiSecretBook } from "react-icons/gi";
 
 const Sidebar = () => {
   const [routes, setRoutes] = useState<any[]>([]);
@@ -199,8 +201,13 @@ const Sidebar = () => {
     },
     {
       title: "Manage Students",
-      icon: <NotificationIcon />,
+      icon: <IoSchool />,
       route: "/manage-students",
+    },
+    {
+      title: "Curriculum",
+      icon: <GiSecretBook />,
+      route: "/curriculum",
     },
     {
       title: "Settings",
