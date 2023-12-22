@@ -8,6 +8,23 @@ label {
   margin-bottom: 2px;
 }
 
+table {
+  border-radius: 15px !important;
+  color: #475467;
+  font-size: 14px;
+}
+
+td {
+  border: none !important;
+  white-space: nowrap !important;
+}
+
+thead {
+  border-bottom: 1px solid var(--gray-200, #eaecf0);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
 .mantine-LoadingOverlay-root {
   position: fixed !important;
   z-index: 1000 !important;

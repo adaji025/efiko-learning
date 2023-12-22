@@ -16,8 +16,8 @@ import Faqs from "../../pages/authenticated/Supports/Faqs";
 import ReportIssues from "../../pages/authenticated/Supports/ReportIssues";
 import ReviewSession from "../../pages/authenticated/Sesssion/ReviewSession";
 import ViewUpcomingSession from "../../pages/authenticated/Sesssion/ViewUpcomingSession";
-import ScheduleSession from "../../pages/authenticated/Sesssion/ScheduleSession";
-import EditSession from "../../pages/authenticated/Sesssion/EditSession";
+// import ScheduleSession from "../../pages/authenticated/Sesssion/ScheduleSession";
+import EditSession from "../../pages/authenticated/Admin/Session/EditSession";
 import Earning from "../../pages/authenticated/Earning";
 import ViewAdminReview from "../../pages/authenticated/Profile/ViewAdminReview";
 import { ProfileTypes } from "../../types/auth";
@@ -32,6 +32,9 @@ import ManageSession from "../../pages/authenticated/Admin/Session/ManageSession
 import ManageAdmin from "../../pages/authenticated/Admin/ManageAdmin/ManageAdmin";
 import Curriculum from "../../pages/authenticated/Admin/Curriculum/Curriculum";
 import ManagePayments from "../../pages/authenticated/Admin/ManagePayments/ManagePayments";
+import ScheduleSession from "../../pages/authenticated/Admin/Session/ScheduleSession";
+import ManageRecordedSession from "../../pages/authenticated/Admin/Session/ManageRecordedSession";
+import ManageUpcomingSession from "../../pages/authenticated/Admin/Session/ManageUpcomingSession";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -99,7 +102,6 @@ const Authenticated = () => {
                 }
               />
               <Route path="/recorded-sessions" element={<RedcordedSession />} />
-              <Route path="/schedule-sessions" element={<ScheduleSession />} />
               <Route
                 path="/recorded-sessions/:id"
                 element={<ReviewSession />}
@@ -128,6 +130,15 @@ const Authenticated = () => {
               <Route path="/manage-sessions" element={<ManageSession />} />
               <Route path="/manage-payments" element={<ManagePayments />} />
               <Route path="/curriculum" element={<Curriculum />} />
+              <Route path="/schedule-sessions" element={<ScheduleSession />} />
+              <Route
+                path="/manage-recorded-sessions"
+                element={<ManageRecordedSession />}
+              />
+              <Route
+                path="/manage-upcoming-sessions"
+                element={<ManageUpcomingSession />}
+              />
             </Routes>
           </main>
         </div>

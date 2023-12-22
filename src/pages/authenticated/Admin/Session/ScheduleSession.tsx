@@ -1,32 +1,27 @@
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useState, useRef } from "react";
 import {
   TextInput,
   Select,
   Textarea,
-  NumberInput,
   Button,
-  ActionIcon,
   LoadingOverlay,
+  ActionIcon,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
-import { useLocation, useNavigate } from "react-router-dom";
-import { SessionTypes } from "../../../types/session";
-import { subjects } from "../../../components/data";
-import { FaRegClock } from "react-icons/fa6";
-import { updateSession } from "../../../services/session";
-import useNotification from "../../../hooks/useNotification";
+import { FaRegClock } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useCallback } from "react";
+import useNotification from "../../../../hooks/useNotification";
+import { addSession } from "../../../../services/session";
+import { subjects } from "../../../../components/data";
+import SchedulePreviews from "./components/SchedulePreviews";
 
-const EditSession = () => {
+const ScheduleSession = () => {
   const [loading, setLoading] = useState(false);
+  const [preview, setPreview] = useState(false);
   const timeRef = useRef<HTMLInputElement>(null);
-  const location = useLocation();
-  const edit: SessionTypes = location.state;
-
-  const userId = localStorage.getItem("userId") ?? "";
   const { handleError } = useNotification();
-  const navigate = useNavigate();
 
   const pickerControl = (
     <ActionIcon
@@ -46,31 +41,28 @@ const EditSession = () => {
       outcome: "",
       date: new Date(),
       time: "",
-      charges: null,
     },
   });
 
-  useEffect(() => {
-    form.setValues({
-      title: edit ? edit.title : "",
-      category: edit ? edit.category : "",
-      description: edit ? edit.description : "",
-      outcome: edit ? edit.outcome : "",
-      date: new Date(edit.date),
-      time: edit ? edit.time : "",
-      // @ts-ignore
-      charges: edit ? edit.charges : null,
-    });
-  }, [edit]);
+  const validate = useCallback((): boolean => {
+    if (
+      form.values.title === "" ||
+      form.values.category === "" ||
+      form.values.outcome === "" ||
+      form.values.time === "" ||
+      form.values.description === ""
+    )
+      return true;
+    return false;
+  }, [form.values]);
 
   const submit = (values: any) => {
     setLoading(true);
 
-    updateSession(userId, values)
+    addSession(values)
       .then(() => {
-        toast.success("Session updated successfully");
+        toast.success("Session created successfully");
         form.reset();
-        navigate("/upcoming-sessions");
       })
       .catch((err) => {
         handleError(err);
@@ -79,21 +71,27 @@ const EditSession = () => {
         setLoading(false);
       });
   };
+
+  const previewData = form.values
+
   return (
     <Fragment>
       <LoadingOverlay visible={loading} />
-      <div className="mt-[50px] lg:mt-5">
-        <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-          Schedule Sesion
-        </div>
-        <form onSubmit={form.onSubmit((values) => submit(values))}>
-          <div className="mt-10 px-4 lg:px-10 max-w-[1000px]">
+      {!preview && (
+        <div className="mt-[50px] lg:mt-5">
+          <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
+            Schedule Sesions
+          </div>
+
+          <form
+            onSubmit={form.onSubmit((values) => submit(values))}
+            className="mt-10 px-4 lg:px-10 max-w-[1000px]"
+          >
             <TextInput
               required
               size="md"
               label="Title of the session"
               {...form.getInputProps("title")}
-              defaultValue={edit.title}
             />
             <Select
               required
@@ -103,7 +101,6 @@ const EditSession = () => {
               data={subjects.map((subject) => subject)}
               searchable
               {...form.getInputProps("category")}
-              defaultValue={edit.category}
             />
             <Textarea
               mt={16}
@@ -113,7 +110,6 @@ const EditSession = () => {
               size="sm"
               className=""
               {...form.getInputProps("description")}
-              defaultValue={edit.description}
             />
 
             <Textarea
@@ -124,7 +120,6 @@ const EditSession = () => {
               size="sm"
               className=""
               {...form.getInputProps("outcome")}
-              defaultValue={edit.outcome}
             />
             <div className="grid grid-cols-2 gap-[16px]">
               <DatePickerInput
@@ -135,7 +130,8 @@ const EditSession = () => {
                 placeholder="Pick date"
                 className="flex-1"
                 {...form.getInputProps("date")}
-                defaultValue={new Date(edit.date)}
+                // @ts-ignore
+                minDate={new Date().toJSON().slice(0, 10)}
               />
               <TimeInput
                 ref={timeRef}
@@ -147,34 +143,35 @@ const EditSession = () => {
                 className="flex-1"
                 rightSection={pickerControl}
                 {...form.getInputProps("time")}
-                defaultValue={edit.time}
-              />
-              <NumberInput
-                hideControls
-                size="md"
-                required
-                label="Session Charges"
-                placeholder="Enter Price"
-                className="flex-1"
-                defaultValue={Number(edit.charges)}
               />
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex gap-10 mt-12 justify-btween">
+              <Button
+                variant="outline"
+                size="md"
+                className="text-primary w-1/2 mx-auto disabled:border border-primary disabled:text-primary/80"
+                disabled={validate()}
+                onClick={() => setPreview(true)}
+              >
+                Preview Session Details
+              </Button>
               <Button
                 type="submit"
                 size="md"
-                mt={30}
                 className="bg-primary w-1/2 mx-auto"
+                disabled={validate()}
               >
-                Update Session
+                Schedule Session
               </Button>
             </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
+      )}
+
+      {preview && <SchedulePreviews setPreview={setPreview} previewData={previewData} />}
     </Fragment>
   );
 };
 
-export default EditSession;
+export default ScheduleSession;
