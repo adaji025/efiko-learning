@@ -11,12 +11,12 @@ import {
 import { useForm } from "@mantine/form";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 import { FaRegClock } from "react-icons/fa";
-import { addSession } from "../../../services/session";
-import useNotification from "../../../hooks/useNotification";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { subjects } from "../../../components/data";
 import { useCallback } from "react";
+import useNotification from "../../../../hooks/useNotification";
+import { addSession } from "../../../../services/session";
+import { subjects } from "../../../../components/data";
 
 const ScheduleSession = () => {
   const [loading, setLoading] = useState(false);
@@ -66,7 +66,7 @@ const ScheduleSession = () => {
     addSession(values)
       .then(() => {
         toast.success("Session created successfully");
-        form.reset()
+        form.reset();
       })
       .catch((err) => {
         handleError(err);

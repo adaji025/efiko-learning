@@ -11,11 +11,11 @@ import {
 import { useForm } from "@mantine/form";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 import { useLocation, useNavigate } from "react-router-dom";
-import { SessionTypes } from "../../../types/session";
-import { subjects } from "../../../components/data";
+import { SessionTypes } from "../../../../types/session";
+import { subjects } from "../../../../components/data";
 import { FaRegClock } from "react-icons/fa6";
-import { updateSession } from "../../../services/session";
-import useNotification from "../../../hooks/useNotification";
+import { updateSession } from "../../../../services/session";
+import useNotification from "../../../../hooks/useNotification";
 import { toast } from "react-toastify";
 
 const EditSession = () => {

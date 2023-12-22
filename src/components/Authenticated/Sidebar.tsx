@@ -113,17 +113,8 @@ const Sidebar = () => {
       title: "Sessions",
       icon: <SessionIcon />,
       route: "/session",
-      key: [
-        "schedule-sessions",
-        "upcoming-sessions",
-        "recorded-sessions",
-        "preview-sessions",
-      ],
+      key: ["upcoming-sessions", "recorded-sessions", "preview-sessions"],
       children: [
-        {
-          title: "Schedule Sessions",
-          route: "/schedule-sessions",
-        },
         {
           title: "Upcoming Sessions",
           route: "upcoming-sessions",
@@ -193,6 +184,26 @@ const Sidebar = () => {
       title: "Manage Sessions",
       icon: <SessionIcon />,
       route: "/manage-sessions",
+      key: [
+        "schedule-sessions",
+        "manage-upcoming-sessions",
+        "manage-recorded-sessions",
+        "preview-sessions",
+      ],
+      children: [
+        {
+          title: "Schedule Sessions",
+          route: "/schedule-sessions",
+        },
+        {
+          title: "Upcoming Sessions",
+          route: "manage-upcoming-sessions",
+        },
+        {
+          title: "Recorded Sessions",
+          route: "manage-recorded-sessions",
+        },
+      ],
     },
     {
       title: "Manage Admin",
