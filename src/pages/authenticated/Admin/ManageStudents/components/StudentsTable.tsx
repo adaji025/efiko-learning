@@ -1,5 +1,7 @@
 import { Pagination, Table } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { Fragment } from "react";
+import ConfirmDisable from "../../../../../components/Confirmation";
 
 type AdminProps = {
   students: {
@@ -10,8 +12,16 @@ type AdminProps = {
 };
 
 const StudentsTable = ({ students }: AdminProps) => {
+  const [opened, { open, close }] = useDisclosure(false);
   return (
     <Fragment>
+      <ConfirmDisable
+        opened={opened}
+        btnText="suspend student"
+        close={close}
+        handleClick={() => {}}
+        callback={() => {}}
+      />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -34,8 +44,9 @@ const StudentsTable = ({ students }: AdminProps) => {
                     className={` w-full md:w-1/2 text-white px-4 py-2 rounded-md ${
                       admin.status === "active" ? "bg-red-400" : "bg-primary"
                     }`}
+                    onClick={open}
                   >
-                    {admin.status === "active" ? "Disable" : "Activate"}
+                    {admin.status === "active" ? "Deactivate" : "Activate"}
                   </button>
                 </Table.Td>
                 <Table.Td></Table.Td>
