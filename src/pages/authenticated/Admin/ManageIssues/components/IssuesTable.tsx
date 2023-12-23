@@ -1,8 +1,9 @@
 import { Divider, Menu, Pagination, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { SlOptionsVertical } from "react-icons/sl";
 import ViewIssues from "./ViewIssues";
+import Confirmation from "../../../../../components/Confirmation";
 
 type AdminProps = {
   issues: {
@@ -15,9 +16,16 @@ type AdminProps = {
 
 const IssuesTable = ({ issues }: AdminProps) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [resolveModal, setResolveModal] = useState(false);
   return (
     <Fragment>
       <ViewIssues close={close} opened={opened} />
+      <Confirmation
+        btnText="mark as resolve"
+        close={() => setResolveModal(false)}
+        handleClick={() => {}}
+        opened={resolveModal}
+      />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -58,7 +66,9 @@ const IssuesTable = ({ issues }: AdminProps) => {
                       {issue.status === "pending" && (
                         <Fragment>
                           <Divider />
-                          <Menu.Item>Mark as resolve</Menu.Item>
+                          <Menu.Item onClick={() => setResolveModal(true)}>
+                            Mark as resolve
+                          </Menu.Item>
                         </Fragment>
                       )}
                     </Menu.Dropdown>

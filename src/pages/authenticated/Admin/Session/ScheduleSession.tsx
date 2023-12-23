@@ -102,6 +102,15 @@ const ScheduleSession = () => {
               searchable
               {...form.getInputProps("category")}
             />
+            <Select
+              required
+              size="md"
+              mt={16}
+              label="Curriculum"
+              data={subjects.map((subject) => subject)}
+              searchable
+              {...form.getInputProps("category")}
+            />
             <Textarea
               mt={16}
               label="Session Description"
