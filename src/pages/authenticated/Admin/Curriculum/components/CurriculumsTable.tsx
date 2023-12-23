@@ -1,8 +1,11 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { Pagination, Table } from "@mantine/core";
 import { CiEdit } from "react-icons/ci";
 import { GrCloudDownload } from "react-icons/gr";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import AddCurriculum from "./AddCurriculum";
+import { useDisclosure } from "@mantine/hooks";
+import ConfirmDelete from "../../../../../components/Confirmation";
 
 type IProps = {
   curriculums: {
@@ -12,8 +15,12 @@ type IProps = {
 };
 
 const CurriculumsTable = ({ curriculums }: IProps) => {
+  const [edit, setEdit] = useState(false)
+  const [opened, {open, close}] = useDisclosure(false)
   return (
     <Fragment>
+      <AddCurriculum opened={edit} close={() => setEdit(false)} callback={() => { }} />
+      <ConfirmDelete opened={opened} close={close} handleClick={() => {}} btnText="Delete Curriculum" />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -30,9 +37,9 @@ const CurriculumsTable = ({ curriculums }: IProps) => {
                 <Table.Td>{admin.date}</Table.Td>
                 <Table.Td>
                   <div className="flex gap-3">
-                    <GrCloudDownload size={20} />
-                    <CiEdit size={20} />
-                    <RiDeleteBin5Line size={20} />
+                    <GrCloudDownload size={20} className="cursor-pointer" onClick={() => {}} />
+                    <CiEdit size={20} className="cursor-pointer" onClick={() => setEdit(true)} />
+                    <RiDeleteBin5Line size={20} className="cursor-pointer" onClick={open} />
                   </div>
                 </Table.Td>
               </Table.Tr>
