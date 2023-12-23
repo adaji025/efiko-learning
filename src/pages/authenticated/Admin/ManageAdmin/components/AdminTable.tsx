@@ -1,5 +1,9 @@
 import { Pagination, Table } from "@mantine/core";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { CiEdit } from "react-icons/ci";
+import AddAdmin from "./AddAdmin";
+import ConfirmDisable from "../../../../../components/Confirmation";
+import { useDisclosure } from "@mantine/hooks";
 
 type AdminProps = {
   admins: {
@@ -10,8 +14,21 @@ type AdminProps = {
 };
 
 const AdminTable = ({ admins }: AdminProps) => {
+  const [edit, setEdit] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
   return (
     <Fragment>
+      <AddAdmin
+        close={() => setEdit(false)}
+        opened={edit}
+        callback={() => {}}
+      />
+      <ConfirmDisable
+        opened={opened}
+        close={close}
+        handleClick={() => {}}
+        btnText="Disable user"
+      />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -30,13 +47,21 @@ const AdminTable = ({ admins }: AdminProps) => {
                 <Table.Td>{admin.email}</Table.Td>
                 <Table.Td>{admin.status}</Table.Td>
                 <Table.Td>
-                  <button
-                    className={` w-full md:w-1/2 text-white px-4 py-2 rounded-md ${
-                      admin.status === "active" ? "bg-red-400" : "bg-primary"
-                    }`}
-                  >
-                    {admin.status === "active" ? "Disable" : "Activate"}
-                  </button>
+                  <div className="flex items-center gap-3">
+                    <button
+                      className={` w-full md:w-1/2 text-white px-4 py-2 rounded-md text-xs sm:text-sm ${
+                        admin.status === "active" ? "bg-red-400" : "bg-primary"
+                      }`}
+                      onClick={open}
+                    >
+                      {admin.status === "active" ? "Disable" : "Activate"}
+                    </button>
+                    <CiEdit
+                      size={24}
+                      className="cursor-pointer"
+                      onClick={() => setEdit(true)}
+                    />
+                  </div>
                 </Table.Td>
                 <Table.Td></Table.Td>
               </Table.Tr>

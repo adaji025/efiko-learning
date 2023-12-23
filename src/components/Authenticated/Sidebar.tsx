@@ -240,7 +240,7 @@ const Sidebar = () => {
     {
       title: "Help & Support",
       icon: <IoIosHelpCircleOutline size={20} />,
-      route: "/support",
+      route: "/manage-issues",
     },
   ];
 
