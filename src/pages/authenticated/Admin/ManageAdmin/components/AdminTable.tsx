@@ -38,7 +38,6 @@ const AdminTable = ({ admins }: AdminProps) => {
                     {admin.status === "active" ? "Disable" : "Activate"}
                   </button>
                 </Table.Td>
-                <Table.Td></Table.Td>
               </Table.Tr>
             ))}
           </Table.Tbody>
