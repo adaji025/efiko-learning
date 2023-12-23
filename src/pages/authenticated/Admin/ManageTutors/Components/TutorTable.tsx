@@ -1,5 +1,8 @@
 import { Pagination, Table } from "@mantine/core";
-import { Fragment } from "react";
+import { useDisclosure } from "@mantine/hooks";
+import { Fragment, useState } from "react";
+import Confirmation from "../../../../../components/Confirmation";
+import ConfirmActivate from "../../../../../components/Confirmation";
 
 type IProps = {
   tutors: {
@@ -11,8 +14,22 @@ type IProps = {
 };
 
 const TutorTable = ({ tutors }: IProps) => {
+  const [opened, { open, close }] = useDisclosure(false);
+  const [activate, setActivate] = useState(false);
   return (
     <Fragment>
+      <Confirmation
+        opened={opened}
+        close={close}
+        handleClick={() => {}}
+        btnText="reject tutor"
+      />
+      <ConfirmActivate
+        opened={activate}
+        close={() => setActivate(false)}
+        handleClick={() => {}}
+        btnText="Activat tutor"
+      />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -36,11 +53,13 @@ const TutorTable = ({ tutors }: IProps) => {
                       <Fragment>
                         <button
                           className={` text-white px-4 py-2 rounded-md bg-primary`}
+                          onClick={open}
                         >
                           Approve
                         </button>
                         <button
                           className={` text-white px-4 py-2 rounded-md bg-red-400`}
+                          onClick={open}
                         >
                           Reject
                         </button>
@@ -52,8 +71,9 @@ const TutorTable = ({ tutors }: IProps) => {
                         className={` text-white px-4 py-2 rounded-md ${
                           tutor.suspend ? "bg-red-400" : "bg-primary"
                         }`}
+                        onClick={() => setActivate(true)}
                       >
-                        {tutor.suspend ? "Disable" : "Activate"}
+                        {tutor.suspend ? "Deactivate" : "Activate"}
                       </button>
                     )}
                   </div>
