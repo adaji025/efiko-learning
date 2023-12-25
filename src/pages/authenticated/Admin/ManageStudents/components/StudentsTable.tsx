@@ -2,6 +2,7 @@ import { Pagination, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Fragment } from "react";
 import ConfirmDisable from "../../../../../components/Confirmation";
+import { useNavigate } from "react-router-dom";
 
 type AdminProps = {
   students: {
@@ -13,6 +14,7 @@ type AdminProps = {
 
 const StudentsTable = ({ students }: AdminProps) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const navigate = useNavigate();
   return (
     <Fragment>
       <ConfirmDisable
@@ -36,7 +38,12 @@ const StudentsTable = ({ students }: AdminProps) => {
           <Table.Tbody>
             {students.map((admin, i) => (
               <Table.Tr key={i}>
-                <Table.Td>{admin.name}</Table.Td>
+                <Table.Td
+                  className="cursor-pointer"
+                  onClick={() => navigate("view-student")}
+                >
+                  {admin.name}
+                </Table.Td>
                 <Table.Td>{admin.email}</Table.Td>
                 <Table.Td>{admin.status}</Table.Td>
                 <Table.Td>
@@ -49,7 +56,6 @@ const StudentsTable = ({ students }: AdminProps) => {
                     {admin.status === "active" ? "Deactivate" : "Activate"}
                   </button>
                 </Table.Td>
-                <Table.Td></Table.Td>
               </Table.Tr>
             ))}
           </Table.Tbody>
