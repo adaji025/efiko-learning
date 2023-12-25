@@ -3,12 +3,14 @@ import moment from "moment";
 import { SlOptionsVertical } from "react-icons/sl";
 import { SessionTypes } from "../../../../../types/session";
 import { Fragment } from "react";
+import { useNavigate } from "react-router-dom";
 
 type SessionProps = {
   sessions: SessionTypes[] | null;
 };
 
 const UpcomingSessionTable = ({ sessions }: SessionProps) => {
+  const navigate = useNavigate();
   return (
     <Fragment>
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
@@ -27,8 +29,17 @@ const UpcomingSessionTable = ({ sessions }: SessionProps) => {
             {sessions &&
               sessions.map((session) => (
                 <Table.Tr key={session._id}>
-                  <Table.Td>{session.title}</Table.Td>
-                  <Table.Td>{session.tutorId.fullName}</Table.Td>
+                  <Table.Td
+                    className="cursor-pointer"
+                    onClick={() =>
+                      navigate(`/schedule-sessions/edit/${session._id}`, {
+                        state: session,
+                      })
+                    }
+                  >
+                    {session.title}
+                  </Table.Td>
+                  <Table.Td>{session.tutorId?.fullName}</Table.Td>
                   <Table.Td>
                     {moment(session.date).format("YYYY-MM-DD")}
                   </Table.Td>
@@ -45,8 +56,25 @@ const UpcomingSessionTable = ({ sessions }: SessionProps) => {
                         </div>
                       </Menu.Target>
                       <Menu.Dropdown>
-                        <Menu.Item>View</Menu.Item>
-                        <Menu.Item>Delete</Menu.Item>
+                        <Menu.Item
+                          onClick={() =>
+                            navigate(`/schedule-sessions/edit/${session._id}`, {
+                              state: session,
+                            })
+                          }
+                        >
+                          View session
+                        </Menu.Item>
+                        <Menu.Item
+                          onClick={() =>
+                            navigate(`/schedule-sessions/edit/${session._id}`, {
+                              state: session,
+                            })
+                          }
+                        >
+                          Edit session
+                        </Menu.Item>
+                        <Menu.Item color="red">Delete session</Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
                   </Table.Td>

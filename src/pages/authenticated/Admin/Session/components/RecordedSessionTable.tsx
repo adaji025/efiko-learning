@@ -28,9 +28,9 @@ const RecordedSessionTable = ({ sessions }: SessionProps) => {
               sessions.map((session) => (
                 <Table.Tr key={session._id}>
                   <Table.Td>{session.title}</Table.Td>
-                  <Table.Td>{session.tutorId.fullName}</Table.Td>
+                  <Table.Td>{session.tutorId?.fullName}</Table.Td>
                   <Table.Td>
-                    {moment(session.date).format("YYYY-MM-DD")}
+                    {moment(session?.date).format("YYYY-MM-DD")}
                   </Table.Td>
                   <Table.Td>{moment(session.date).format("HH : MM")}</Table.Td>
                   <Table.Td>3</Table.Td>

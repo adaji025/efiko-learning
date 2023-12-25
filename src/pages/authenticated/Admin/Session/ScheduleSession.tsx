@@ -6,6 +6,7 @@ import {
   Button,
   LoadingOverlay,
   ActionIcon,
+  NumberInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
@@ -72,7 +73,7 @@ const ScheduleSession = () => {
       });
   };
 
-  const previewData = form.values
+  const previewData = form.values;
 
   return (
     <Fragment>
@@ -154,6 +155,17 @@ const ScheduleSession = () => {
                 {...form.getInputProps("time")}
               />
             </div>
+            <div className="grid grid-cols-2 gap-[16px]">
+              <NumberInput
+                hideControls
+                mt={16}
+                size="md"
+                required
+                label="Session duration"
+                placeholder="Enter duration in hours"
+                className="flex-1"
+              />
+            </div>
 
             <div className="flex gap-10 mt-12 justify-btween">
               <Button
@@ -178,7 +190,9 @@ const ScheduleSession = () => {
         </div>
       )}
 
-      {preview && <SchedulePreviews setPreview={setPreview} previewData={previewData} />}
+      {preview && (
+        <SchedulePreviews setPreview={setPreview} previewData={previewData} />
+      )}
     </Fragment>
   );
 };
