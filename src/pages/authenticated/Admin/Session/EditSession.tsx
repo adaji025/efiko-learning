@@ -22,7 +22,7 @@ const EditSession = () => {
   const [loading, setLoading] = useState(false);
   const timeRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
-  const edit: SessionTypes = location.state;
+  const session: SessionTypes = location.state;
 
   const userId = localStorage.getItem("userId") ?? "";
   const { handleError } = useNotification();
@@ -46,22 +46,20 @@ const EditSession = () => {
       outcome: "",
       date: new Date(),
       time: "",
-      charges: null,
     },
   });
 
   useEffect(() => {
     form.setValues({
-      title: edit ? edit.title : "",
-      category: edit ? edit.category : "",
-      description: edit ? edit.description : "",
-      outcome: edit ? edit.outcome : "",
-      date: new Date(edit.date),
-      time: edit ? edit.time : "",
+      title: session ? session.title : "",
+      category: session ? session.category : "",
+      description: session ? session.description : "",
+      outcome: session ? session.outcome : "",
+      date: new Date(session.date),
+      time: session ? session.time : "",
       // @ts-ignore
-      charges: edit ? edit.charges : null,
     });
-  }, [edit]);
+  }, [session]);
 
   const submit = (values: any) => {
     setLoading(true);
@@ -93,7 +91,7 @@ const EditSession = () => {
               size="md"
               label="Title of the session"
               {...form.getInputProps("title")}
-              defaultValue={edit.title}
+              defaultValue={session.title}
             />
             <Select
               required
@@ -103,7 +101,7 @@ const EditSession = () => {
               data={subjects.map((subject) => subject)}
               searchable
               {...form.getInputProps("category")}
-              defaultValue={edit.category}
+              defaultValue={session.category}
             />
             <Textarea
               mt={16}
@@ -113,7 +111,7 @@ const EditSession = () => {
               size="sm"
               className=""
               {...form.getInputProps("description")}
-              defaultValue={edit.description}
+              defaultValue={session.description}
             />
 
             <Textarea
@@ -124,7 +122,7 @@ const EditSession = () => {
               size="sm"
               className=""
               {...form.getInputProps("outcome")}
-              defaultValue={edit.outcome}
+              defaultValue={session.outcome}
             />
             <div className="grid grid-cols-2 gap-[16px]">
               <DatePickerInput
@@ -135,7 +133,7 @@ const EditSession = () => {
                 placeholder="Pick date"
                 className="flex-1"
                 {...form.getInputProps("date")}
-                defaultValue={new Date(edit.date)}
+                defaultValue={new Date(session.date)}
               />
               <TimeInput
                 ref={timeRef}
@@ -147,16 +145,15 @@ const EditSession = () => {
                 className="flex-1"
                 rightSection={pickerControl}
                 {...form.getInputProps("time")}
-                defaultValue={edit.time}
+                defaultValue={session.time}
               />
               <NumberInput
                 hideControls
                 size="md"
                 required
-                label="Session Charges"
-                placeholder="Enter Price"
+                label="Session duration"
+                placeholder="Enter duration in hours"
                 className="flex-1"
-                defaultValue={Number(edit.charges)}
               />
             </div>
 

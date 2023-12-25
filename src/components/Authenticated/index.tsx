@@ -122,7 +122,6 @@ const Authenticated = () => {
               <Route path="/notifications" element={<Notification />} />
               <Route path="/my-profile" element={<Profile />} />
               <Route path="/my-profile/:id" element={<ViewAdminReview />} />
-              <Route path="/edit-profile" element={<EditProfile />} />
               <Route path="/payments" element={<Payments />} />
               <Route path="/faqs" element={<Faqs />} />
               <Route path="/report-issues" element={<ReportIssues />} />
@@ -144,6 +143,7 @@ const Authenticated = () => {
                 path="/manage-upcoming-sessions"
                 element={<ManageUpcomingSession />}
               />
+              <Route path="/edit-profile" element={<EditProfile />} />
               <Route
                 path="/manage-students/create-student"
                 element={<CreateStudent />}
