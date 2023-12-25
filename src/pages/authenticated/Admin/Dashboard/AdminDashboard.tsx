@@ -37,7 +37,7 @@ const AdminDashboard = () => {
           </div>
         </div>
         <div className="mt-10">
-          <h2 className="text-xl font-semibold">My Upcoming Sessions</h2>
+          {/* <h2 className="text-xl font-semibold">My Upcoming Sessions</h2> */}
         </div>
         <div className="mt-10 border p-5">
           <div className="flex items-center">

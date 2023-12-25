@@ -39,7 +39,7 @@ const RecordedSessionTable = ({ sessions }: SessionProps) => {
                       <Menu.Target>
                         <div className="pl-4">
                           <SlOptionsVertical
-                            size={20}
+                            size={18}
                             className="cursor-pointer"
                           />
                         </div>

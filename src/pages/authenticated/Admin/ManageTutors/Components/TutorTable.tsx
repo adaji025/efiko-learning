@@ -1,8 +1,10 @@
-import { Pagination, Table } from "@mantine/core";
+import { Menu, Pagination, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Fragment, useState } from "react";
 import Confirmation from "../../../../../components/Confirmation";
 import ConfirmActivate from "../../../../../components/Confirmation";
+import { SlOptionsVertical } from "react-icons/sl";
+import { useNavigate } from "react-router-dom";
 
 type IProps = {
   tutors: {
@@ -16,6 +18,7 @@ type IProps = {
 const TutorTable = ({ tutors }: IProps) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activate, setActivate] = useState(false);
+  const navigate = useNavigate();
   return (
     <Fragment>
       <Confirmation
@@ -36,49 +39,54 @@ const TutorTable = ({ tutors }: IProps) => {
             <Table.Tr>
               <Table.Th>Name</Table.Th>
               <Table.Th>email</Table.Th>
+              <Table.Th>Sessions completed</Table.Th>
               <Table.Th>status</Table.Th>
-
               <Table.Th>Actions</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
             {tutors.map((tutor, i) => (
               <Table.Tr key={i}>
-                <Table.Td>{tutor.name}</Table.Td>
+                <Table.Td
+                  className="cursor-pointer"
+                  onClick={() => navigate("view-tutor")}
+                >
+                  {tutor.name}
+                </Table.Td>
                 <Table.Td>{tutor.email}</Table.Td>
+                <Table.Td>5</Table.Td>
                 <Table.Td>{tutor.status}</Table.Td>
                 <Table.Td>
-                  <div className="flex gap-3">
-                    {tutor.status === "pending" && (
-                      <Fragment>
-                        <button
-                          className={` text-white px-4 py-2 rounded-md bg-primary`}
-                          onClick={open}
-                        >
-                          Approve
-                        </button>
-                        <button
-                          className={` text-white px-4 py-2 rounded-md bg-red-400`}
-                          onClick={open}
-                        >
-                          Reject
-                        </button>
-                      </Fragment>
-                    )}
-
-                    {tutor.status === "approved" && (
-                      <button
-                        className={` text-white px-4 py-2 rounded-md ${
-                          tutor.suspend ? "bg-red-400" : "bg-primary"
-                        }`}
-                        onClick={() => setActivate(true)}
+                  <Menu shadow="md" width={150}>
+                    <Menu.Target>
+                      <div className="pl-4">
+                        <SlOptionsVertical
+                          size={18}
+                          className="cursor-pointer"
+                        />
+                      </div>
+                    </Menu.Target>
+                    <Menu.Dropdown>
+                      <Menu.Item
+                        onClick={() => navigate("view-tutor")}
                       >
-                        {tutor.suspend ? "Deactivate" : "Activate"}
-                      </button>
-                    )}
-                  </div>
+                        View
+                      </Menu.Item>
+                      {tutor.status === "pending" && (
+                        <Fragment>
+                          <Menu.Item onClick={open}>Approve</Menu.Item>
+                          <Menu.Item onClick={open}>Reject</Menu.Item>
+                        </Fragment>
+                      )}
+
+                      {tutor.status !== "pending" && (
+                        <Menu.Item>
+                          {tutor.suspend ? "Deactivate" : "Activate"}
+                        </Menu.Item>
+                      )}
+                    </Menu.Dropdown>
+                  </Menu>
                 </Table.Td>
-                <Table.Td></Table.Td>
               </Table.Tr>
             ))}
           </Table.Tbody>

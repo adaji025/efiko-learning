@@ -29,7 +29,7 @@ const ManageStudents = () => {
             <Button
               size="md"
               className="bg-primary"
-              onClick={() => navigate("/create-student")}
+              onClick={() => navigate("/manage-students/create-student")}
             >
               Create Student
             </Button>

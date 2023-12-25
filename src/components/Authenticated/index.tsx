@@ -38,6 +38,7 @@ import ManageUpcomingSession from "../../pages/authenticated/Admin/Session/Manag
 import CreateStudent from "../../pages/authenticated/Admin/ManageStudents/CreateStudent";
 import ManageTutors from "../../pages/authenticated/Admin/ManageTutors/ManageTutors";
 import ManageIssues from "../../pages/authenticated/Admin/ManageIssues/ManageIssues";
+import ViewTutor from "../../pages/authenticated/Admin/ManageTutors/ViewTutor";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -147,6 +148,7 @@ const Authenticated = () => {
                 element={<CreateStudent />}
               />
               <Route path="/manage-tutors" element={<ManageTutors />} />
+              <Route path="/manage-tutors/view-tutor" element={<ViewTutor />} />
               <Route path="/manage-issues" element={<ManageIssues />} />
             </Routes>
           </main>
