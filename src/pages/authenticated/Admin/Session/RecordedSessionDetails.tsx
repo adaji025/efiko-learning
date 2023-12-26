@@ -1,7 +1,4 @@
 import { Button } from "@mantine/core";
-import { useSelector } from "react-redux";
-import { ProfileTypes } from "../../../../types/auth";
-import { RootState } from "../../../../redux/store";
 import { useLocation } from "react-router-dom";
 import { SessionTypes } from "../../../../types/session";
 import moment from "moment";
@@ -9,9 +6,7 @@ import moment from "moment";
 const RecordedSessionDetails = () => {
   const location = useLocation();
   const session: SessionTypes = location.state;
-  const userData: ProfileTypes = useSelector(
-    (state: RootState) => state.user.userData
-  );
+
 
   return (
     <div className="mt-[50px] lg:mt-5">
