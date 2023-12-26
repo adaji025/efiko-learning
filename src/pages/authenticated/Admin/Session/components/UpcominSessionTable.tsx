@@ -4,15 +4,24 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { SessionTypes } from "../../../../../types/session";
 import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDisclosure } from "@mantine/hooks";
+import Confirmation from "../../../../../components/Confirmation";
 
 type SessionProps = {
   sessions: SessionTypes[] | null;
 };
 
 const UpcomingSessionTable = ({ sessions }: SessionProps) => {
+  const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
   return (
     <Fragment>
+      <Confirmation
+        btnText="delete session"
+        close={close}
+        handleClick={() => {}}
+        opened={opened}
+      />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -74,7 +83,9 @@ const UpcomingSessionTable = ({ sessions }: SessionProps) => {
                         >
                           Edit session
                         </Menu.Item>
-                        <Menu.Item color="red">Delete session</Menu.Item>
+                        <Menu.Item color="red" onClick={open}>
+                          Delete session
+                        </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
                   </Table.Td>
