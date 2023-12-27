@@ -229,11 +229,15 @@ const Sidebar = () => {
       title: "Settings",
       icon: <FiSettings size={20} />,
       route: "/settings",
-      key: ["edit-profile", "payments"],
+      key: ["subscriptions", "payments"],
       children: [
         {
           title: "Manage Payments",
           route: "/manage-payments",
+        },
+        {
+          title: "Subscriptions",
+          route: "/subscriptions",
         },
       ],
     },
