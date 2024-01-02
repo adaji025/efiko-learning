@@ -1,9 +1,10 @@
-import { Button, TextInput } from "@mantine/core";
+import { Button, LoadingOverlay, TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import CurriculumsTable from "./components/CurriculumsTable";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import AddCurriculum from "./components/AddCurriculum";
+import { getCurriculums } from "../../../../services/admin/curriculum";
 
 const dummyCurriculum = [
   {
@@ -17,11 +18,27 @@ const dummyCurriculum = [
 ];
 
 const Curriculum = () => {
+  const [loading] = useState(false);
+  const [limit] = useState(5);
+  const [skip] = useState(1);
+  const [search] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
+
+  useEffect(() => {
+    handleGetCurriculum();
+  }, []);
+
+  const handleGetCurriculum = () => {
+    getCurriculums(limit, skip, search).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
     <Fragment>
       <AddCurriculum opened={opened} close={close} callback={() => {}} />
+
+      <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Curriculums

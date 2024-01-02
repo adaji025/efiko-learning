@@ -27,7 +27,7 @@ export const userlogin = (data: any) => {
 
 export const adminlogin = (data: any) => {
   return new Promise((resolve, reject) => {
-    AxoisApi.post(APIS.ADMIN.LOGIN, data)
+    AxoisApi.post(`${APIS.ADMIN}/login`, data)
       .then((res) => {
         resolve(res);
       })

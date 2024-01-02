@@ -12,7 +12,6 @@ const ManageUpcomingSession = () => {
 
   const { handleError } = useNotification();
 
-  console.log(sessions)
 
   useEffect(() => {
     handleGetSessions();
