@@ -6,10 +6,8 @@ export const APIS = {
     LOGIN: `${api}/user/login`,
     STUDENT_LOGIN: `${api}/user/student-login`,
   },
-  ADMIN: {
-    ADMIN: `${api}/admin`,
-    LOGIN: `${api}/admin/login`,
-  },
+  ADMIN: `${api}/admin`,
+
   AUTH: {
     RESET_PASSWORD: `${api}/auth/reset-password`,
     FORGOT_PASSWORD: `${api}/auth/forgot-password`,

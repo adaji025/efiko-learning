@@ -1,9 +1,10 @@
-import { Button, TextInput } from "@mantine/core";
+import { Button, LoadingOverlay, TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import AdminTable from "./components/AdminTable";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import AddAdmin from "./components/AddAdmin";
 import { useDisclosure } from "@mantine/hooks";
+import { getAdmins } from "../../../../services/admin";
 
 const dummyAdmins = [
   {
@@ -19,10 +20,25 @@ const dummyAdmins = [
 ];
 
 const ManageAdmin = () => {
+  const [loading] = useState(false);
+  const [limit] = useState(5);
+  const [skip] = useState(0);
+  const [search] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
+
+  useEffect(() => {
+    handleGetAdmins();
+  }, []);
+
+  const handleGetAdmins = () => {
+    getAdmins(limit, skip, search).then((res) => {
+      console.log(res);
+    });
+  };
   return (
     <Fragment>
       <AddAdmin opened={opened} close={close} callback={() => {}} />
+      <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Manage Admins
