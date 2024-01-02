@@ -1,4 +1,5 @@
 import { BiArrowBack } from "react-icons/bi";
+import { convertMinutesToHours } from "../../../../../utils";
 
 type PreviewType = {
   previewData: {
@@ -8,6 +9,7 @@ type PreviewType = {
     outcome: string;
     date: Date;
     time: string;
+    duration: string;
   };
   setPreview: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -25,8 +27,8 @@ const SchedulePreviews = ({ previewData, setPreview }: PreviewType) => {
         <BiArrowBack /> Back
       </div>
       <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
-        <div className="w-full border-b px-4 lg:px-10 py-4 font-semibold">
-          {previewData.title}: {previewData.description}
+        <div className="w-full border-b px-4 lg:px-10 py-4 font-semibold text-lg">
+          {previewData.title}: <span className="font-normal pl-2 text-base"> {previewData.description} </span>
         </div>
         <div className="px-4 lg:px-10 mt-3">
           <div>
@@ -61,6 +63,10 @@ const SchedulePreviews = ({ previewData, setPreview }: PreviewType) => {
             <div>
               <div className="sm:text-lg font-medium">Session Time: </div>
               <div className="text-sm ml-2"> {previewData.date.toLocaleTimeString()}</div>
+            </div>
+            <div>
+              <div className="sm:text-lg font-medium">Session Duration: </div>
+              <div className="text-sm ml-2"> {convertMinutesToHours(Number(previewData.duration))}</div>
             </div>
           </div>
         </div>

@@ -25,3 +25,11 @@ export const formDataObj = (jsonData: any) => {
     }
   }
 };
+
+
+export function convertMinutesToHours(minutes: number) {
+  let hours = Math.floor(minutes / 60);
+  let remainingMinutes = minutes % 60;
+
+  return hours + " hours " + remainingMinutes + " minutes";
+}

@@ -42,6 +42,7 @@ const ScheduleSession = () => {
       outcome: "",
       date: new Date(),
       time: "",
+      duration: ""
     },
   });
 
@@ -71,6 +72,8 @@ const ScheduleSession = () => {
       .finally(() => {
         setLoading(false);
       });
+
+    console.log(values)
   };
 
   const previewData = form.values;
@@ -162,8 +165,9 @@ const ScheduleSession = () => {
                 size="md"
                 required
                 label="Session duration"
-                placeholder="Enter duration in hours"
+                placeholder="Enter duration in minutes"
                 className="flex-1"
+                {...form.getInputProps("duration")}
               />
             </div>
 
