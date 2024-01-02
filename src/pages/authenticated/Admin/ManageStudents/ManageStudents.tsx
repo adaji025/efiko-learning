@@ -22,7 +22,7 @@ const ManageStudents = () => {
   // const [students, setStudents] = useState([]);
   const [loading] = useState(false);
   const [limit] = useState(5);
-  const [skip] = useState(1);
+  const [skip] = useState(0);
   const [search] = useState("");
   const navigate = useNavigate();
 

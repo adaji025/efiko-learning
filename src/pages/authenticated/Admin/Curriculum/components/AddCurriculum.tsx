@@ -12,6 +12,7 @@ import useNotification from "../../../../../hooks/useNotification";
 import { addAdmin } from "../../../../../services/admin";
 import { toast } from "react-toastify";
 import Upload from "./Upload";
+import { useDropzone } from "react-dropzone";
 
 type Props = {
   opened: boolean;
@@ -22,14 +23,17 @@ type Props = {
 const AddCurriculum = ({ close, opened, callback }: Props) => {
   const [loading, setLoading] = useState(false);
 
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    maxFiles: 1,
+    accept: { "application/pdf": [".pdf"] },
+  });
+
   const { handleError } = useNotification();
 
   const form = useForm({
     initialValues: {
-      fullName: "",
-      email: "",
-      accountType: "",
-      password: "admin",
+      title: "",
+      description: "",
     },
   });
 
@@ -37,10 +41,8 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("fullName", form.values.fullName);
-    formData.append("email", form.values.email);
-    formData.append("accountType", form.values.accountType);
-    formData.append("password", form.values.password);
+    formData.append("fullName", form.values.title);
+    formData.append("email", form.values.description);
 
     addAdmin(formData)
       .then(() => {
@@ -91,7 +93,7 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
           />
 
           <div className="mt-3">
-            <Upload />
+            <Upload {...{ getInputProps, getRootProps, acceptedFiles }} />
           </div>
 
           <div className="flex justify-end">

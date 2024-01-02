@@ -1,11 +1,15 @@
-import { useDropzone } from "react-dropzone";
+import { DropzoneInputProps, DropzoneRootProps } from "react-dropzone";
 import { FaUpload } from "react-icons/fa6";
 import { GrStatusGood } from "react-icons/gr";
 
-const Upload = () => {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    maxFiles: 1,
-  });
+type IProps = {
+  acceptedFiles: File[]
+  getRootProps: (props?: object) => DropzoneRootProps;
+  getInputProps: (props?: object) => DropzoneInputProps;
+}
+
+const Upload = ({acceptedFiles, getRootProps, getInputProps} :IProps) => {
+  
   return (
     <div className="mt-5">
       <div

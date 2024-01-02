@@ -34,7 +34,7 @@ const dummyTutors = [
 const ManageTutors = () => {
   const [loading] = useState(false);
   const [limit] = useState(5);
-  const [skip] = useState(1);
+  const [skip] = useState(0);
   const [search] = useState("");
 
   useEffect(() => {
