@@ -1,5 +1,5 @@
-import { Fragment, useState } from "react";
-import { Pagination, Table } from "@mantine/core";
+import { Fragment, useEffect, useState } from "react";
+import { LoadingOverlay, Pagination, Table } from "@mantine/core";
 import { CiEdit } from "react-icons/ci";
 import { GrCloudDownload } from "react-icons/gr";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -11,19 +11,54 @@ import {
   CurriculumTypes,
 } from "../../../../../types/curriculum";
 import moment from "moment";
+import { deleteCurriculum } from "../../../../../services/admin/curriculum";
+import { toast } from "react-toastify";
+import useNotification from "../../../../../hooks/useNotification";
 
 type IProps = {
   curriculums: CurriculumState | null;
   skip: number;
   limit: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
-  handleGetCurriculum: () => void
+  handleGetCurriculum: () => void;
 };
 
-const CurriculumsTable = ({ curriculums, skip, setSkip, handleGetCurriculum }: IProps) => {
+const CurriculumsTable = ({
+  curriculums,
+  skip,
+  setSkip,
+  handleGetCurriculum,
+  limit,
+}: IProps) => {
+  const [loading, setLoading] = useState(false);
   const [curriculum, setCurriculum] = useState<CurriculumTypes | null>(null);
   const [edit, setEdit] = useState(false);
+  const [curriculumId, setCurriculumId] = useState("");
+  const [totalPages, setTotalPages] = useState(1);
   const [opened, { open, close }] = useDisclosure(false);
+
+  const { handleError } = useNotification();
+
+  useEffect(() => {
+    if (curriculums) setTotalPages(Math.ceil(curriculums?.length / limit));
+  }, [curriculums, limit]);
+
+  const handleDeleteCurriculum = () => {
+    setLoading(true);
+
+    deleteCurriculum(curriculumId)
+      .then(() => {
+        toast.success("Curriculum deleted successfully");
+        handleGetCurriculum();
+        close();
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   return (
     <Fragment>
@@ -36,9 +71,10 @@ const CurriculumsTable = ({ curriculums, skip, setSkip, handleGetCurriculum }: I
       <ConfirmDelete
         opened={opened}
         close={close}
-        handleClick={() => {}}
+        handleClick={handleDeleteCurriculum}
         btnText="Delete Curriculum"
       />
+      <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -74,7 +110,10 @@ const CurriculumsTable = ({ curriculums, skip, setSkip, handleGetCurriculum }: I
                       <RiDeleteBin5Line
                         size={20}
                         className="cursor-pointer"
-                        onClick={open}
+                        onClick={() => {
+                          open();
+                          setCurriculumId(curriculum._id);
+                        }}
                       />
                     </div>
                   </Table.Td>
@@ -91,7 +130,7 @@ const CurriculumsTable = ({ curriculums, skip, setSkip, handleGetCurriculum }: I
       </div>
       <div className="mt-10">
         <Pagination
-          total={curriculums ? curriculums.length : 1}
+          total={totalPages}
           siblings={1}
           value={skip}
           onChange={setSkip}

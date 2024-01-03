@@ -28,8 +28,6 @@ type Props = {
 const AddCurriculum = ({ close, opened, callback, curriculum }: Props) => {
   const [loading, setLoading] = useState(false);
 
-  console.log(curriculum)
-
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
     accept: { "application/pdf": [".pdf"] },
@@ -115,7 +113,9 @@ const AddCurriculum = ({ close, opened, callback, curriculum }: Props) => {
       >
         <form
           onSubmit={form.onSubmit((values) =>
-            curriculum ? handleUpdateCurriculum(values) : handleAddCurriculum(values)
+            curriculum
+              ? handleUpdateCurriculum(values)
+              : handleAddCurriculum(values)
           )}
         >
           <Title order={3} ta="center">
