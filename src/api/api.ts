@@ -7,7 +7,7 @@ export const APIS = {
     STUDENT_LOGIN: `${api}/user/student-login`,
   },
   ADMIN: `${api}/admin`,
-  CURRICULUM: `${api}`,
+  CURRICULUM: `${api}/curriculum`,
 
   AUTH: {
     RESET_PASSWORD: `${api}/auth/reset-password`,
