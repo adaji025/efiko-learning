@@ -9,10 +9,10 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import useNotification from "../../../../../hooks/useNotification";
-import { addAdmin } from "../../../../../services/admin";
 import { toast } from "react-toastify";
 import Upload from "./Upload";
 import { useDropzone } from "react-dropzone";
+import { addCurriculum } from "../../../../../services/admin/curriculum";
 
 type Props = {
   opened: boolean;
@@ -37,16 +37,17 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
     },
   });
 
-  const submit = () => {
+  const submit = (values: any) => {
     setLoading(true);
 
     const formData = new FormData();
-    formData.append("fullName", form.values.title);
-    formData.append("email", form.values.description);
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("pdf", acceptedFiles[0]);
 
-    addAdmin(formData)
+    addCurriculum(formData)
       .then(() => {
-        toast.success("Admin added successfully");
+        toast.success("Curriculum added successfully");
         close();
         callback();
         form.reset();
@@ -73,7 +74,7 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
         onClose={close}
         title="Authentication"
       >
-        <form onSubmit={form.onSubmit(submit)}>
+        <form onSubmit={form.onSubmit((values) => submit(values))}>
           <Title order={3} ta="center">
             Please enter curriculum details
           </Title>
@@ -82,7 +83,7 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
             mt={8}
             label="title"
             placeholder="Example ttle"
-            {...form.getInputProps("fullName")}
+            {...form.getInputProps("title")}
           />
           <Textarea
             required
@@ -97,8 +98,8 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
           </div>
 
           <div className="flex justify-end">
-            <Button type="submit" mt={16} className="bg-darkBlue">
-              Add
+            <Button size="md" type="submit" mt={16} className="bg-primary">
+              Create Curriculum
             </Button>
           </div>
         </form>
