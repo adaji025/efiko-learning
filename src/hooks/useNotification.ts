@@ -22,6 +22,11 @@ const useNotification = () => {
       return toast.error("Route not found");
     }
 
+    if (error.response.data.message === "Unable to verify token.") {
+      logoutUser();
+      return toast.error("Route not found");
+    }
+
     if (
       error.response.data.errors &&
       Array.isArray(error.response.data.errors)
