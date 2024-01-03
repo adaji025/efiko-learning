@@ -94,11 +94,13 @@ const CurriculumsTable = ({
                   </Table.Td>
                   <Table.Td>
                     <div className="flex gap-3">
-                      <GrCloudDownload
-                        size={20}
-                        className="cursor-pointer"
-                        onClick={() => {}}
-                      />
+                      <a href={curriculum.pdfFile} target="_blank">
+                        <GrCloudDownload
+                          size={20}
+                          className="cursor-pointer"
+                          onClick={() => {}}
+                        />
+                      </a>
                       <CiEdit
                         size={20}
                         className="cursor-pointer"
