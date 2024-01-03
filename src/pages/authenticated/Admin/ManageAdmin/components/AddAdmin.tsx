@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import {
   Modal,
   Title,
@@ -11,14 +11,16 @@ import { useForm } from "@mantine/form";
 import useNotification from "../../../../../hooks/useNotification";
 import { addAdmin } from "../../../../../services/admin";
 import { toast } from "react-toastify";
+import { AdminTypes } from "../../../../../types/admins/admin";
 
 type Props = {
   opened: boolean;
   close: () => void;
   callback: () => void;
+  admin?: AdminTypes | null;
 };
 
-const AddAdmin = ({ close, opened, callback }: Props) => {
+const AddAdmin = ({ close, opened, callback, admin }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const { handleError } = useNotification();
@@ -28,20 +30,21 @@ const AddAdmin = ({ close, opened, callback }: Props) => {
       fullName: "",
       email: "",
       accountType: "",
-      password: "admin",
     },
   });
 
-  const submit = () => {
+  useEffect(() => {
+    form.setValues({
+      fullName: admin ? admin.fullName : "",
+      email: admin ? admin.email : "",
+      accountType: admin ? admin.accountType : "",
+    });
+  }, [admin]);
+
+  const submit = (values: any) => {
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append("fullName", form.values.fullName);
-    formData.append("email", form.values.email);
-    formData.append("accountType", form.values.accountType);
-    formData.append("password", form.values.password);
-
-    addAdmin(formData)
+    addAdmin(values)
       .then(() => {
         toast.success("Admin added successfully");
         close();
@@ -70,7 +73,7 @@ const AddAdmin = ({ close, opened, callback }: Props) => {
         onClose={close}
         title="Authentication"
       >
-        <form onSubmit={form.onSubmit(submit)}>
+        <form onSubmit={form.onSubmit((values) => submit(values))}>
           <Title order={3} ta="center">
             Please enter new admin details
           </Title>
@@ -102,7 +105,7 @@ const AddAdmin = ({ close, opened, callback }: Props) => {
           />
 
           <div className="flex justify-end">
-            <Button type="submit" mt={16} className="bg-darkBlue">
+            <Button size="md" type="submit" mt={16} className="bg-primary">
               Add admin
             </Button>
           </div>

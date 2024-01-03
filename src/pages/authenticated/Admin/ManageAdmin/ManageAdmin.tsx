@@ -5,35 +5,36 @@ import { Fragment, useEffect, useState } from "react";
 import AddAdmin from "./components/AddAdmin";
 import { useDisclosure } from "@mantine/hooks";
 import { getAdmins } from "../../../../services/admin";
-
-const dummyAdmins = [
-  {
-    name: "admin Admin",
-    email: "admin@gmail.com",
-    status: "active",
-  },
-  {
-    name: "Test Admin",
-    email: "admin@gmail.com",
-    status: "inactive",
-  },
-];
+import { AdminState } from "../../../../types/admins/admin";
+import useNotification from "../../../../hooks/useNotification";
 
 const ManageAdmin = () => {
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [admins, setAdmins] = useState<AdminState | null>(null);
   const [limit] = useState(5);
-  const [skip] = useState(0);
+  const [skip, setSkip] = useState(0);
   const [search] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
 
+  const { handleError } = useNotification();
+
   useEffect(() => {
     handleGetAdmins();
-  }, []);
+  }, [skip, limit, search]);
 
   const handleGetAdmins = () => {
-    getAdmins(limit, skip, search).then((res) => {
-      console.log(res);
-    });
+    setLoading(true);
+    getAdmins(limit, skip, search)
+      .then((res: any) => {
+        setAdmins(res.data);
+      })
+      .catch((err) => {
+        handleError(err);
+        console.log(err)
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <Fragment>
@@ -58,7 +59,13 @@ const ManageAdmin = () => {
               />
             </div>
           </div>
-          <AdminTable admins={dummyAdmins} />
+          <AdminTable
+            admins={admins?.data}
+            limit={limit}
+            setSkip={setSkip}
+            skip={skip}
+            handleGetAdmins={handleGetAdmins}
+          />
         </div>
       </div>
     </Fragment>
