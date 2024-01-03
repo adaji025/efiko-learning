@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import {
   Modal,
   Title,
@@ -12,16 +12,23 @@ import useNotification from "../../../../../hooks/useNotification";
 import { toast } from "react-toastify";
 import Upload from "./Upload";
 import { useDropzone } from "react-dropzone";
-import { addCurriculum } from "../../../../../services/admin/curriculum";
+import {
+  addCurriculum,
+  updateCurriculum,
+} from "../../../../../services/admin/curriculum";
+import { CurriculumTypes } from "../../../../../types/curriculum";
 
 type Props = {
   opened: boolean;
   close: () => void;
   callback: () => void;
+  curriculum?: CurriculumTypes;
 };
 
-const AddCurriculum = ({ close, opened, callback }: Props) => {
+const AddCurriculum = ({ close, opened, callback, curriculum }: Props) => {
   const [loading, setLoading] = useState(false);
+
+  console.log(curriculum)
 
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
@@ -37,7 +44,14 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
     },
   });
 
-  const submit = (values: any) => {
+  useEffect(() => {
+    form.setValues({
+      title: curriculum ? curriculum.title : "",
+      description: curriculum ? curriculum.description : "",
+    });
+  }, [curriculum]);
+
+  const handleAddCurriculum = (values: any) => {
     setLoading(true);
 
     const formData = new FormData();
@@ -61,6 +75,31 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
       });
   };
 
+  const handleUpdateCurriculum = (values: any) => {
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("pdf", acceptedFiles[0]);
+
+    curriculum &&
+      updateCurriculum(curriculum?._id, formData)
+        .then(() => {
+          toast.success("Curriculum updated successfully");
+          close();
+          callback();
+          form.reset();
+        })
+        .catch((err) => {
+          handleError(err);
+          console.log(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
+
   return (
     <Fragment>
       <LoadingOverlay visible={loading} />
@@ -74,7 +113,11 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
         onClose={close}
         title="Authentication"
       >
-        <form onSubmit={form.onSubmit((values) => submit(values))}>
+        <form
+          onSubmit={form.onSubmit((values) =>
+            curriculum ? handleUpdateCurriculum(values) : handleAddCurriculum(values)
+          )}
+        >
           <Title order={3} ta="center">
             Please enter curriculum details
           </Title>
@@ -90,7 +133,7 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
             mt={8}
             label="Description"
             placeholder="Enter description"
-            {...form.getInputProps("email")}
+            {...form.getInputProps("description")}
           />
 
           <div className="mt-3">
@@ -99,7 +142,7 @@ const AddCurriculum = ({ close, opened, callback }: Props) => {
 
           <div className="flex justify-end">
             <Button size="md" type="submit" mt={16} className="bg-primary">
-              Create Curriculum
+              {curriculum ? " Edit Curriculum" : "Create Curriculum"}
             </Button>
           </div>
         </form>

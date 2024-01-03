@@ -1,4 +1,4 @@
-import { Fragment,  useState } from "react";
+import { Fragment, useState } from "react";
 import { Pagination, Table } from "@mantine/core";
 import { CiEdit } from "react-icons/ci";
 import { GrCloudDownload } from "react-icons/gr";
@@ -17,20 +17,21 @@ type IProps = {
   skip: number;
   limit: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
+  handleGetCurriculum: () => void
 };
 
-const CurriculumsTable = ({ curriculums, skip, setSkip }: IProps) => {
+const CurriculumsTable = ({ curriculums, skip, setSkip, handleGetCurriculum }: IProps) => {
+  const [curriculum, setCurriculum] = useState<CurriculumTypes | null>(null);
   const [edit, setEdit] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
-
- 
 
   return (
     <Fragment>
       <AddCurriculum
         opened={edit}
         close={() => setEdit(false)}
-        callback={() => {}}
+        callback={handleGetCurriculum}
+        curriculum={curriculum || undefined}
       />
       <ConfirmDelete
         opened={opened}
@@ -65,7 +66,10 @@ const CurriculumsTable = ({ curriculums, skip, setSkip }: IProps) => {
                       <CiEdit
                         size={20}
                         className="cursor-pointer"
-                        onClick={() => setEdit(true)}
+                        onClick={() => {
+                          setEdit(true);
+                          setCurriculum(curriculum);
+                        }}
                       />
                       <RiDeleteBin5Line
                         size={20}
@@ -87,7 +91,7 @@ const CurriculumsTable = ({ curriculums, skip, setSkip }: IProps) => {
       </div>
       <div className="mt-10">
         <Pagination
-          total={curriculums ? curriculums.length: 1}
+          total={curriculums ? curriculums.length : 1}
           siblings={1}
           value={skip}
           onChange={setSkip}
