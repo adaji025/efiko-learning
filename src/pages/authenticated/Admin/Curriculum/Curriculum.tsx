@@ -5,38 +5,44 @@ import { Fragment, useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import AddCurriculum from "./components/AddCurriculum";
 import { getCurriculums } from "../../../../services/admin/curriculum";
-
-const dummyCurriculum = [
-  {
-    name: "intro to AI",
-    date: "2024-10-14",
-  },
-  {
-    name: "Ecology 101",
-    date: "2024-10-14",
-  },
-];
+import { CurriculumState } from "../../../../types/curriculum";
+import useNotification from "../../../../hooks/useNotification";
 
 const Curriculum = () => {
-  const [loading] = useState(false);
-  const [limit] = useState(5);
-  const [skip] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [curriculum, setCurriculum] = useState<CurriculumState | null>(null);
+  const [limit] = useState(3);
+  const [skip, setSkip] = useState(0);
   const [search] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
 
+  const { handleError } = useNotification();
+
   useEffect(() => {
     handleGetCurriculum();
-  }, []);
+  }, [skip, limit]);
 
   const handleGetCurriculum = () => {
-    getCurriculums(limit, skip, search).then((res) => {
-      console.log(res);
-    });
+    setLoading(true);
+    getCurriculums(limit, skip, search)
+      .then((res: any) => {
+        setCurriculum(res.data);
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
     <Fragment>
-      <AddCurriculum opened={opened} close={close} callback={() => {}} />
+      <AddCurriculum
+        opened={opened}
+        close={close}
+        callback={handleGetCurriculum}
+      />
 
       <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
@@ -58,7 +64,12 @@ const Curriculum = () => {
               />
             </div>
           </div>
-          <CurriculumsTable curriculums={dummyCurriculum} />
+          <CurriculumsTable
+            curriculums={curriculum}
+            limit={limit}
+            skip={skip}
+            setSkip={setSkip}
+          />
         </div>
       </div>
     </Fragment>

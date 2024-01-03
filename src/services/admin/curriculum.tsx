@@ -1,30 +1,30 @@
 import AxoisApi from "../../api";
 import { APIS } from "../../api/api";
 
-export const addAdmin = (data: any) => {
-    return new Promise((resolve, reject) => {
-      AxoisApi.post(`${APIS.ADMIN}/curriculum`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
+export const addCurriculum = (data: any) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.post(`${APIS.CURRICULUM}/curriculum`, data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((res: any) => {
+        resolve(res);
       })
-        .then((res: any) => {
-          resolve(res);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  };
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
 
 export const getCurriculums = (limit: number, skip: number, search: string) => {
-    return new Promise((resolve, reject) => {
-      AxoisApi.get(
-        `${APIS.ADMIN}/curriculum?limit=${limit}&skip=${skip}&search=${search}`
-      )
-        .then((res: any) => {
-          resolve(res);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  };
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(
+      `${APIS.CURRICULUM}/curriculum?limit=${limit}&skip=${skip}&search=${search}`
+    )
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
