@@ -13,14 +13,14 @@ const Curriculum = () => {
   const [curriculum, setCurriculum] = useState<CurriculumState | null>(null);
   const [limit] = useState(3);
   const [skip, setSkip] = useState(0);
-  const [search] = useState("");
+  const [search, setSearch] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
 
   const { handleError } = useNotification();
 
   useEffect(() => {
     handleGetCurriculum();
-  }, [skip, limit]);
+  }, [skip, limit, search]);
 
   const handleGetCurriculum = () => {
     setLoading(true);
@@ -61,6 +61,8 @@ const Curriculum = () => {
                 leftSection={<CiSearch />}
                 size="md"
                 placeholder="search.."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
           </div>

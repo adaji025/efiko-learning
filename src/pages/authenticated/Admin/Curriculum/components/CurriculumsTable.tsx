@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment,  useState } from "react";
 import { Pagination, Table } from "@mantine/core";
 import { CiEdit } from "react-icons/ci";
 import { GrCloudDownload } from "react-icons/gr";
@@ -19,17 +19,11 @@ type IProps = {
   setSkip: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const CurriculumsTable = ({ curriculums, skip, limit, setSkip }: IProps) => {
+const CurriculumsTable = ({ curriculums, skip, setSkip }: IProps) => {
   const [edit, setEdit] = useState(false);
-  const [totalPages, setTotalPages] = useState(1);
   const [opened, { open, close }] = useDisclosure(false);
 
-  useEffect(() => {
-    if (curriculums) setTotalPages(Math.ceil(10 / 3));
-  }, [curriculums, limit, skip]);
-  console.log("total page",totalPages);
-  console.log("perPage", limit, curriculums?.length);
-  console.log("length", curriculums?.length);
+ 
 
   return (
     <Fragment>
