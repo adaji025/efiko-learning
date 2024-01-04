@@ -73,7 +73,7 @@ const AdminTable = ({
         opened={opened}
         close={close}
         handleClick={handleUpdateAdmin}
-        btnText={status === "Inactivate" ? "Deactivate user" : "Activate user"}
+        btnText={status === "Inactive" ? "Deactivate user" : "Activate user"}
       />
 
       <LoadingOverlay visible={loading} />
@@ -111,8 +111,8 @@ const AdminTable = ({
                         onClick={() => {
                           open();
                           setAdmin(admin);
-                          admin.status === "Active" && setStatus("Inactivate");
-                          admin.status === "inactive" && setStatus("Activate");
+                          admin.status === "Active" && setStatus("Inactive");
+                          admin.status === "inactive" && setStatus("Active");
                         }}
                       >
                         {admin.status === "Active" ? "Deactivate" : "Activate"}
