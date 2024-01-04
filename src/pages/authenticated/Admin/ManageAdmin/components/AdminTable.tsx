@@ -1,4 +1,4 @@
-import { Pagination, Table } from "@mantine/core";
+import { Pagination, Table, LoadingOverlay } from "@mantine/core";
 import { Fragment, useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { IoEye } from "react-icons/io5";
@@ -6,6 +6,9 @@ import AddAdmin from "./AddAdmin";
 import ConfirmDisable from "../../../../../components/Confirmation";
 import { useDisclosure } from "@mantine/hooks";
 import { AdminTypes } from "../../../../../types/admins/admin";
+import { updateAdmin } from "../../../../../services/admin";
+import { toast } from "react-toastify";
+import useNotification from "../../../../../hooks/useNotification";
 
 type AdminProps = {
   admins: AdminTypes[] | undefined;
@@ -22,14 +25,42 @@ const AdminTable = ({
   setSkip,
   handleGetAdmins,
 }: AdminProps) => {
+  const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
   const [admin, setAdmin] = useState<AdminTypes | null>(null);
+  const [status, setStatus] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
     if (admins) setTotalPages(Math.ceil(admins?.length / limit));
   }, [admins, limit]);
+
+  console.log(admins);
+  console.log(status);
+
+  const { handleError } = useNotification();
+
+  const handleUpdateAdmin = () => {
+    setLoading(true);
+
+    const values = {
+      status,
+    };
+    admin &&
+      updateAdmin(admin?._id, values)
+      .then(() => {
+        toast.success(`Admin ${status === "Activate" ? "Deactivated" : "Activated"} successfully`)
+          close();
+          handleGetAdmins();
+        })
+        .catch((err) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
   return (
     <Fragment>
       <AddAdmin
@@ -41,9 +72,11 @@ const AdminTable = ({
       <ConfirmDisable
         opened={opened}
         close={close}
-        handleClick={() => {}}
-        btnText="Disable user"
+        handleClick={handleUpdateAdmin}
+        btnText={status === "Inactivate" ? "Deactivate user" : "Activate user"}
       />
+
+      <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -71,13 +104,18 @@ const AdminTable = ({
                     <div className="flex items-center gap-3">
                       <button
                         className={` w-full md:w-1/2 text-white px-4 py-2 rounded-md text-xs sm:text-sm ${
-                          admin.status === "active"
+                          admin.status === "Active"
                             ? "bg-red-400"
                             : "bg-primary"
                         }`}
-                        onClick={open}
+                        onClick={() => {
+                          open();
+                          setAdmin(admin);
+                          admin.status === "Active" && setStatus("Inactivate");
+                          admin.status === "inactive" && setStatus("Activate");
+                        }}
                       >
-                        {admin.status === "active" ? "Disable" : "Activate"}
+                        {admin.status === "Active" ? "Deactivate" : "Activate"}
                       </button>
                       <CiEdit
                         size={24}

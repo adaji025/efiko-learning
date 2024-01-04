@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import useNotification from "../../../../../hooks/useNotification";
-import { addAdmin } from "../../../../../services/admin";
+import { addAdmin, updateAdmin } from "../../../../../services/admin";
 import { toast } from "react-toastify";
 import { AdminTypes } from "../../../../../types/admins/admin";
 
@@ -41,7 +41,7 @@ const AddAdmin = ({ close, opened, callback, admin }: Props) => {
     });
   }, [admin]);
 
-  const submit = (values: any) => {
+  const handleAddAdmin = (values: any) => {
     setLoading(true);
 
     addAdmin(values)
@@ -53,11 +53,29 @@ const AddAdmin = ({ close, opened, callback, admin }: Props) => {
       })
       .catch((err) => {
         handleError(err);
-        console.log(err);
       })
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  const handleUpdateAdmin = (values: any) => {
+    setLoading(true);
+
+    admin &&
+      updateAdmin(admin?._id, values)
+        .then(() => {
+          toast.success("Admin updated successfully");
+          close();
+          callback();
+          form.reset();
+        })
+        .catch((err) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
   };
 
   return (
@@ -73,7 +91,11 @@ const AddAdmin = ({ close, opened, callback, admin }: Props) => {
         onClose={close}
         title="Authentication"
       >
-        <form onSubmit={form.onSubmit((values) => submit(values))}>
+        <form
+          onSubmit={form.onSubmit((values) => {
+            admin ? handleUpdateAdmin(values) : handleAddAdmin(values);
+          })}
+        >
           <Title order={3} ta="center">
             Please enter new admin details
           </Title>
@@ -106,7 +128,7 @@ const AddAdmin = ({ close, opened, callback, admin }: Props) => {
 
           <div className="flex justify-end">
             <Button size="md" type="submit" mt={16} className="bg-primary">
-              Add admin
+              {admin ? "Update admin" : "Add Admin"}
             </Button>
           </div>
         </form>

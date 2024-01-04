@@ -13,7 +13,7 @@ const ManageAdmin = () => {
   const [admins, setAdmins] = useState<AdminState | null>(null);
   const [limit] = useState(5);
   const [skip, setSkip] = useState(0);
-  const [search] = useState("");
+  const [search, setSearch] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
 
   const { handleError } = useNotification();
@@ -56,6 +56,8 @@ const ManageAdmin = () => {
                 leftSection={<CiSearch />}
                 size="md"
                 placeholder="search.."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
           </div>
