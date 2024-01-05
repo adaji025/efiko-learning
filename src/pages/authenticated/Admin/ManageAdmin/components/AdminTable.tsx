@@ -5,13 +5,13 @@ import { IoEye } from "react-icons/io5";
 import AddAdmin from "./AddAdmin";
 import ConfirmDisable from "../../../../../components/Confirmation";
 import { useDisclosure } from "@mantine/hooks";
-import { AdminTypes } from "../../../../../types/admins/admin";
+import { AdminState, AdminTypes } from "../../../../../types/admins/admin";
 import { updateAdmin } from "../../../../../services/admin";
 import { toast } from "react-toastify";
 import useNotification from "../../../../../hooks/useNotification";
 
 type AdminProps = {
-  admins: AdminTypes[] | undefined;
+  admins: AdminState | null;
   limit: number;
   skip: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
@@ -33,11 +33,9 @@ const AdminTable = ({
   const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
-    if (admins) setTotalPages(Math.ceil(admins?.length / limit));
+    if (admins) setTotalPages(Math.ceil(admins?.total / limit));
   }, [admins, limit]);
 
-  console.log(admins);
-  console.log(status);
 
   const { handleError } = useNotification();
 
@@ -90,7 +88,7 @@ const AdminTable = ({
           </Table.Thead>
           <Table.Tbody>
             {admins &&
-              admins.map((admin, i) => (
+              admins.data.map((admin, i) => (
                 <Table.Tr key={i}>
                   <Table.Td
                     className="cursor-pointer"

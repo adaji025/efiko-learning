@@ -62,7 +62,7 @@ const ManageAdmin = () => {
             </div>
           </div>
           <AdminTable
-            admins={admins?.data}
+            admins={admins}
             limit={limit}
             setSkip={setSkip}
             skip={skip}

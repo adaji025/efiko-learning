@@ -3,6 +3,7 @@ export type AdminState = {
   msg: string;
   data: AdminTypes[];
   length: number;
+  total: number;
 };
 
 export type AdminTypes = {

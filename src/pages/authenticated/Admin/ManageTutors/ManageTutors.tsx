@@ -10,16 +10,16 @@ const ManageTutors = () => {
   const [loading, setLoading] = useState(false);
   const [tutors, setTutors] = useState<TutorState | null>(null);
   const [limit] = useState(5);
-  const [skip] = useState(0);
-  const [search] = useState("");
+  const [skip, setSkip] = useState(0);
+  const [search, setSearch] = useState("");
 
-  console.log(tutors)
+  console.log(tutors);
 
   const { handleError } = useNotification();
 
   useEffect(() => {
     handleGetTutors();
-  }, []);
+  }, [limit, skip, search]);
 
   const handleGetTutors = () => {
     setLoading(true);
@@ -47,9 +47,16 @@ const ManageTutors = () => {
               leftSection={<CiSearch />}
               size="md"
               placeholder="search.."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <TutorTable tutors={tutors?.data} />
+          <TutorTable
+            tutors={tutors}
+            limit={limit}
+            setSkip={setSkip}
+            skip={skip}
+          />
         </div>
       </div>
     </Fragment>
