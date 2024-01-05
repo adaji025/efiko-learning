@@ -1,27 +1,30 @@
 import { useEffect, useState, Fragment } from "react";
 import { TextInput, LoadingOverlay } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
-import { SessionTypes } from "../../../../types/session";
 import useNotification from "../../../../hooks/useNotification";
-import { getSession } from "../../../../services/session";
 import RecordedSessionTable from "./components/RecordedSessionTable";
+import { getAdminUpcomingSession } from "../../../../services/admin/session";
+import { AdminSessionState } from "../../../../types/admins/session";
 
 const ManageRecordedSession = () => {
-  const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
+  const [sessions, setSessions] = useState<AdminSessionState | null>(null);
   const [loading, setLoading] = useState(false);
+  const [limit] = useState(5);
+  const [skip, setSkip] = useState(1);
+  const [search, setSearch] = useState("");
 
   const { handleError } = useNotification();
 
   useEffect(() => {
     handleGetSessions();
-  }, []);
+  }, [limit, skip, search]);
 
   const handleGetSessions = () => {
     setLoading(true);
 
-    getSession()
+    getAdminUpcomingSession(limit, skip, search)
       .then((res: any) => {
-        setSessions(res.data.data);
+        setSessions(res.data);
       })
       .catch((err: any) => {
         handleError(err);
@@ -44,10 +47,17 @@ const ManageRecordedSession = () => {
               size="md"
               mt={10}
               placeholder="search.."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
-          <RecordedSessionTable sessions={sessions} />
+          <RecordedSessionTable
+            sessions={sessions}
+            limit={limit}
+            skip={skip}
+            setSkip={setSkip}
+          />
         </div>
       </div>
     </Fragment>
