@@ -1,20 +1,28 @@
 import { Menu, Pagination, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Confirmation from "../../../../../components/Confirmation";
 import ConfirmActivate from "../../../../../components/Confirmation";
 import { SlOptionsVertical } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
-import { TutorTypes } from "../../../../../types/admins/tutor";
+import { TutorState } from "../../../../../types/admins/tutor";
 
 type IProps = {
-  tutors: TutorTypes[] | undefined;
+  tutors: TutorState | null;
+  limit: number;
+  skip: number;
+  setSkip: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const TutorTable = ({ tutors }: IProps) => {
+const TutorTable = ({ tutors, limit, setSkip, skip }: IProps) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [activate, setActivate] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (tutors) setTotalPages(Math.ceil(tutors?.total / limit));
+  }, [tutors, limit]);
   return (
     <Fragment>
       <Confirmation
@@ -42,8 +50,8 @@ const TutorTable = ({ tutors }: IProps) => {
           </Table.Thead>
           <Table.Tbody>
             {tutors &&
-              tutors.map((tutor, i) => (
-                <Table.Tr key={i}>
+              tutors.data.map((tutor) => (
+                <Table.Tr key={tutor._id}>
                   <Table.Td
                     className="cursor-pointer"
                     onClick={() => navigate("view-tutor")}
@@ -94,7 +102,13 @@ const TutorTable = ({ tutors }: IProps) => {
         )}
       </div>
       <div className="mt-10">
-        <Pagination total={10} className="text-primary" />
+        <Pagination
+          total={totalPages}
+          siblings={1}
+          value={skip}
+          onChange={setSkip}
+          className="text-primary"
+        />
       </div>
     </Fragment>
   );

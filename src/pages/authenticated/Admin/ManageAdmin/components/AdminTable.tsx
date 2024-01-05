@@ -36,8 +36,6 @@ const AdminTable = ({
     if (admins) setTotalPages(Math.ceil(admins?.total / limit));
   }, [admins, limit]);
 
-  console.log(admins);
-  console.log(status);
 
   const { handleError } = useNotification();
 
