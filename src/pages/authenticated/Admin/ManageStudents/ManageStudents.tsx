@@ -4,35 +4,25 @@ import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import StudentsTable from "./components/StudentsTable";
 import { getStudents } from "../../../../services/admin/students";
+import { StudentState } from "../../../../types/admins/student";
 
-const dummyStudents = [
-  {
-    name: "Student One",
-    email: "student@gmail.com",
-    status: "active",
-  },
-  {
-    name: "Test student",
-    email: "student@gmail.com",
-    status: "inactive",
-  },
-];
+
 
 const ManageStudents = () => {
-  // const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState<StudentState | null>(null);
   const [loading] = useState(false);
   const [limit] = useState(5);
-  const [skip] = useState(0);
-  const [search] = useState("");
+  const [skip, setSkip] = useState(0);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     handleGetStudents();
-  }, []);
+  }, [limit, skip, search]);
 
   const handleGetStudents = () => {
     getStudents(limit, skip, search).then((res: any) => {
-      console.log(res);
+      setStudents(res.data);
     });
   };
   return (
@@ -58,10 +48,12 @@ const ManageStudents = () => {
                 leftSection={<CiSearch />}
                 size="md"
                 placeholder="search.."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
           </div>
-          <StudentsTable students={dummyStudents} />
+          <StudentsTable students={students} limit={limit} setSkip={setSkip} skip={skip} />
         </div>
       </div>
     </Fragment>

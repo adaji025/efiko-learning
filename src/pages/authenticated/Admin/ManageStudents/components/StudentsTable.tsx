@@ -1,20 +1,25 @@
 import { Pagination, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import ConfirmDisable from "../../../../../components/Confirmation";
 import { useNavigate } from "react-router-dom";
+import { StudentState } from "../../../../../types/admins/student";
 
-type AdminProps = {
-  students: {
-    name: string;
-    email: string;
-    status: string;
-  }[];
+type StudentProps = {
+  students: StudentState | null;
+  limit: number,
+  skip: number,
+  setSkip: React.Dispatch<React.SetStateAction<number>>,
 };
 
-const StudentsTable = ({ students }: AdminProps) => {
+const StudentsTable = ({ students, limit, setSkip, skip }: StudentProps) => {
+  const [totalPages, setTotalPages] = useState(1);
   const [opened, { open, close }] = useDisclosure(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (students) setTotalPages(Math.ceil(students?.total / limit));
+  }, [students, limit]);
   return (
     <Fragment>
       <ConfirmDisable
@@ -36,24 +41,24 @@ const StudentsTable = ({ students }: AdminProps) => {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {students.map((admin, i) => (
+            {students?.data.map((student, i) => (
               <Table.Tr key={i}>
                 <Table.Td
                   className="cursor-pointer"
                   onClick={() => navigate("view-student")}
                 >
-                  {admin.name}
+                  {student.firstName} {student.lastName}
                 </Table.Td>
-                <Table.Td>{admin.email}</Table.Td>
-                <Table.Td>{admin.status}</Table.Td>
+                <Table.Td>{student.email}</Table.Td>
+                <Table.Td>{student.status}</Table.Td>
                 <Table.Td>
                   <button
-                    className={` w-full md:w-1/2 text-white px-4 py-2 rounded-md ${
-                      admin.status === "active" ? "bg-red-400" : "bg-primary"
+                    className={` w-full xl:w-1/2 text-white px-4 py-2 rounded-md ${
+                      student.status === "active" ? "bg-red-400" : "bg-primary"
                     }`}
                     onClick={open}
                   >
-                    {admin.status === "active" ? "Deactivate" : "Activate"}
+                    {student.status === "active" ? "Deactivate" : "Activate"}
                   </button>
                 </Table.Td>
               </Table.Tr>
@@ -68,7 +73,10 @@ const StudentsTable = ({ students }: AdminProps) => {
         )}
       </div>
       <div className="mt-10">
-        <Pagination total={10} className="text-primary" />
+        <Pagination total={totalPages}
+          siblings={1}
+          value={skip}
+          onChange={setSkip} className="text-primary" />
       </div>
     </Fragment>
   );
