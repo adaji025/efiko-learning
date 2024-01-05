@@ -1,19 +1,35 @@
 import { Menu, Pagination, Table } from "@mantine/core";
 import moment from "moment";
 import { SlOptionsVertical } from "react-icons/sl";
-import { SessionTypes } from "../../../../../types/session";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDisclosure } from "@mantine/hooks";
 import Confirmation from "../../../../../components/Confirmation";
+import { AdminSessionState } from "../../../../../types/admins/session";
 
 type SessionProps = {
-  sessions: SessionTypes[] | null;
+  sessions: AdminSessionState | null;
+  skip: number;
+  limit: number;
+  setSkip: React.Dispatch<React.SetStateAction<number>>;
+  handleGetSessions: () => void;
 };
 
-const UpcomingSessionTable = ({ sessions }: SessionProps) => {
+const UpcomingSessionTable = ({
+  sessions,
+  handleGetSessions,
+  limit,
+  setSkip,
+  skip,
+}: SessionProps) => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
+  }, [sessions, limit]);
+
   return (
     <Fragment>
       <Confirmation
@@ -36,7 +52,7 @@ const UpcomingSessionTable = ({ sessions }: SessionProps) => {
           </Table.Thead>
           <Table.Tbody>
             {sessions &&
-              sessions.map((session) => (
+              sessions?.data?.map((session) => (
                 <Table.Tr key={session._id}>
                   <Table.Td
                     className="cursor-pointer"
@@ -48,11 +64,11 @@ const UpcomingSessionTable = ({ sessions }: SessionProps) => {
                   >
                     {session.title}
                   </Table.Td>
-                  <Table.Td>{session.tutorId?.fullName}</Table.Td>
+                  <Table.Td>Tutor</Table.Td>
                   <Table.Td>
-                    {moment(session.date).format("YYYY-MM-DD")}
+                    {moment(session.timeAndDate).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>{moment(session.date).format("HH : MM")}</Table.Td>
+                  <Table.Td>{moment(session.time).format("HH : MM")}</Table.Td>
                   <Table.Td>3</Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
@@ -100,7 +116,13 @@ const UpcomingSessionTable = ({ sessions }: SessionProps) => {
         )}
       </div>
       <div className="mt-10">
-        <Pagination total={10} className="text-primary" />
+        <Pagination
+          total={totalPages}
+          siblings={1}
+          value={skip}
+          onChange={setSkip}
+          className="text-primary"
+        />
       </div>
     </Fragment>
   );

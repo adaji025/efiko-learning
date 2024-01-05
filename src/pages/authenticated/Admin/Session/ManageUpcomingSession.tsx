@@ -2,27 +2,30 @@ import { Fragment, useEffect, useState } from "react";
 import { TextInput, LoadingOverlay } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import useNotification from "../../../../hooks/useNotification";
-import { SessionTypes } from "../../../../types/session";
-import { getUpcomingSession } from "../../../../services/session";
 import UpcomingSessionTable from "./components/UpcominSessionTable";
+import { getAdminUpcomingSession } from "../../../../services/admin/session";
+import { AdminSessionState } from "../../../../types/admins/session";
 
 const ManageUpcomingSession = () => {
-  const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
+  const [sessions, setSessions] = useState<AdminSessionState | null>(null);
   const [loading, setLoading] = useState(false);
+  const [limit] = useState(5);
+  const [skip, setSkip] = useState(0);
+  const [search, setSearch] = useState("");
 
   const { handleError } = useNotification();
 
-
   useEffect(() => {
     handleGetSessions();
-  }, []);
+  }, [limit, skip, search]);
 
   const handleGetSessions = () => {
     setLoading(true);
 
-    getUpcomingSession()
+    getAdminUpcomingSession(limit, skip, search)
       .then((res: any) => {
-        setSessions(res.data.data);
+        setSessions(res.data);
+        console.log(res);
       })
       .catch((err: any) => {
         handleError(err);
@@ -46,9 +49,17 @@ const ManageUpcomingSession = () => {
               size="md"
               mt={10}
               placeholder="search.."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <UpcomingSessionTable sessions={sessions} />
+          <UpcomingSessionTable
+            sessions={sessions}
+            limit={limit}
+            skip={skip}
+            setSkip={setSkip}
+            handleGetSessions={handleGetSessions}
+          />
         </div>
       </div>
     </Fragment>
