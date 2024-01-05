@@ -12,12 +12,11 @@ type SessionProps = {
   skip: number;
   limit: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
-  handleGetSessions: () => void;
+  handleGetSessions?: () => void;
 };
 
 const UpcomingSessionTable = ({
   sessions,
-  handleGetSessions,
   limit,
   setSkip,
   skip,
@@ -68,7 +67,10 @@ const UpcomingSessionTable = ({
                   <Table.Td>
                     {moment(session.timeAndDate).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>{moment(session.time).format("HH : MM")}</Table.Td>
+                  <Table.Td>
+                    {/* {moment(session.time).format("HH : MM")} */}
+                    {session.time}
+                  </Table.Td>
                   <Table.Td>3</Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
