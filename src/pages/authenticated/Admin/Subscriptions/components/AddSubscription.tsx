@@ -93,8 +93,8 @@ const AddSubscription = ({ close, opened, callback }: Props) => {
           <Select
             required
             mt={8}
-            label="Admin Type"
-            placeholder="Select admin type"
+            label="Subscription Type"
+            placeholder="Select subscription type"
             data={[
               { label: "Bi-Weekly", value: "Bi-Weekly" },
               { label: "Tri-Weekly", value: "Tri-Weekly" },
