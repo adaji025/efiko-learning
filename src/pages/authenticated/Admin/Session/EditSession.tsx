@@ -11,18 +11,18 @@ import {
 import { useForm } from "@mantine/form";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 import { useLocation, useNavigate } from "react-router-dom";
-import { SessionTypes } from "../../../../types/session";
 import { subjects } from "../../../../components/data";
 import { FaRegClock } from "react-icons/fa6";
 import { updateSession } from "../../../../services/session";
 import useNotification from "../../../../hooks/useNotification";
 import { toast } from "react-toastify";
+import { AdminSessionType } from "../../../../types/admins/session";
 
 const EditSession = () => {
   const [loading, setLoading] = useState(false);
   const timeRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
-  const session: SessionTypes = location.state;
+  const session: AdminSessionType = location.state;
 
   const userId = localStorage.getItem("userId") ?? "";
   const { handleError } = useNotification();
@@ -46,17 +46,19 @@ const EditSession = () => {
       outcome: "",
       date: new Date(),
       time: "",
+      duration: "",
     },
   });
 
   useEffect(() => {
     form.setValues({
-      title: session ? session.title : "",
-      category: session ? session.category : "",
-      description: session ? session.description : "",
-      outcome: session ? session.outcome : "",
-      date: new Date(session.date),
-      time: session ? session.time : "",
+      title: session ? session?.title : "",
+      category: session ? session?.category : "",
+      description: session ? session?.description : "",
+      outcome: session ? session?.outcome : "",
+      date: new Date(session.timeAndDate),
+      time: session ? session?.time : "",
+      duration: session ? session?.duration : "",
       // @ts-ignore
     });
   }, [session]);
@@ -91,7 +93,7 @@ const EditSession = () => {
               size="md"
               label="Title of the session"
               {...form.getInputProps("title")}
-              defaultValue={session.title}
+              defaultValue={session?.title}
             />
             <Select
               required
@@ -122,7 +124,7 @@ const EditSession = () => {
               size="sm"
               className=""
               {...form.getInputProps("outcome")}
-              defaultValue={session.outcome}
+              defaultValue={session?.outcome}
             />
             <div className="grid grid-cols-2 gap-[16px]">
               <DatePickerInput
@@ -133,7 +135,7 @@ const EditSession = () => {
                 placeholder="Pick date"
                 className="flex-1"
                 {...form.getInputProps("date")}
-                defaultValue={new Date(session.date)}
+                defaultValue={new Date(session.timeAndDate)}
               />
               <TimeInput
                 ref={timeRef}
@@ -154,6 +156,8 @@ const EditSession = () => {
                 label="Session duration"
                 placeholder="Enter duration in hours"
                 className="flex-1"
+                {...form.getInputProps("duration")}
+                defaultValue={session.duration}
               />
             </div>
 

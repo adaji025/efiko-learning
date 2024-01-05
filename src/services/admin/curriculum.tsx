@@ -29,10 +29,9 @@ export const getCurriculums = (limit: number, skip: number, search: string) => {
   });
 };
 
-
-export const deleteCurriculum = (id: string) => {
+export const getAllCurriculums = () => {
   return new Promise((resolve, reject) => {
-    AxoisApi.delete(`${APIS.CURRICULUM}/${id}` )
+    AxoisApi.get(`${APIS.CURRICULUM}`)
       .then((res: any) => {
         resolve(res);
       })
@@ -42,7 +41,19 @@ export const deleteCurriculum = (id: string) => {
   });
 };
 
-export const updateCurriculum = (id:string, data: any) => {
+export const deleteCurriculum = (id: string) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.delete(`${APIS.CURRICULUM}/${id}`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const updateCurriculum = (id: string, data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.patch(`${APIS.CURRICULUM}/${id}`, data, {
       headers: { "Content-Type": "multipart/form-data" },

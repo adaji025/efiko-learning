@@ -1,4 +1,4 @@
-import { Fragment, useState, useRef } from "react";
+import { Fragment, useState, useRef, useEffect } from "react";
 import {
   TextInput,
   Select,
@@ -17,10 +17,13 @@ import useNotification from "../../../../hooks/useNotification";
 import { addSession } from "../../../../services/session";
 import { subjects } from "../../../../components/data";
 import SchedulePreviews from "./components/SchedulePreviews";
+import { CurriculumTypes } from "../../../../types/curriculum";
+import { getAllCurriculums } from "../../../../services/admin/curriculum";
 
 const ScheduleSession = () => {
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(false);
+  const [curriculum, setCurriculum] = useState<CurriculumTypes[]>([]);
   const timeRef = useRef<HTMLInputElement>(null);
   const { handleError } = useNotification();
 
@@ -42,7 +45,8 @@ const ScheduleSession = () => {
       outcome: "",
       date: new Date(),
       time: "",
-      duration: ""
+      duration: "",
+      curriculumId: "",
     },
   });
 
@@ -57,6 +61,26 @@ const ScheduleSession = () => {
       return true;
     return false;
   }, [form.values]);
+
+  console.log(curriculum);
+
+  useEffect(() => {
+    handleGetCurriculum();
+  }, []);
+
+  const handleGetCurriculum = () => {
+    setLoading(true);
+    getAllCurriculums()
+      .then((res: any) => {
+        setCurriculum(res.data.data);
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
 
   const submit = (values: any) => {
     setLoading(true);
@@ -73,7 +97,7 @@ const ScheduleSession = () => {
         setLoading(false);
       });
 
-    console.log(values)
+    console.log(values);
   };
 
   const previewData = form.values;
@@ -111,9 +135,12 @@ const ScheduleSession = () => {
               size="md"
               mt={16}
               label="Curriculum"
-              data={subjects.map((subject) => subject)}
+              data={curriculum.map((item) => ({
+                label: item.title,
+                value: item._id,
+              }))}
               searchable
-              {...form.getInputProps("category")}
+              {...form.getInputProps("curriculumId")}
             />
             <Textarea
               mt={16}
@@ -195,7 +222,11 @@ const ScheduleSession = () => {
       )}
 
       {preview && (
-        <SchedulePreviews setPreview={setPreview} previewData={previewData} />
+        <SchedulePreviews
+          setPreview={setPreview}
+          previewData={previewData}
+          curriculum={curriculum}
+        />
       )}
     </Fragment>
   );

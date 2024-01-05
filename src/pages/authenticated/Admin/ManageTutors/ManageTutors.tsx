@@ -3,48 +3,36 @@ import { CiSearch } from "react-icons/ci";
 import TutorTable from "./Components/TutorTable";
 import { Fragment, useEffect, useState } from "react";
 import { getTutors } from "../../../../services/admin/tutors";
-
-const dummyTutors = [
-  {
-    name: "tutor One",
-    email: "tutor@gmail.com",
-    status: "pending",
-    suspend: false,
-  },
-  {
-    name: "Test tutor",
-    email: "tutor@gmail.com",
-    status: "approved",
-    suspend: true,
-  },
-  {
-    name: "Test tutor three",
-    email: "tutor@gmail.com",
-    status: "rejected",
-    suspend: true,
-  },
-  {
-    name: "Test tutor four",
-    email: "tutor@gmail.com",
-    status: "approved",
-    suspend: false,
-  },
-];
+import useNotification from "../../../../hooks/useNotification";
+import { TutorState } from "../../../../types/admins/tutor";
 
 const ManageTutors = () => {
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [tutors, setTutors] = useState<TutorState | null>(null);
   const [limit] = useState(5);
   const [skip] = useState(0);
   const [search] = useState("");
+
+  console.log(tutors)
+
+  const { handleError } = useNotification();
 
   useEffect(() => {
     handleGetTutors();
   }, []);
 
   const handleGetTutors = () => {
-    getTutors(limit, skip, search).then((res) => {
-      console.log(res);
-    });
+    setLoading(true);
+    getTutors(limit, skip, search)
+      .then((res: any) => {
+        setTutors(res.data);
+      })
+      .then((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <Fragment>
@@ -61,7 +49,7 @@ const ManageTutors = () => {
               placeholder="search.."
             />
           </div>
-          <TutorTable tutors={dummyTutors} />
+          <TutorTable tutors={tutors?.data} />
         </div>
       </div>
     </Fragment>

@@ -1,5 +1,6 @@
 import { BiArrowBack } from "react-icons/bi";
 import { convertMinutesToHours } from "../../../../../utils";
+import { CurriculumTypes } from "../../../../../types/curriculum";
 
 type PreviewType = {
   previewData: {
@@ -10,11 +11,18 @@ type PreviewType = {
     date: Date;
     time: string;
     duration: string;
+    curriculumId: string;
   };
+  curriculum: CurriculumTypes[];
   setPreview: React.Dispatch<React.SetStateAction<boolean>>;
 };
-const SchedulePreviews = ({ previewData, setPreview }: PreviewType) => {
-  console.log(previewData.date.toString());
+const SchedulePreviews = ({
+  previewData,
+  setPreview,
+  curriculum,
+}: PreviewType) => {
+  const singleCurriculum = curriculum.find((curriculum) => curriculum._id)?.title;
+  console.log(singleCurriculum);
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -28,12 +36,20 @@ const SchedulePreviews = ({ previewData, setPreview }: PreviewType) => {
       </div>
       <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
         <div className="w-full border-b px-4 lg:px-10 py-4 font-semibold text-lg">
-          {previewData.title}: <span className="font-normal pl-2 text-base"> {previewData.description} </span>
+          {previewData.title}:{" "}
+          <span className="font-normal pl-2 text-base">
+            {" "}
+            {previewData.description}{" "}
+          </span>
         </div>
         <div className="px-4 lg:px-10 mt-3">
           <div>
             <div className="sm:text-lg font-medium">Subject Category: </div>
             <div className="text-sm ml-2">{previewData.category}</div>
+          </div>
+          <div className="mt-3">
+            <div className="sm:text-lg font-medium">Subject Curriculum: </div>
+            <div className="text-sm ml-2">{singleCurriculum}</div>
           </div>
           <div className="mt-5">
             <div className="sm:text-lg font-medium">Session Description: </div>
@@ -62,11 +78,17 @@ const SchedulePreviews = ({ previewData, setPreview }: PreviewType) => {
             </div>
             <div>
               <div className="sm:text-lg font-medium">Session Time: </div>
-              <div className="text-sm ml-2"> {previewData.date.toLocaleTimeString()}</div>
+              <div className="text-sm ml-2">
+                {" "}
+                {previewData.date.toLocaleTimeString()}
+              </div>
             </div>
             <div>
               <div className="sm:text-lg font-medium">Session Duration: </div>
-              <div className="text-sm ml-2"> {convertMinutesToHours(Number(previewData.duration))}</div>
+              <div className="text-sm ml-2">
+                {" "}
+                {convertMinutesToHours(Number(previewData.duration))}
+              </div>
             </div>
           </div>
         </div>
