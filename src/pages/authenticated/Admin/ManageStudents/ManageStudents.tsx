@@ -5,15 +5,16 @@ import { useNavigate } from "react-router-dom";
 import StudentsTable from "./components/StudentsTable";
 import { getStudents } from "../../../../services/admin/students";
 import { StudentState } from "../../../../types/admins/student";
-
-
+import useNotification from "../../../../hooks/useNotification";
 
 const ManageStudents = () => {
   const [students, setStudents] = useState<StudentState | null>(null);
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [limit] = useState(5);
   const [skip, setSkip] = useState(0);
   const [search, setSearch] = useState("");
+
+  const { handleError } = useNotification();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,9 +22,17 @@ const ManageStudents = () => {
   }, [limit, skip, search]);
 
   const handleGetStudents = () => {
-    getStudents(limit, skip, search).then((res: any) => {
-      setStudents(res.data);
-    });
+    setLoading(true);
+    getStudents(limit, skip, search)
+      .then((res: any) => {
+        setStudents(res.data);
+      })
+      .catch((err: any) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
   return (
     <Fragment>
@@ -53,7 +62,13 @@ const ManageStudents = () => {
               />
             </div>
           </div>
-          <StudentsTable students={students} limit={limit} setSkip={setSkip} skip={skip} />
+          <StudentsTable
+            students={students}
+            limit={limit}
+            setSkip={setSkip}
+            skip={skip}
+            handleGetStudents={handleGetStudents}
+          />
         </div>
       </div>
     </Fragment>

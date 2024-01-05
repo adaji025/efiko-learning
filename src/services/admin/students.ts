@@ -15,7 +15,7 @@ export const addStudent = (data: any) => {
 
 export const changeStudentActiveState = (id: string, data: any) => {
   return new Promise((resolve, reject) => {
-    AxoisApi.post(`${APIS.ADMIN}/student/${id}`, data)
+    AxoisApi.patch(`${APIS.ADMIN}/student/${id}`, data)
       .then((res: any) => {
         resolve(res);
       })
