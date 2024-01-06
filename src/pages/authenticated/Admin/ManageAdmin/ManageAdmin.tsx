@@ -20,7 +20,7 @@ const ManageAdmin = () => {
 
   useEffect(() => {
     handleGetAdmins();
-  }, [skip, limit, search]);
+  }, [skip, limit]);
 
   const handleGetAdmins = () => {
     setLoading(true);
@@ -57,6 +57,14 @@ const ManageAdmin = () => {
                 size="md"
                 placeholder="search.."
                 value={search}
+                onKeyUp={(e: any) => {
+                  if (e.code === "Enter") {
+                    if (search !== "") {
+                      setSearch(search);
+                      handleGetAdmins();
+                    }
+                  }
+                }}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>

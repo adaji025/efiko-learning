@@ -19,7 +19,7 @@ const ManageStudents = () => {
 
   useEffect(() => {
     handleGetStudents();
-  }, [limit, skip, search]);
+  }, [limit, skip]);
 
   const handleGetStudents = () => {
     setLoading(true);
@@ -58,6 +58,14 @@ const ManageStudents = () => {
                 size="md"
                 placeholder="search.."
                 value={search}
+                onKeyUp={(e: any) => {
+                  if (e.code === "Enter") {
+                    if (search !== "") {
+                      setSearch(search);
+                      handleGetStudents();
+                    }
+                  }
+                }}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
