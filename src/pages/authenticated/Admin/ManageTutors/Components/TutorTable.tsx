@@ -36,7 +36,6 @@ const TutorTable = ({
   const [tutor, setTutor] = useState<TutorTypes | null>(null);
   const [totalPages, setTotalPages] = useState(1);
 
-  console.log(action)
 
   const { handleError } = useNotification();
   const navigate = useNavigate();

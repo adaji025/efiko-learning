@@ -26,7 +26,6 @@ const ManageUpcomingSession = () => {
     getAdminUpcomingSession(limit, skip, search)
       .then((res: any) => {
         setSessions(res.data);
-        console.log(res);
       })
       .catch((err: any) => {
         handleError(err);

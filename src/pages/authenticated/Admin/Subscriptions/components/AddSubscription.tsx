@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import {
   Modal,
   Title,
@@ -10,52 +10,76 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import useNotification from "../../../../../hooks/useNotification";
-import { addAdmin } from "../../../../../services/admin";
 import { toast } from "react-toastify";
+import {
+  addSubscription,
+  updateSubscription,
+} from "../../../../../services/admin/subscription";
+import { SubscriptionTypes } from "../../../../../types/admins/subscription";
 
 type Props = {
   opened: boolean;
   close: () => void;
   callback: () => void;
+  subscription?: SubscriptionTypes | null;
 };
 
-const AddSubscription = ({ close, opened, callback }: Props) => {
+const AddSubscription = ({ close, opened, callback, subscription }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const { handleError } = useNotification();
 
   const form = useForm({
     initialValues: {
-      fullName: "",
-      email: "",
-      accountType: "",
-      password: "admin",
+      title: "",
+      amount: "",
+      type: "",
     },
   });
 
-  const submit = () => {
+  useEffect(() => {
+    form.setValues({
+      title: subscription ? subscription.title : "",
+      amount: subscription ? subscription.amount : "",
+      type: subscription ? subscription.type : "",
+    });
+  }, [subscription]);
+
+  const handleAddSubscription = (values: any) => {
     setLoading(true);
 
-    const formData = new FormData();
-    formData.append("fullName", form.values.fullName);
-    formData.append("email", form.values.email);
-    formData.append("accountType", form.values.accountType);
-    formData.append("password", form.values.password);
-
-    addAdmin(formData)
+    addSubscription(values)
       .then(() => {
-        toast.success("Admin added successfully");
+        toast.success("Subscription added successfully");
         close();
         callback();
         form.reset();
       })
       .catch((err) => {
         handleError(err);
-        console.log(err);
       })
       .finally(() => {
         setLoading(false);
       });
+  };
+
+  const handleUpdateSubscription = (values: any) => {
+    setLoading(true);
+
+    subscription &&
+      updateSubscription(subscription._id, values)
+        .then(() => {
+          toast.success("Subscription updated successfully");
+          close();
+          callback();
+          form.reset();
+        })
+        .catch((err) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
   };
 
   return (
@@ -71,7 +95,13 @@ const AddSubscription = ({ close, opened, callback }: Props) => {
         onClose={close}
         title="Authentication"
       >
-        <form onSubmit={form.onSubmit(submit)}>
+        <form
+          onSubmit={form.onSubmit((values) => {
+            subscription
+              ? handleUpdateSubscription(values)
+              : handleAddSubscription(values);
+          })}
+        >
           <Title order={3} ta="center">
             Please enter new subscriptions details
           </Title>
@@ -80,7 +110,7 @@ const AddSubscription = ({ close, opened, callback }: Props) => {
             mt={8}
             label="Title"
             placeholder="Example name"
-            {...form.getInputProps("fullName")}
+            {...form.getInputProps("title")}
           />
           <NumberInput
             hideControls
@@ -88,7 +118,7 @@ const AddSubscription = ({ close, opened, callback }: Props) => {
             mt={8}
             label="Amount"
             placeholder="Enter amount"
-            {...form.getInputProps("email")}
+            {...form.getInputProps("amount")}
           />
           <Select
             required
@@ -96,6 +126,7 @@ const AddSubscription = ({ close, opened, callback }: Props) => {
             label="Subscription Type"
             placeholder="Select subscription type"
             data={[
+              { label: "Weekly", value: "Weekly" },
               { label: "Bi-Weekly", value: "Bi-Weekly" },
               { label: "Tri-Weekly", value: "Tri-Weekly" },
               { label: "Monthly", value: "Monthly" },
@@ -104,12 +135,12 @@ const AddSubscription = ({ close, opened, callback }: Props) => {
               { label: "Semi-Annually", value: "Semi-Annually" },
               { label: "Annually", value: "Annually" },
             ]}
-            {...form.getInputProps("accountType")}
+            {...form.getInputProps("type")}
           />
 
           <div className="flex justify-end">
-            <Button type="submit" mt={16} className="bg-darkBlue">
-              Add admin
+            <Button type="submit" mt={16} className="bg-primary">
+              {subscription? "Update" : "Add"} Subscription
             </Button>
           </div>
         </form>
