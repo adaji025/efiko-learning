@@ -1,4 +1,4 @@
-import { Button, LoadingOverlay, TextInput } from "@mantine/core";
+import { Button, TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { FaTimes } from "react-icons/fa";
 import CurriculumsTable from "./components/CurriculumsTable";
@@ -8,6 +8,7 @@ import AddCurriculum from "./components/AddCurriculum";
 import { getCurriculums } from "../../../../services/admin/curriculum";
 import { CurriculumState } from "../../../../types/curriculum";
 import useNotification from "../../../../hooks/useNotification";
+import TableSkeleton from "../../../../components/TableSkeleton";
 
 const Curriculum = () => {
   const [loading, setLoading] = useState(false);
@@ -45,7 +46,7 @@ const Curriculum = () => {
         callback={handleGetCurriculum}
       />
 
-      <LoadingOverlay visible={loading} />
+      {/* <LoadingOverlay visible={loading} /> */}
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Curriculums
@@ -92,13 +93,17 @@ const Curriculum = () => {
               />
             </div>
           </div>
-          <CurriculumsTable
-            curriculums={curriculum}
-            limit={limit}
-            skip={skip}
-            setSkip={setSkip}
-            handleGetCurriculum={handleGetCurriculum}
-          />
+          {!loading && (
+            <CurriculumsTable
+              curriculums={curriculum}
+              limit={limit}
+              skip={skip}
+              setSkip={setSkip}
+              handleGetCurriculum={handleGetCurriculum}
+            />
+          )}
+
+          {loading && <TableSkeleton />}
         </div>
       </div>
     </Fragment>

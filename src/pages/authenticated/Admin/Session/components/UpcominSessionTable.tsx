@@ -3,8 +3,6 @@ import moment from "moment";
 import { SlOptionsVertical } from "react-icons/sl";
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDisclosure } from "@mantine/hooks";
-import Confirmation from "../../../../../components/Confirmation";
 import { AdminSessionState } from "../../../../../types/admins/session";
 
 type SessionProps = {
@@ -21,7 +19,6 @@ const UpcomingSessionTable = ({
   setSkip,
   skip,
 }: SessionProps) => {
-  const [opened, { open, close }] = useDisclosure(false);
   const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
@@ -31,12 +28,6 @@ const UpcomingSessionTable = ({
 
   return (
     <Fragment>
-      <Confirmation
-        btnText="delete session"
-        close={close}
-        handleClick={() => {}}
-        opened={opened}
-      />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -100,9 +91,6 @@ const UpcomingSessionTable = ({
                           }
                         >
                           Edit session
-                        </Menu.Item>
-                        <Menu.Item color="red" onClick={open}>
-                          Delete session
                         </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
