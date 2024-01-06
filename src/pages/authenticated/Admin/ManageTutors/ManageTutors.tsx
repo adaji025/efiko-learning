@@ -19,7 +19,7 @@ const ManageTutors = () => {
 
   useEffect(() => {
     handleGetTutors();
-  }, [limit, skip, search]);
+  }, [limit, skip]);
 
   const handleGetTutors = () => {
     setLoading(true);
@@ -48,6 +48,14 @@ const ManageTutors = () => {
               size="md"
               placeholder="search.."
               value={search}
+              onKeyUp={(e: any) => {
+                if (e.code === "Enter") {
+                  if (search !== "") {
+                    setSearch(search);
+                    handleGetTutors();
+                  }
+                }
+              }}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>

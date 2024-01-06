@@ -28,7 +28,6 @@ import PreviewSession from "../../pages/authenticated/Sesssion/PreviewSession";
 import UpcomingSessionTutor from "../../pages/authenticated/Sesssion/UpcomingSessionsTutor";
 import AdminDashboard from "../../pages/authenticated/Admin/Dashboard/AdminDashboard";
 import ManageStudents from "../../pages/authenticated/Admin/ManageStudents/ManageStudents";
-import ManageSession from "../../pages/authenticated/Admin/Session/ManageSession";
 import ManageAdmin from "../../pages/authenticated/Admin/ManageAdmin/ManageAdmin";
 import Curriculum from "../../pages/authenticated/Admin/Curriculum/Curriculum";
 import ManagePayments from "../../pages/authenticated/Admin/ManagePayments/ManagePayments";
@@ -133,7 +132,6 @@ const Authenticated = () => {
               <Route path="/dashboard" element={<AdminDashboard />} />
               <Route path="/manage-students" element={<ManageStudents />} />
               <Route path="/manage-admins" element={<ManageAdmin />} />
-              <Route path="/manage-sessions" element={<ManageSession />} />
               <Route path="/manage-payments" element={<ManagePayments />} />
               <Route path="/curriculum" element={<Curriculum />} />
               <Route path="/schedule-sessions" element={<ScheduleSession />} />

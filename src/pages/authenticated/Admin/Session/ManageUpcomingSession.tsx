@@ -17,7 +17,7 @@ const ManageUpcomingSession = () => {
 
   useEffect(() => {
     handleGetSessions();
-  }, [limit, skip, search]);
+  }, [limit, skip]);
 
   const handleGetSessions = () => {
     setLoading(true);
@@ -50,6 +50,14 @@ const ManageUpcomingSession = () => {
               mt={10}
               placeholder="search.."
               value={search}
+              onKeyUp={(e: any) => {
+                if (e.code === "Enter") {
+                  if (search !== "") {
+                    setSearch(search);
+                    handleGetSessions();
+                  }
+                }
+              }}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>

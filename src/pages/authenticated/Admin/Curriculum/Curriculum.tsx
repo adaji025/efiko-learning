@@ -1,5 +1,6 @@
 import { Button, LoadingOverlay, TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
+import { FaTimes } from "react-icons/fa";
 import CurriculumsTable from "./components/CurriculumsTable";
 import { Fragment, useEffect, useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
@@ -20,7 +21,7 @@ const Curriculum = () => {
 
   useEffect(() => {
     handleGetCurriculum();
-  }, [skip, limit, search]);
+  }, [skip, limit]);
 
   const handleGetCurriculum = () => {
     setLoading(true);
@@ -60,9 +61,34 @@ const Curriculum = () => {
               <TextInput
                 leftSection={<CiSearch />}
                 size="md"
-                placeholder="search.."
+                placeholder="Type and press enter.."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onKeyUp={(e: any) => {
+                  if (e.code === "Enter") {
+                    if (search !== "") {
+                      setSearch(search);
+                      handleGetCurriculum();
+                    }
+                  }
+                }}
+                rightSection={
+                  (search !== "" || search !== "") && (
+                    <FaTimes
+                      style={{ opacity: 0.5 }}
+                      className="click cursor-pointer"
+                      onClick={() => {
+                        if (search !== "") {
+                          setLoading(true);
+                          setSearch("");
+                        }
+                        setSearch("");
+                      }}
+                    />
+                  )
+                }
+                onChange={(e: any) => {
+                  setSearch(e.target.value);
+                }}
               />
             </div>
           </div>
