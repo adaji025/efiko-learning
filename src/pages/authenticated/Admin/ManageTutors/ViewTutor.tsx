@@ -25,7 +25,7 @@ export const VerifiedIcon = () => {
 const ViewTutor = () => {
   const location = useLocation();
   const tutor: TutorTypes = location.state;
-  console.log(tutor)
+  console.log(tutor);
   return (
     <Fragment>
       <div className="mt-[50px] lg:mt-5">
@@ -38,16 +38,17 @@ const ViewTutor = () => {
               <Avatar size="xl" className="mt-5" />
               <div className="font-semibold mt-5 capitalize">
                 {tutor?.firstName} {tutor?.lastName}
+                {tutor?.fullName}
               </div>
               <div className="text-sm mt-2 capitalize">tutor</div>
-              <div className="text-sm mt-2">{tutor?.email }</div>
+              <div className="text-sm mt-2">{tutor?.email}</div>
 
               <Button
                 size="md"
                 className="bg-secondary text-primary font-bold mt-5"
                 leftSection={<VerifiedIcon />}
               >
-                Approve Account
+                {tutor?.approvalStatus} Account
               </Button>
             </div>
             <div className="flex-1">
@@ -62,7 +63,8 @@ const ViewTutor = () => {
                   Personal Details
                 </div>
                 <div className="mt-2 text-sm">
-                  <span className="font-medium">Name:</span> {tutor?.firstName} {tutor?.lastName}
+                  <span className="font-medium">Name:</span> {tutor?.firstName}{" "}
+                  {tutor?.lastName}
                 </div>
                 <div className="mt-2 text-sm">
                   <span className="font-medium">Age:</span> {tutor?.age}
@@ -80,18 +82,15 @@ const ViewTutor = () => {
                 </div>
                 <div className="mt-2 text-sm">Education: Bachelors </div>
                 <div className="mt-2 text-sm">
-                  Career Interests: Computer Science
-                </div>
-                <div className="mt-2 text-sm">
                   Your Majors: Computer Science
                 </div>
                 <div className="mt-2 text-sm">
                   Subjects you are interested in:{" "}
                 </div>
                 <div className="mt-2 flex flex-wrap gap-5 ">
-                  {[...Array(7)].map((_, i) => (
+                  {tutor?.subjectInterest.map((item, i) => (
                     <div key={i} className="bg-secondary p-2 rounded-md">
-                      Mathematics
+                      {item}
                     </div>
                   ))}
                 </div>

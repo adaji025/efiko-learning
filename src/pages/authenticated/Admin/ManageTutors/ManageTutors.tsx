@@ -1,4 +1,4 @@
-import {  TextInput } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import TutorTable from "./Components/TutorTable";
 import { Fragment, useEffect, useState } from "react";
@@ -65,6 +65,7 @@ const ManageTutors = () => {
               limit={limit}
               setSkip={setSkip}
               skip={skip}
+              handleGetTutors={handleGetTutors}
             />
           )}
 
