@@ -72,7 +72,11 @@ const TutorTable = ({ tutors, limit, setSkip, skip }: IProps) => {
                         </div>
                       </Menu.Target>
                       <Menu.Dropdown>
-                        <Menu.Item onClick={() => navigate("view-tutor")}>
+                        <Menu.Item
+                          onClick={() =>
+                            navigate("view-tutor", { state: tutor })
+                          }
+                        >
                           View
                         </Menu.Item>
                         {tutor.status === "pending" && (

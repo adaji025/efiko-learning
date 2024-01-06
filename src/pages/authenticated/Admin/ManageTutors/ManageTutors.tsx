@@ -1,10 +1,11 @@
-import { LoadingOverlay, TextInput } from "@mantine/core";
+import {  TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import TutorTable from "./Components/TutorTable";
 import { Fragment, useEffect, useState } from "react";
 import { getTutors } from "../../../../services/admin/tutors";
 import useNotification from "../../../../hooks/useNotification";
 import { TutorState } from "../../../../types/admins/tutor";
+import TableSkeleton from "../../../../components/TableSkeleton";
 
 const ManageTutors = () => {
   const [loading, setLoading] = useState(false);
@@ -36,7 +37,6 @@ const ManageTutors = () => {
   };
   return (
     <Fragment>
-      <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Manage Tutors
@@ -59,12 +59,16 @@ const ManageTutors = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <TutorTable
-            tutors={tutors}
-            limit={limit}
-            setSkip={setSkip}
-            skip={skip}
-          />
+          {!loading && (
+            <TutorTable
+              tutors={tutors}
+              limit={limit}
+              setSkip={setSkip}
+              skip={skip}
+            />
+          )}
+
+          {loading && <TableSkeleton />}
         </div>
       </div>
     </Fragment>

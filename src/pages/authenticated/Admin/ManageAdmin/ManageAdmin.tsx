@@ -1,4 +1,4 @@
-import { Button, LoadingOverlay, TextInput } from "@mantine/core";
+import { Button, TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import AdminTable from "./components/AdminTable";
 import { Fragment, useEffect, useState } from "react";
@@ -7,6 +7,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { getAdmins } from "../../../../services/admin";
 import { AdminState } from "../../../../types/admins/admin";
 import useNotification from "../../../../hooks/useNotification";
+import TableSkeleton from "../../../../components/TableSkeleton";
 
 const ManageAdmin = () => {
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ const ManageAdmin = () => {
       })
       .catch((err) => {
         handleError(err);
-        console.log(err)
+        console.log(err);
       })
       .finally(() => {
         setLoading(false);
@@ -39,7 +40,6 @@ const ManageAdmin = () => {
   return (
     <Fragment>
       <AddAdmin opened={opened} close={close} callback={() => {}} />
-      <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Manage Admins
@@ -69,13 +69,16 @@ const ManageAdmin = () => {
               />
             </div>
           </div>
-          <AdminTable
-            admins={admins}
-            limit={limit}
-            setSkip={setSkip}
-            skip={skip}
-            handleGetAdmins={handleGetAdmins}
-          />
+          {!loading && (
+            <AdminTable
+              admins={admins}
+              limit={limit}
+              setSkip={setSkip}
+              skip={skip}
+              handleGetAdmins={handleGetAdmins}
+            />
+          )}
+          {loading && <TableSkeleton />}
         </div>
       </div>
     </Fragment>

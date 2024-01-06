@@ -1,10 +1,11 @@
 import { Fragment, useEffect, useState } from "react";
-import { TextInput, LoadingOverlay } from "@mantine/core";
+import { TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import useNotification from "../../../../hooks/useNotification";
 import UpcomingSessionTable from "./components/UpcominSessionTable";
 import { getAdminUpcomingSession } from "../../../../services/admin/session";
 import { AdminSessionState } from "../../../../types/admins/session";
+import TableSkeleton from "../../../../components/TableSkeleton";
 
 const ManageUpcomingSession = () => {
   const [sessions, setSessions] = useState<AdminSessionState | null>(null);
@@ -37,7 +38,6 @@ const ManageUpcomingSession = () => {
 
   return (
     <Fragment>
-      <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Upcoming Sessions
@@ -61,13 +61,17 @@ const ManageUpcomingSession = () => {
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <UpcomingSessionTable
-            sessions={sessions}
-            limit={limit}
-            skip={skip}
-            setSkip={setSkip}
-            handleGetSessions={handleGetSessions}
-          />
+          {!loading && (
+            <UpcomingSessionTable
+              sessions={sessions}
+              limit={limit}
+              skip={skip}
+              setSkip={setSkip}
+              handleGetSessions={handleGetSessions}
+            />
+          )}
+
+          {loading && <TableSkeleton />}
         </div>
       </div>
     </Fragment>
