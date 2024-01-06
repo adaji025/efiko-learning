@@ -9,6 +9,7 @@ export type SubscriptionState = {
   export type SubscriptionTypes = {
     _id: string
     title: string
+    status: string
     amount: string
     type: string
     createdAt: string
