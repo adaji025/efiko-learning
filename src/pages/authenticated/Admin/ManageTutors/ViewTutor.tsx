@@ -2,6 +2,8 @@ import { Fragment } from "react";
 import { Avatar, Button } from "@mantine/core";
 import { HiMiniIdentification } from "react-icons/hi2";
 import { IoSchoolSharp } from "react-icons/io5";
+import { useLocation } from "react-router-dom";
+import { TutorTypes } from "../../../../types/admins/tutor";
 
 export const VerifiedIcon = () => {
   return (
@@ -21,6 +23,9 @@ export const VerifiedIcon = () => {
 };
 
 const ViewTutor = () => {
+  const location = useLocation();
+  const tutor: TutorTypes = location.state;
+  console.log(tutor);
   return (
     <Fragment>
       <div className="mt-[50px] lg:mt-5">
@@ -31,16 +36,19 @@ const ViewTutor = () => {
           <div className="border rounded-2xl flex flex-col md:flex-row">
             <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
               <Avatar size="xl" className="mt-5" />
-              <div className="font-semibold mt-5 capitalize">Adaji Mukhtar</div>
+              <div className="font-semibold mt-5 capitalize">
+                {tutor?.firstName} {tutor?.lastName}
+                {tutor?.fullName}
+              </div>
               <div className="text-sm mt-2 capitalize">tutor</div>
-              <div className="text-sm mt-2">doe@gmail.com</div>
+              <div className="text-sm mt-2">{tutor?.email}</div>
 
               <Button
                 size="md"
                 className="bg-secondary text-primary font-bold mt-5"
                 leftSection={<VerifiedIcon />}
               >
-                Approve Account
+                {tutor?.approvalStatus} Account
               </Button>
             </div>
             <div className="flex-1">
@@ -54,10 +62,19 @@ const ViewTutor = () => {
                 <div className="font-semibold mt-5 text-lg text-primary">
                   Personal Details
                 </div>
-                <div className="mt-2 text-sm"><span className="font-medium">Name:</span> Adaji Mukhtar</div>
-                <div className="mt-2 text-sm"><span className="font-medium">Age:</span> 30 Years</div>
-                <div className="mt-2 text-sm"><span className="font-medium">Experience:</span> 3 Years</div>
-                <div className="mt-2 text-sm"><span className="font-medium">Country:</span> Nigeria</div>
+                <div className="mt-2 text-sm">
+                  <span className="font-medium">Name:</span> {tutor?.firstName}{" "}
+                  {tutor?.lastName}
+                </div>
+                <div className="mt-2 text-sm">
+                  <span className="font-medium">Age:</span> {tutor?.age}
+                </div>
+                <div className="mt-2 text-sm">
+                  <span className="font-medium">Experience:</span> 3 Years
+                </div>
+                <div className="mt-2 text-sm">
+                  <span className="font-medium">Country:</span> {tutor?.country}
+                </div>
               </div>
               <div className="p-5 border-b">
                 <div className="font-semibold mt-5 text-lg text-primary">
@@ -65,18 +82,15 @@ const ViewTutor = () => {
                 </div>
                 <div className="mt-2 text-sm">Education: Bachelors </div>
                 <div className="mt-2 text-sm">
-                  Career Interests: Computer Science
-                </div>
-                <div className="mt-2 text-sm">
                   Your Majors: Computer Science
                 </div>
                 <div className="mt-2 text-sm">
                   Subjects you are interested in:{" "}
                 </div>
                 <div className="mt-2 flex flex-wrap gap-5 ">
-                  {[...Array(7)].map((_, i) => (
+                  {tutor?.subjectInterest.map((item, i) => (
                     <div key={i} className="bg-secondary p-2 rounded-md">
-                      Mathematics
+                      {item}
                     </div>
                   ))}
                 </div>

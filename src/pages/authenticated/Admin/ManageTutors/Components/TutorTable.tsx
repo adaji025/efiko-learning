@@ -1,42 +1,112 @@
-import { Menu, Pagination, Table } from "@mantine/core";
+import { LoadingOverlay, Menu, Pagination, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Fragment, useEffect, useState } from "react";
 import Confirmation from "../../../../../components/Confirmation";
 import ConfirmActivate from "../../../../../components/Confirmation";
 import { SlOptionsVertical } from "react-icons/sl";
 import { useNavigate } from "react-router-dom";
-import { TutorState } from "../../../../../types/admins/tutor";
+import { TutorState, TutorTypes } from "../../../../../types/admins/tutor";
+import {
+  approve_Reject_tutor,
+  changeTutorActiveState,
+} from "../../../../../services/admin/tutors";
+import { toast } from "react-toastify";
+import useNotification from "../../../../../hooks/useNotification";
 
 type IProps = {
   tutors: TutorState | null;
   limit: number;
   skip: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
+  handleGetTutors: () => void;
 };
 
-const TutorTable = ({ tutors, limit, setSkip, skip }: IProps) => {
+const TutorTable = ({
+  tutors,
+  limit,
+  setSkip,
+  skip,
+  handleGetTutors,
+}: IProps) => {
+  const [loading, setLoading] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [activate, setActivate] = useState(false);
+  const [action, setAction] = useState("");
+  const [approvalStatus, setApprovalStatus] = useState("");
+  const [tutor, setTutor] = useState<TutorTypes | null>(null);
   const [totalPages, setTotalPages] = useState(1);
+
+  console.log(action)
+
+  const { handleError } = useNotification();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (tutors) setTotalPages(Math.ceil(tutors?.total / limit));
   }, [tutors, limit]);
+
+  const handleApprove_Reject_tutor = () => {
+    setLoading(true);
+    const value = {
+      approvalStatus,
+    };
+    tutor &&
+      approve_Reject_tutor(tutor?._id, value)
+        .then(() => {
+          toast.success(
+            `Tutor successfully ${
+              action === "Approved" ? "Approved" : "Rejected"
+            }`
+          );
+          handleGetTutors();
+          close();
+        })
+        .catch((err: any) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
+
+  const handleChangeTutorsStatus = () => {
+    setLoading(true);
+    const value = {
+      action,
+    };
+    tutor &&
+      changeTutorActiveState(tutor?._id, value)
+        .then(() => {
+          toast.success(
+            `Student successfully ${
+              action === "Activate" ? "deactivated" : "activated"
+            }`
+          );
+          handleGetTutors();
+          close();
+        })
+        .catch((err: any) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
   return (
     <Fragment>
       <Confirmation
         opened={opened}
         close={close}
-        handleClick={() => {}}
-        btnText="reject tutor"
+        handleClick={handleApprove_Reject_tutor}
+        btnText={`${approvalStatus === "Approved" ? "Approve" : "Reject"}`}
       />
       <ConfirmActivate
         opened={activate}
         close={() => setActivate(false)}
-        handleClick={() => {}}
-        btnText="Activat tutor"
+        handleClick={handleChangeTutorsStatus}
+        btnText={`${action} tutor`}
       />
+      <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -57,6 +127,7 @@ const TutorTable = ({ tutors, limit, setSkip, skip }: IProps) => {
                     onClick={() => navigate("view-tutor")}
                   >
                     {tutor.firstName} {tutor.lastName}
+                    {tutor.fullName}
                   </Table.Td>
                   <Table.Td>{tutor.email}</Table.Td>
                   <Table.Td>5</Table.Td>
@@ -72,18 +143,46 @@ const TutorTable = ({ tutors, limit, setSkip, skip }: IProps) => {
                         </div>
                       </Menu.Target>
                       <Menu.Dropdown>
-                        <Menu.Item onClick={() => navigate("view-tutor")}>
+                        <Menu.Item
+                          onClick={() =>
+                            navigate("view-tutor", { state: tutor })
+                          }
+                        >
                           View
                         </Menu.Item>
-                        {tutor.status === "pending" && (
+                        {tutor.approvalStatus === "Pending" && (
                           <Fragment>
-                            <Menu.Item onClick={open}>Approve</Menu.Item>
-                            <Menu.Item onClick={open}>Reject</Menu.Item>
+                            <Menu.Item
+                              onClick={() => {
+                                open();
+                                setApprovalStatus("Approved");
+                                setTutor(tutor);
+                              }}
+                            >
+                              Approve
+                            </Menu.Item>
+                            <Menu.Item
+                              onClick={() => {
+                                open();
+                                setApprovalStatus("Rejected");
+                                setTutor(tutor);
+                              }}
+                            >
+                              Reject
+                            </Menu.Item>
                           </Fragment>
                         )}
 
-                        {tutor.status !== "pending" && (
-                          <Menu.Item>
+                        {tutor.approvalStatus === "Approved" && (
+                          <Menu.Item
+                            onClick={() => {
+                              setActivate(true);
+                              setTutor(tutor);
+                              tutor.status === "Active"
+                                ? setAction("Deactivate")
+                                : setAction("Activate");
+                            }}
+                          >
                             {tutor.status ? "Deactivate" : "Activate"}
                           </Menu.Item>
                         )}

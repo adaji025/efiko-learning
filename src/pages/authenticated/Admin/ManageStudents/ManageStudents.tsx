@@ -1,11 +1,12 @@
 import { useEffect, useState, Fragment } from "react";
-import { Button, TextInput, LoadingOverlay } from "@mantine/core";
+import { Button, TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import StudentsTable from "./components/StudentsTable";
 import { getStudents } from "../../../../services/admin/students";
 import { StudentState } from "../../../../types/admins/student";
 import useNotification from "../../../../hooks/useNotification";
+import TableSkeleton from "../../../../components/TableSkeleton";
 
 const ManageStudents = () => {
   const [students, setStudents] = useState<StudentState | null>(null);
@@ -36,7 +37,6 @@ const ManageStudents = () => {
   };
   return (
     <Fragment>
-      <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Manage Students
@@ -70,13 +70,14 @@ const ManageStudents = () => {
               />
             </div>
           </div>
-          <StudentsTable
+         {!loading && <StudentsTable
             students={students}
             limit={limit}
             setSkip={setSkip}
             skip={skip}
             handleGetStudents={handleGetStudents}
-          />
+          />}
+          {loading && <TableSkeleton />}
         </div>
       </div>
     </Fragment>
