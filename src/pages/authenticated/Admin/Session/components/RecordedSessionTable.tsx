@@ -2,8 +2,6 @@ import { Menu, Pagination, Table } from "@mantine/core";
 import moment from "moment";
 import { SlOptionsVertical } from "react-icons/sl";
 import { Fragment, useEffect, useState } from "react";
-import { useDisclosure } from "@mantine/hooks";
-import Confirmation from "../../../../../components/Confirmation";
 import { useNavigate } from "react-router-dom";
 import { AdminSessionState } from "../../../../../types/admins/session";
 
@@ -14,9 +12,13 @@ type SessionProps = {
   setSkip: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const RecordedSessionTable = ({ sessions, limit, setSkip, skip }: SessionProps) => {
+const RecordedSessionTable = ({
+  sessions,
+  limit,
+  setSkip,
+  skip,
+}: SessionProps) => {
   const [totalPages, setTotalPages] = useState(1);
-  const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
@@ -25,12 +27,6 @@ const RecordedSessionTable = ({ sessions, limit, setSkip, skip }: SessionProps) 
   const navigate = useNavigate();
   return (
     <Fragment>
-      <Confirmation
-        btnText="delete session"
-        close={close}
-        handleClick={() => {}}
-        opened={opened}
-      />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -81,9 +77,6 @@ const RecordedSessionTable = ({ sessions, limit, setSkip, skip }: SessionProps) 
                         >
                           View session
                         </Menu.Item>
-                        <Menu.Item color="red" onClick={open}>
-                          Delete session
-                        </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
                   </Table.Td>
@@ -98,7 +91,7 @@ const RecordedSessionTable = ({ sessions, limit, setSkip, skip }: SessionProps) 
         )}
       </div>
       <div className="mt-10">
-      <Pagination
+        <Pagination
           total={totalPages}
           siblings={1}
           value={skip}
