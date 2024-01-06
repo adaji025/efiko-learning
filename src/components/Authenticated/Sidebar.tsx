@@ -255,13 +255,13 @@ const Sidebar = () => {
       route: "/dashboard",
     },
     {
-      title: "Sessions",
+      title: "Manage Sessions",
       icon: <SessionIcon />,
-      route: "/session",
+      route: "/manage-sessions",
       key: [
         "schedule-sessions",
-        "upcoming-sessions",
-        "recorded-sessions",
+        "manage-upcoming-sessions",
+        "manage-recorded-sessions",
         "preview-sessions",
       ],
       children: [
@@ -271,60 +271,49 @@ const Sidebar = () => {
         },
         {
           title: "Upcoming Sessions",
-          route: "upcoming-sessions",
+          route: "manage-upcoming-sessions",
         },
         {
           title: "Recorded Sessions",
-          route: "recorded-sessions",
+          route: "manage-recorded-sessions",
         },
       ],
     },
     {
-      title: "Earnings",
-      icon: <EarningsIcon />,
-      route: "/earnings",
+      title: "Manage Students",
+      icon: <IoSchool />,
+      route: "/manage-students",
     },
     {
-      title: "Notifications",
-      icon: <NotificationIcon />,
-      route: "/notifications",
+      title: "Manage Tutors",
+      icon: <FaUsers />,
+      route: "/manage-tutors",
     },
     {
-      title: "My Profiles",
-      icon: <FiUser size={20} />,
-      route: "/my-profile",
+      title: "Curriculum",
+      icon: <GiSecretBook />,
+      route: "/curriculum",
     },
     {
       title: "Settings",
       icon: <FiSettings size={20} />,
       route: "/settings",
-      key: ["edit-profile", "payments"],
+      key: ["subscriptions", "payments"],
       children: [
         {
-          title: "Profile",
-          route: "/edit-profile",
+          title: "Manage Payments",
+          route: "/manage-payments",
         },
         {
-          title: "Payments",
-          route: "/payments",
+          title: "Subscriptions",
+          route: "/subscriptions",
         },
       ],
     },
     {
       title: "Help & Support",
       icon: <IoIosHelpCircleOutline size={20} />,
-      route: "/support",
-      key: ["FAQs", "Report Issues"],
-      children: [
-        {
-          title: "FAQs",
-          route: "/faqs",
-        },
-        {
-          title: "Report Issues",
-          route: "/report-issues",
-        },
-      ],
+      route: "/manage-issues",
     },
   ];
 
