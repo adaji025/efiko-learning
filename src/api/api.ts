@@ -8,6 +8,7 @@ export const APIS = {
   },
   ADMIN: `${api}/admin`,
   CURRICULUM: `${api}/curriculum`,
+  SUBSCRIPTION: `${api}/subscription`,
 
   AUTH: {
     RESET_PASSWORD: `${api}/auth/reset-password`,

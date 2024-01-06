@@ -1,25 +1,43 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Button, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { CiSearch } from "react-icons/ci";
 import SubscriptionTable from "./components/SubscriptionTable";
 import AddSubscription from "./components/AddSubscription";
-
-const dummyAdmins = [
-  {
-    name: "Annaul",
-    amount: "1000",
-    status: "active",
-  },
-  {
-    name: "Weekly",
-    amount: "1000",
-    status: "inactive",
-  },
-];
+import { getSbubscritions } from "../../../../services/admin/subscription";
+import useNotification from "../../../../hooks/useNotification";
+import { SubscriptionState } from "../../../../types/admins/subscription";
+import TableSkeleton from "../../../../components/TableSkeleton";
 
 const Subscriptions = () => {
+  const [loading, setLoading] = useState(false);
+  const [subscriptions, setSubscriptions] = useState<SubscriptionState | null>(
+    null
+  );
+  const [limit] = useState(5);
+  const [skip, setSkip] = useState(0);
+  const [search, setSearch] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
+
+  const { handleError } = useNotification();
+
+  useEffect(() => {
+    handleGetSubscriptions();
+  }, [limit, skip]);
+
+  const handleGetSubscriptions = () => {
+    setLoading(true);
+    getSbubscritions(limit, skip, search)
+      .then((res: any) => {
+        setSubscriptions(res.data);
+      })
+      .then((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   return (
     <Fragment>
       <AddSubscription opened={opened} close={close} callback={() => {}} />
@@ -39,10 +57,28 @@ const Subscriptions = () => {
                 leftSection={<CiSearch />}
                 size="md"
                 placeholder="search.."
+                value={search}
+                onKeyUp={(e: any) => {
+                  if (e.code === "Enter") {
+                    if (search !== "") {
+                      setSearch(search);
+                      handleGetSubscriptions();
+                    }
+                  }
+                }}
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
           </div>
-          <SubscriptionTable admins={dummyAdmins} />
+          {!loading && (
+            <SubscriptionTable
+              subscriptions={subscriptions}
+              limit={limit}
+              setSkip={setSkip}
+              skip={skip}
+            />
+          )}
+          {loading && <TableSkeleton />}
         </div>
       </div>
     </Fragment>

@@ -62,7 +62,6 @@ const ScheduleSession = () => {
     return false;
   }, [form.values]);
 
-  console.log(curriculum);
 
   useEffect(() => {
     handleGetCurriculum();

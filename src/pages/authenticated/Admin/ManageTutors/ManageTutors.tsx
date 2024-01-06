@@ -14,8 +14,6 @@ const ManageTutors = () => {
   const [skip, setSkip] = useState(0);
   const [search, setSearch] = useState("");
 
-  console.log(tutors);
-
   const { handleError } = useNotification();
 
   useEffect(() => {
