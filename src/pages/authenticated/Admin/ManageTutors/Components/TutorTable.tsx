@@ -36,7 +36,6 @@ const TutorTable = ({
   const [tutor, setTutor] = useState<TutorTypes | null>(null);
   const [totalPages, setTotalPages] = useState(1);
 
-
   const { handleError } = useNotification();
   const navigate = useNavigate();
 
@@ -71,7 +70,7 @@ const TutorTable = ({
   const handleChangeTutorsStatus = () => {
     setLoading(true);
     const value = {
-      action,
+      status: action,
     };
     tutor &&
       changeTutorActiveState(tutor?._id, value)
@@ -91,6 +90,7 @@ const TutorTable = ({
           setLoading(false);
         });
   };
+
   return (
     <Fragment>
       <Confirmation
@@ -114,6 +114,7 @@ const TutorTable = ({
               <Table.Th>email</Table.Th>
               <Table.Th>Sessions completed</Table.Th>
               <Table.Th>status</Table.Th>
+              <Table.Th>Approval status</Table.Th>
               <Table.Th>Actions</Table.Th>
             </Table.Tr>
           </Table.Thead>
@@ -130,7 +131,16 @@ const TutorTable = ({
                   </Table.Td>
                   <Table.Td>{tutor.email}</Table.Td>
                   <Table.Td>5</Table.Td>
-                  <Table.Td>{tutor.status}</Table.Td>
+                  <Table.Td>{tutor.status} </Table.Td>
+                  <Table.Td>
+                    <span
+                      className={`${
+                        tutor.approvalStatus === "Rejected" && "text-red-500"
+                      }`}
+                    >
+                      {tutor.approvalStatus}
+                    </span>
+                  </Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
                       <Menu.Target>
@@ -178,11 +188,13 @@ const TutorTable = ({
                               setActivate(true);
                               setTutor(tutor);
                               tutor.status === "Active"
-                                ? setAction("Deactivate")
-                                : setAction("Activate");
+                                ? setAction("Inactive")
+                                : setAction("Active");
                             }}
                           >
-                            {tutor.status ? "Deactivate" : "Activate"}
+                            {tutor.status === "Active"
+                              ? "Deactivate"
+                              : "Activate"}
                           </Menu.Item>
                         )}
                       </Menu.Dropdown>

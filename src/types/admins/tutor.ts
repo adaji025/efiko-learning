@@ -11,6 +11,7 @@ export type TutorTypes = {
   studentEducationDetails: StudentEducationDetails;
   _id: string;
   fullName: string;
+  description: string;
   firstName: string;
   lastName: string;
   approvalStatus: string;
