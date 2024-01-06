@@ -56,7 +56,7 @@ const ViewTutor = () => {
                 <div className="font-semibold mt-5 text-lg text-primary">
                   Profile Description
                 </div>
-                <div>bio</div>
+                <div className="mt-2">{tutor?.description?.charAt(0).toUpperCase() + tutor?.description?.slice(1)}</div>
               </div>
               <div className={`p-5 `}>
                 <div className="font-semibold mt-5 text-lg text-primary">

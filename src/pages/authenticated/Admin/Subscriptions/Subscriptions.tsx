@@ -19,8 +19,6 @@ const Subscriptions = () => {
   const [search, setSearch] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
 
-  console.log(subscriptions)
-
   const { handleError } = useNotification();
 
   useEffect(() => {
@@ -42,7 +40,11 @@ const Subscriptions = () => {
   };
   return (
     <Fragment>
-      <AddSubscription opened={opened} close={close} callback={handleGetSubscriptions} />
+      <AddSubscription
+        opened={opened}
+        close={close}
+        callback={handleGetSubscriptions}
+      />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Manage Subcriptions

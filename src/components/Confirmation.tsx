@@ -22,7 +22,7 @@ const Confirmation = ({ close, handleClick, opened, btnText }: IProps) => {
     >
       <Divider mb={16} />
       <div className="text-lg font-medium">
-        Are you sure you want to {btnText}?
+        Are you sure you want to <span className="font-semibold">{btnText}</span> ?
       </div>
       <div className="flex gap-5 mb-5 mt-5 justify-center">
         <Button variant="outline" className="w-1/2" onClick={close}>
