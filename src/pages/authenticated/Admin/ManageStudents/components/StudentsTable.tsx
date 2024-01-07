@@ -66,7 +66,7 @@ const StudentsTable = ({
     <Fragment>
       <ConfirmDisable
         opened={opened}
-        btnText={`${action === "Activate" ? "deactivate" : "activate"} student`}
+        btnText={`${action} student`}
         close={close}
         handleClick={handleChangeStudentStatus}
       />
