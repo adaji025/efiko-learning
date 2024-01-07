@@ -26,7 +26,8 @@ import { toast } from "react-toastify";
 const TutorProfilSetup = () => {
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [edDocvalue, setEdDocValue] = useState<File[]>([]);
+  // const [edDocvalue, setEdDocValue] = useState<File[]>([]);
+  const [edDocvalue, setEdDocValue] = useState<File | null>(null);
   const [natIdvalue, setNatIdValue] = useState<File | null>(null);
 
   const { handleError } = useNotification();
@@ -72,7 +73,8 @@ const TutorProfilSetup = () => {
       form.values.education === "" ||
       form.values.teachingExperience === "" ||
       form.values.subject === "" ||
-      edDocvalue.length === 0 ||
+      // edDocvalue.length === 0 ||
+      edDocvalue === null ||
       natIdvalue === null
     )
       return true;
@@ -96,7 +98,10 @@ const TutorProfilSetup = () => {
     formData.append("fullName", form.values.fullName);
     formData.append("age", form.values.age);
     formData.append("country", form.values.country);
+    formData.append("teachingExperience", form.values.teachingExperience);
     formData.append("description", form.values.description);
+    formData.append("subject", form.values.subject);
+    formData.append("education", form.values.education);
 
     // Append nested object key-value pairs
     formData.append("tutorEducationDetails.education", form.values.education);
@@ -106,10 +111,11 @@ const TutorProfilSetup = () => {
     );
 
     // Append array elements
-    edDocvalue.forEach((img, index) => {
-      educationFormData.append(`educationImage[${index}]`, img);
-    });
+    // edDocvalue.forEach((img, index) => {
+    //   educationFormData.append(`educationImage[${index}]`, img);
+    // });
 
+    if (edDocvalue) educationFormData.append("educationImage", edDocvalue);
     if (natIdvalue) identityFormData.append("nationalId", natIdvalue);
 
     profileSetUp(id, formData)
@@ -217,13 +223,13 @@ const TutorProfilSetup = () => {
                 />
 
                 <FileInput
-                  multiple
+                  // multiple
                   required
                   size="md"
                   mt={16}
                   value={edDocvalue}
                   onChange={setEdDocValue}
-                  label="Upload your educational documents"
+                  label="Upload your highest educational document"
                 />
                 <FileInput
                   required

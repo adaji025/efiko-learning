@@ -133,12 +133,12 @@ const StudentProfilSetup = () => {
                   label="First Name"
                   {...form.getInputProps("fullName")}
                 />
-                <TextInput
+                {/* <TextInput
                   required
                   mt={16}
                   size="md"
                   label="Last Name"
-                />
+                /> */}
                 <NumberInput
                   hideControls
                   required
