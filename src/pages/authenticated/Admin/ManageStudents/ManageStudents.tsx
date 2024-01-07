@@ -64,6 +64,8 @@ const ManageStudents = () => {
                       setSearch(search);
                       handleGetStudents();
                     }
+                  }else if (e.code === "Backspace") {
+                    handleGetStudents();
                   }
                 }}
                 onChange={(e) => setSearch(e.target.value)}

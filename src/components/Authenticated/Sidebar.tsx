@@ -398,7 +398,6 @@ const Sidebar = () => {
                     to={item.route}
                   >
                     <span>{item.icon}</span>
-
                     <div>{item.title}</div>
                   </NavLink>
                 )}

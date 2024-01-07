@@ -63,6 +63,8 @@ const ManageAdmin = () => {
                       setSearch(search);
                       handleGetAdmins();
                     }
+                  }else if (e.code === "Backspace") {
+                    handleGetAdmins();
                   }
                 }}
                 onChange={(e) => setSearch(e.target.value)}
