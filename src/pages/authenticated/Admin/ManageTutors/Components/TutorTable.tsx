@@ -205,9 +205,9 @@ const TutorTable = ({
           </Table.Tbody>
         </Table>
 
-        {tutors && (tutors.length === 0 || !tutors) && (
+        {tutors && (tutors.data.length === 0 || !tutors) && (
           <div className="w-full h-[50vh] flex flex-col justify-center items-center">
-            <div>No recorded session available.</div>
+            <div>No record available.</div>
           </div>
         )}
       </div>

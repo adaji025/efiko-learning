@@ -68,6 +68,8 @@ const Subscriptions = () => {
                       setSearch(search);
                       handleGetSubscriptions();
                     }
+                  }else if (e.code === "Backspace") {
+                    handleGetSubscriptions();
                   }
                 }}
                 onChange={(e) => setSearch(e.target.value)}

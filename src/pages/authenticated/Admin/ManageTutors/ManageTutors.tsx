@@ -14,7 +14,6 @@ const ManageTutors = () => {
   const [skip, setSkip] = useState(0);
   const [search, setSearch] = useState("");
 
-  console.log(tutors)
 
 
   const { handleError } = useNotification();
@@ -55,6 +54,8 @@ const ManageTutors = () => {
                     setSearch(search);
                     handleGetTutors();
                   }
+                }else if (e.code === "Backspace") {
+                  handleGetTutors();
                 }
               }}
               onChange={(e) => setSearch(e.target.value)}

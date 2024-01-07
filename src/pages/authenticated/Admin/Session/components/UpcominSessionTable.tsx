@@ -99,7 +99,7 @@ const UpcomingSessionTable = ({
               ))}
           </Table.Tbody>
         </Table>
-        {sessions && (sessions.length === 0 || !sessions) && (
+        {sessions && (sessions.data.length === 0 || !sessions) && (
           <div className="w-full h-[50vh] flex flex-col justify-center items-center">
             <div>No recorded session available.</div>
           </div>

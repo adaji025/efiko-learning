@@ -55,6 +55,8 @@ const ManageUpcomingSession = () => {
                     setSearch(search);
                     handleGetSessions();
                   }
+                } else if (e.code === "Backspace") {
+                  handleGetSessions();
                 }
               }}
               onChange={(e) => setSearch(e.target.value)}

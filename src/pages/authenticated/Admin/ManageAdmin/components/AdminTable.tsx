@@ -133,15 +133,14 @@ const AdminTable = ({
                       />
                     </div>
                   </Table.Td>
-                  <Table.Td></Table.Td>
                 </Table.Tr>
               ))}
           </Table.Tbody>
         </Table>
 
-        {admins && (admins.length === 0 || !admins) && (
+        {admins && (admins.data.length === 0 || !admins) && (
           <div className="w-full h-[50vh] flex flex-col justify-center items-center">
-            <div>No recorded session available.</div>
+            <div>No record available.</div>
           </div>
         )}
       </div>
