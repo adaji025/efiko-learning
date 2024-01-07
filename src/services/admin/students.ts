@@ -28,7 +28,7 @@ export const changeStudentActiveState = (id: string, data: any) => {
 export const getStudents = (limit: number, skip: number, search: string) => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(
-      `${APIS.ADMIN}/student?limit=${limit}&skip=${skip}&search=${search}`
+      `${APIS.ADMIN}/student?limit=${limit}&accountType=student&skip=${skip}&search=${search}`
     )
       .then((res: any) => {
         resolve(res);
