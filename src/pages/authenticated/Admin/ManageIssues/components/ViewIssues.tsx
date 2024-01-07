@@ -1,23 +1,25 @@
 import { Modal } from "@mantine/core";
+import { ReportTypes } from "../../../../../types/admins/report";
 
 type IProps = {
   opened: boolean;
   close: () => void;
+  report: ReportTypes | null;
 };
 
-const ViewIssues = ({ close, opened }: IProps) => {
+const ViewIssues = ({ close, opened, report }: IProps) => {
   return (
     <Modal centered opened={opened} onClose={close} title="Reports">
       <div>
-        <span className="font-semibold">Reported by: </span>John Doe
+        <span className="font-semibold">Reported by: </span>
+        {report?.reportedBy.fullName}
       </div>
       <div className="mt-2">
-        <span className="font-semibold">Title:</span> Payment Issues
+        <span className="font-semibold">Title:</span> {report?.title}
       </div>
       <div className="mt-2">
-        <span className="font-semibold">Description:</span> Lorem ipsum dolor
-        sit amet consectetur adipisicing elit. Culpa quas nam maiores placeat
-        libero? Iusto!
+        <span className="font-semibold">Description:</span>{" "}
+        {report?.description}
       </div>
     </Modal>
   );

@@ -1,31 +1,78 @@
-import { Divider, Menu, Pagination, Table } from "@mantine/core";
+import {
+  Divider,
+  LoadingOverlay,
+  Menu,
+  Pagination,
+  Table,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { SlOptionsVertical } from "react-icons/sl";
 import ViewIssues from "./ViewIssues";
 import Confirmation from "../../../../../components/Confirmation";
+import { ReportState, ReportTypes } from "../../../../../types/admins/report";
+import useNotification from "../../../../../hooks/useNotification";
+import { resolveReport } from "../../../../../services/admin/report";
+import { toast } from "react-toastify";
 
-type AdminProps = {
-  issues: {
-    name: string;
-    email: string;
-    status: string;
-    title: string;
-  }[];
+type IProps = {
+  reports: ReportState | null;
+  limit: number;
+  skip: number;
+  setSkip: React.Dispatch<React.SetStateAction<number>>;
+  handleGetReport: () => void;
 };
 
-const IssuesTable = ({ issues }: AdminProps) => {
+const IssuesTable = ({
+  reports,
+  limit,
+  skip,
+  setSkip,
+  handleGetReport,
+}: IProps) => {
+  const [loading, setLoading] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [resolveModal, setResolveModal] = useState(false);
+  const [totalPages, setTotalPages] = useState(1);
+  const [report, setReport] = useState<ReportTypes | null>(null);
+
+  useEffect(() => {
+    if (reports) setTotalPages(Math.ceil(reports.total / limit));
+  }, [reports]);
+
+  const { handleError } = useNotification();
+
+  const handleMarkAsResolve = () => {
+    setLoading(true);
+
+    const values = {
+      status: "Resolved",
+    };
+    report &&
+      resolveReport(report?._id, values)
+        .then(() => {
+          toast.success(`Issue marked as resolved`);
+          close();
+          handleGetReport();
+        })
+        .catch((err) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
   return (
     <Fragment>
-      <ViewIssues close={close} opened={opened} />
+      <ViewIssues close={close} opened={opened} report={report} />
       <Confirmation
         btnText="mark as resolve"
         close={() => setResolveModal(false)}
-        handleClick={() => {}}
+        handleClick={handleMarkAsResolve}
         opened={resolveModal}
       />
+
+      <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -37,12 +84,12 @@ const IssuesTable = ({ issues }: AdminProps) => {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {issues.map((issue, i) => (
+            {reports?.data.map((report, i) => (
               <Table.Tr key={i}>
-                <Table.Td>{issue.name}</Table.Td>
-                <Table.Td>{issue.title}</Table.Td>
-                <Table.Td>{issue.email}</Table.Td>
-                <Table.Td>{issue.status}</Table.Td>
+                <Table.Td>{report.reportedBy.fullName}</Table.Td>
+                <Table.Td>{report.title}</Table.Td>
+                <Table.Td>{report.reportedBy.email}</Table.Td>
+                <Table.Td>{report.status}</Table.Td>
                 <Table.Td>
                   <Menu shadow="md" width={150}>
                     <Menu.Target>
@@ -59,14 +106,20 @@ const IssuesTable = ({ issues }: AdminProps) => {
                       <Menu.Item
                         onClick={() => {
                           open();
+                          setReport(report);
                         }}
                       >
                         View
                       </Menu.Item>
-                      {issue.status === "pending" && (
+                      {report.status === "Pending" && (
                         <Fragment>
                           <Divider />
-                          <Menu.Item onClick={() => setResolveModal(true)}>
+                          <Menu.Item
+                            onClick={() => {
+                              setReport(report);
+                              setResolveModal(true);
+                            }}
+                          >
                             Mark as resolve
                           </Menu.Item>
                         </Fragment>
@@ -79,14 +132,20 @@ const IssuesTable = ({ issues }: AdminProps) => {
           </Table.Tbody>
         </Table>
 
-        {issues && (issues.length === 0 || !issues) && (
+        {reports && (reports.data.length === 0 || !reports) && (
           <div className="w-full h-[50vh] flex flex-col justify-center items-center">
-            <div>No recorded session available.</div>
+            <div>No record available.</div>
           </div>
         )}
       </div>
       <div className="mt-10">
-        <Pagination total={10} className="text-primary" />
+        <Pagination
+          total={totalPages}
+          siblings={1}
+          value={skip}
+          onChange={setSkip}
+          className="text-primary"
+        />
       </div>
     </Fragment>
   );
