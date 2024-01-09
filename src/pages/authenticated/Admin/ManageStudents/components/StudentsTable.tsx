@@ -88,7 +88,7 @@ const StudentsTable = ({
               <Table.Tr key={i}>
                 <Table.Td
                   className="cursor-pointer"
-                  onClick={() => navigate("view-student")}
+                  onClick={() => navigate("view-student", { state: student })}
                 >
                   {student.firstName} {student.lastName}
                 </Table.Td>

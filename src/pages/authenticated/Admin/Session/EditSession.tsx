@@ -12,7 +12,7 @@ import { useForm } from "@mantine/form";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
 import { useLocation, useNavigate } from "react-router-dom";
 import { subjects } from "../../../../components/data";
-import { FaRegClock } from "react-icons/fa6";
+import { FaArrowLeft, FaRegClock } from "react-icons/fa6";
 import { updateSession } from "../../../../services/session";
 import useNotification from "../../../../hooks/useNotification";
 import { toast } from "react-toastify";
@@ -83,8 +83,12 @@ const EditSession = () => {
     <Fragment>
       <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
-        <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-          Schedule Sesion
+        <div className="flex items-center gap-2 py-4 font-bold text-xl border-b px-4 lg:px-10">
+          <FaArrowLeft
+            className="cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
+          <div>Edit Sesions</div>
         </div>
         <form onSubmit={form.onSubmit((values) => submit(values))}>
           <div className="mt-10 px-4 lg:px-10 max-w-[1000px]">

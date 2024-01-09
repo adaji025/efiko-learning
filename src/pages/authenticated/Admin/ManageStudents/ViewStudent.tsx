@@ -1,5 +1,8 @@
 import { Fragment } from "react";
 import { Avatar, Button } from "@mantine/core";
+import { FaArrowLeft } from "react-icons/fa6";
+import { useLocation, useNavigate } from "react-router-dom";
+import { StudentsTypes } from "../../../../types/admins/student";
 
 export const VerifiedIcon = () => {
   return (
@@ -19,26 +22,38 @@ export const VerifiedIcon = () => {
 };
 
 const ViewStudent = () => {
+  const location = useLocation();
+  const student: StudentsTypes = location.state;
+  const navigate = useNavigate();
+
+  console.log(student);
   return (
     <Fragment>
       <div className="mt-[50px] lg:mt-5">
-        <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-          My Profile
+        <div className="py-4 font-bold text-xl border-b px-4 lg:px-10 flex items-center gap-2">
+          <FaArrowLeft
+            className="cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
+          Student Profile
         </div>
+
         <div className="mt-10 px-4 lg:px-8">
           <div className="border rounded-2xl flex flex-col md:flex-row">
             <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
               <Avatar size="xl" className="mt-5" />
-              <div className="font-semibold mt-5 capitalize">Adaji Mukhtar</div>
-              <div className="text-sm mt-2 capitalize">tutor</div>
-              <div className="text-sm mt-2">doe@gmail.com</div>
+              <div className="font-semibold mt-5 capitalize">
+                {student?.firstName} {student?.lastName}
+              </div>
+              <div className="text-sm mt-2 capitalize">Student</div>
+              <div className="text-sm mt-2">{student?.email}</div>
 
               <Button
                 size="md"
                 className="bg-secondary text-primary font-bold mt-5"
                 leftSection={<VerifiedIcon />}
               >
-                Suspend Account
+                {student.status === "Active" ? "Active" : "Suspended"} Account
               </Button>
             </div>
             <div className="flex-1">
@@ -46,20 +61,22 @@ const ViewStudent = () => {
                 <div className="font-semibold mt-5 text-lg text-primary">
                   Profile Description
                 </div>
-                <div>bio</div>
+                <div>A student account</div>
               </div>
               <div className={`p-5 `}>
                 <div className="font-semibold mt-5 text-lg text-primary">
                   Personal Details
                 </div>
                 <div className="mt-2 text-sm">
-                  <span className="font-medium">Name:</span> Adaji Mukhtar
+                  <span className="font-medium">Name:</span>{" "}
+                  {student?.firstName} {student?.lastName}
                 </div>
                 <div className="mt-2 text-sm">
-                  <span className="font-medium">Age:</span> 30 Years
+                  <span className="font-medium">Age:</span> {student?.age}
                 </div>
                 <div className="mt-2 text-sm">
-                  <span className="font-medium">Country:</span> Nigeria
+                  <span className="font-medium">Country:</span>{" "}
+                  {student?.country}
                 </div>
               </div>
               <div className="p-5 border-b">
@@ -67,15 +84,20 @@ const ViewStudent = () => {
                   Educational Details
                 </div>
                 <div className="mt-2 text-sm">
-                  Career Interests: Computer Science
+                  Career Interests:{" "}
+                  {student?.subjectInterest?.map((item, i) => (
+                    <span key={i} className="mr-2">
+                      {item}
+                    </span>
+                  ))}
                 </div>
                 <div className="mt-2 text-sm">
                   Subjects you are interested in:{" "}
                 </div>
                 <div className="mt-2 flex flex-wrap gap-5 ">
-                  {[...Array(7)].map((_, i) => (
+                  {student?.subjectInterest?.map((item, i) => (
                     <div key={i} className="bg-secondary p-2 rounded-md">
-                      Mathematics
+                      {item}
                     </div>
                   ))}
                 </div>

@@ -2,8 +2,9 @@ import { Fragment } from "react";
 import { Avatar, Button } from "@mantine/core";
 import { HiMiniIdentification } from "react-icons/hi2";
 import { IoSchoolSharp } from "react-icons/io5";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { TutorTypes } from "../../../../types/admins/tutor";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export const VerifiedIcon = () => {
   return (
@@ -25,12 +26,17 @@ export const VerifiedIcon = () => {
 const ViewTutor = () => {
   const location = useLocation();
   const tutor: TutorTypes = location.state;
-  console.log(tutor);
+  
+  const navigate = useNavigate()
   return (
     <Fragment>
       <div className="mt-[50px] lg:mt-5">
-        <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-          My Profile
+      <div className="py-4 font-bold text-xl border-b px-4 lg:px-10 flex items-center gap-2">
+          <FaArrowLeft
+            className="cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
+          Tutor Profile
         </div>
         <div className="mt-10 px-4 lg:px-8">
           <div className="border rounded-2xl flex flex-col md:flex-row">

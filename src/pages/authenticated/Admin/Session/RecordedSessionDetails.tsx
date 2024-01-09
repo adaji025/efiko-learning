@@ -1,16 +1,22 @@
 import { Button } from "@mantine/core";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SessionTypes } from "../../../../types/session";
 import moment from "moment";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const RecordedSessionDetails = () => {
   const location = useLocation();
   const session: SessionTypes = location.state;
 
+  const navigate = useNavigate()
 
   return (
     <div className="mt-[50px] lg:mt-5">
-      <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
+      <div className="py-4 font-bold text-xl border-b px-4 lg:px-10 flex items-center gap-2">
+      <FaArrowLeft
+            className="cursor-pointer"
+            onClick={() => navigate(-1)}
+          />
         Recorded Sesion Details
       </div>
       <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
