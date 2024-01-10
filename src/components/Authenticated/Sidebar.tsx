@@ -193,6 +193,7 @@ const Sidebar = ({ openMobileNav }: IProps) => {
         "manage-upcoming-sessions",
         "manage-recorded-sessions",
         "preview-sessions",
+        "manage-session-requests",
       ],
       children: [
         {
@@ -206,6 +207,10 @@ const Sidebar = ({ openMobileNav }: IProps) => {
         {
           title: "Recorded Sessions",
           route: "manage-recorded-sessions",
+        },
+        {
+          title: "Session Requests",
+          route: "manage-session-requests",
         },
       ],
     },

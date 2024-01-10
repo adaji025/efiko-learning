@@ -109,7 +109,7 @@ const AddCurriculum = ({ close, opened, callback, curriculum }: Props) => {
         centered
         opened={opened}
         onClose={close}
-        title="Authentication"
+        title="Curriculum"
       >
         <form
           onSubmit={form.onSubmit((values) =>

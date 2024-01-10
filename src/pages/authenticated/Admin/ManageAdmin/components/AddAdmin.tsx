@@ -89,7 +89,7 @@ const AddAdmin = ({ close, opened, callback, admin }: Props) => {
         centered
         opened={opened}
         onClose={close}
-        title="Authentication"
+        title="Add Admin"
       >
         <form
           onSubmit={form.onSubmit((values) => {

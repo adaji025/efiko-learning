@@ -28,7 +28,7 @@ const Confirmation = ({ close, handleClick, opened, btnText }: IProps) => {
         <Button variant="outline" className="w-1/2" onClick={close}>
           Cancel
         </Button>
-        <Button className="bg-primary flex-1" onClick={handleClick}>
+        <Button className="bg-primary flex-1 capitalize" onClick={handleClick}>
           {btnText}
         </Button>
       </div>
