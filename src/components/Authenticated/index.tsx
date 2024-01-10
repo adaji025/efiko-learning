@@ -54,7 +54,7 @@ const Authenticated = () => {
       <MobileSidebar {...{ mobileNav, openMobileNav }} />
       <div className="flex overflow-x-hidden">
         <div className="fixed h-screen hidden lg:flex lg:w-[300px]  bg-primary p-[22px]">
-          <Sidebar />
+          <Sidebar openMobileNav={openMobileNav} />
         </div>
         <div className="w-full">
           <Header mobileNav={mobileNav} openMobileNav={openMobileNav} />

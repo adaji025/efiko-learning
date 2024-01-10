@@ -16,7 +16,11 @@ import { FaUsers } from "react-icons/fa";
 import { IoSchool } from "react-icons/io5";
 import { GiSecretBook } from "react-icons/gi";
 
-const Sidebar = () => {
+type IProps = {
+  openMobileNav: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Sidebar = ({ openMobileNav }: IProps) => {
   const [routes, setRoutes] = useState<any[]>([]);
   const [showChildren, setShowChildren] = useState<string>("");
   const [opened, { open, close }] = useDisclosure(false);
@@ -373,6 +377,7 @@ const Sidebar = () => {
                               .filter(Boolean)
                               .join(" ")
                           }
+                          onClick={() => openMobileNav(false)}
                           to={child.route}
                         >
                           <div>{child.title}</div>
@@ -395,6 +400,7 @@ const Sidebar = () => {
                         .filter(Boolean)
                         .join(" ")
                     }
+                    onClick={() => openMobileNav(false)}
                     to={item.route}
                   >
                     <span>{item.icon}</span>
