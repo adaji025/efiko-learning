@@ -9,7 +9,6 @@ type IProps = {
 
 const AssignTutorModal = ({ close, opened, tutors }: IProps) => {
 
-  console.log(tutors)
   return (
     <Modal
       overlayProps={{

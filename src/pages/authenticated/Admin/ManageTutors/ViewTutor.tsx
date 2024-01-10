@@ -43,7 +43,6 @@ const ViewTutor = () => {
             <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
               <Avatar size="xl" className="mt-5" />
               <div className="font-semibold mt-5 capitalize">
-                {tutor?.firstName} {tutor?.lastName}
                 {tutor?.fullName}
               </div>
               <div className="text-sm mt-2 capitalize">tutor</div>
@@ -69,8 +68,7 @@ const ViewTutor = () => {
                   Personal Details
                 </div>
                 <div className="mt-2 text-sm">
-                  <span className="font-medium">Name:</span> {tutor?.firstName}{" "}
-                  {tutor?.lastName}
+                  <span className="font-medium">Name:</span> {tutor?.fullName}
                 </div>
                 <div className="mt-2 text-sm">
                   <span className="font-medium">Age:</span> {tutor?.age}

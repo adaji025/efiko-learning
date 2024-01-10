@@ -17,7 +17,7 @@ export const getTutors = (limit: number, skip: number, search: string) => {
 
 export const getAllTutors = () => {
   return new Promise((resolve, reject) => {
-    AxoisApi.get(`${APIS.ADMIN}/tutor`)
+    AxoisApi.get(`${APIS.ADMIN}/tutor?accountType=tutor`)
       .then((res: any) => {
         resolve(res);
       })

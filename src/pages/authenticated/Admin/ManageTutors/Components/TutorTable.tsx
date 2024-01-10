@@ -126,7 +126,6 @@ const TutorTable = ({
                     className="cursor-pointer"
                     onClick={() => navigate("view-tutor")}
                   >
-                    {tutor.firstName} {tutor.lastName}
                     {tutor.fullName}
                   </Table.Td>
                   <Table.Td>{tutor.email}</Table.Td>
