@@ -7,6 +7,7 @@ import {
   LoadingOverlay,
   ActionIcon,
   NumberInput,
+  Checkbox,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
@@ -19,12 +20,17 @@ import { subjects } from "../../../../components/data";
 import SchedulePreviews from "./components/SchedulePreviews";
 import { CurriculumTypes } from "../../../../types/curriculum";
 import { getAllCurriculums } from "../../../../services/admin/curriculum";
+import { FaArrowLeft } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 const ScheduleSession = () => {
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(false);
   const [curriculum, setCurriculum] = useState<CurriculumTypes[]>([]);
+  const [checked, setChecked] = useState(false);
   const timeRef = useRef<HTMLInputElement>(null);
+
+  const navigate = useNavigate()
   const { handleError } = useNotification();
 
   const pickerControl = (
@@ -47,6 +53,7 @@ const ScheduleSession = () => {
       time: "",
       duration: "",
       curriculumId: "",
+      free: checked,
     },
   });
 
@@ -61,7 +68,6 @@ const ScheduleSession = () => {
       return true;
     return false;
   }, [form.values]);
-
 
   useEffect(() => {
     handleGetCurriculum();
@@ -84,7 +90,7 @@ const ScheduleSession = () => {
   const submit = (values: any) => {
     setLoading(true);
 
-    addSession(values)
+    addSession({ ...values, free: checked })
       .then(() => {
         toast.success("Session created successfully");
         form.reset();
@@ -96,7 +102,7 @@ const ScheduleSession = () => {
         setLoading(false);
       });
 
-    console.log(values);
+    console.log({ ...values, free: checked });
   };
 
   const previewData = form.values;
@@ -106,8 +112,11 @@ const ScheduleSession = () => {
       <LoadingOverlay visible={loading} />
       {!preview && (
         <div className="mt-[50px] lg:mt-5">
-          <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-            Schedule Sesions
+          <div className="flex items-center gap-2 py-4 font-bold text-xl border-b px-4 lg:px-10">
+            <FaArrowLeft className="cursor-pointer" onClick={() => navigate(-1)} />
+            <div>
+              Schedule Sesions
+            </div>
           </div>
 
           <form
@@ -195,13 +204,19 @@ const ScheduleSession = () => {
                 className="flex-1"
                 {...form.getInputProps("duration")}
               />
+              <Checkbox
+                mt={26}
+                checked={checked}
+                onChange={(event) => setChecked(event.currentTarget.checked)}
+                label="Check if it's a free session"
+              />
             </div>
 
-            <div className="flex gap-10 mt-12 justify-btween">
+            <div className="flex flex-col sm:flex-row gap-5 sm:gap-10 mt-12 justify-btween">
               <Button
                 variant="outline"
                 size="md"
-                className="text-primary w-1/2 mx-auto disabled:border border-primary disabled:text-primary/80"
+                className="text-primary w-2/3 sm:w-1/2 mx-auto disabled:border border-primary disabled:text-primary/80"
                 disabled={validate()}
                 onClick={() => setPreview(true)}
               >
@@ -210,7 +225,7 @@ const ScheduleSession = () => {
               <Button
                 type="submit"
                 size="md"
-                className="bg-primary w-1/2 mx-auto"
+                className="bg-primary w-2/3 sm: mx-auto"
                 disabled={validate()}
               >
                 Schedule Session
@@ -225,6 +240,7 @@ const ScheduleSession = () => {
           setPreview={setPreview}
           previewData={previewData}
           curriculum={curriculum}
+          free={checked}
         />
       )}
     </Fragment>

@@ -38,7 +38,7 @@ import CreateStudent from "../../pages/authenticated/Admin/ManageStudents/Create
 import ManageTutors from "../../pages/authenticated/Admin/ManageTutors/ManageTutors";
 import ManageIssues from "../../pages/authenticated/Admin/ManageIssues/ManageIssues";
 import ViewTutor from "../../pages/authenticated/Admin/ManageTutors/ViewTutor";
-import ViewStudent from "../../pages/authenticated/Admin/ManageStudents/components/ViewStudent";
+import ViewStudent from "../../pages/authenticated/Admin/ManageStudents/ViewStudent";
 import RecordedSessionDetails from "../../pages/authenticated/Admin/Session/RecordedSessionDetails";
 import Subscriptions from "../../pages/authenticated/Admin/Subscriptions/Subscriptions";
 
