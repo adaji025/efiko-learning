@@ -14,8 +14,6 @@ const ManageTutors = () => {
   const [skip, setSkip] = useState(0);
   const [search, setSearch] = useState("");
 
-
-
   const { handleError } = useNotification();
 
   useEffect(() => {
@@ -54,7 +52,7 @@ const ManageTutors = () => {
                     setSearch(search);
                     handleGetTutors();
                   }
-                }else if (e.code === "Backspace") {
+                } else if (e.code === "Backspace") {
                   handleGetTutors();
                 }
               }}
