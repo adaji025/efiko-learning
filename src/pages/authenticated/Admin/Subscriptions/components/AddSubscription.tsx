@@ -93,7 +93,7 @@ const AddSubscription = ({ close, opened, callback, subscription }: Props) => {
         centered
         opened={opened}
         onClose={close}
-        title="Authentication"
+        title="Subscription"
       >
         <form
           onSubmit={form.onSubmit((values) => {

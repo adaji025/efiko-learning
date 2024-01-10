@@ -16,7 +16,7 @@ const MobileSidebar = ({ openMobileNav, mobileNav }: Props) => {
       } ${breakPoint ? "z-[1000] h-screen" : "z-[-1] h-0"}`}
     >
       <div className="w-4/5 sm:w-1/2 bg-primary h-full lg:hidden p-[22px]">
-        <Sidebar />
+        <Sidebar openMobileNav={openMobileNav} />
       </div>
       <div onClick={() => openMobileNav(false)}>
         <FaTimes

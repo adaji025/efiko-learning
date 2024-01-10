@@ -41,6 +41,7 @@ import ViewTutor from "../../pages/authenticated/Admin/ManageTutors/ViewTutor";
 import ViewStudent from "../../pages/authenticated/Admin/ManageStudents/ViewStudent";
 import RecordedSessionDetails from "../../pages/authenticated/Admin/Session/RecordedSessionDetails";
 import Subscriptions from "../../pages/authenticated/Admin/Subscriptions/Subscriptions";
+import ManageSessionRequest from "../../pages/authenticated/Admin/Session/ManageSessionRequest";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -54,7 +55,7 @@ const Authenticated = () => {
       <MobileSidebar {...{ mobileNav, openMobileNav }} />
       <div className="flex overflow-x-hidden">
         <div className="fixed h-screen hidden lg:flex lg:w-[300px]  bg-primary p-[22px]">
-          <Sidebar />
+          <Sidebar openMobileNav={openMobileNav} />
         </div>
         <div className="w-full">
           <Header mobileNav={mobileNav} openMobileNav={openMobileNav} />
@@ -146,6 +147,10 @@ const Authenticated = () => {
               <Route
                 path="/manage-upcoming-sessions"
                 element={<ManageUpcomingSession />}
+              />
+              <Route
+                path="/manage-session-requests"
+                element={<ManageSessionRequest />}
               />
               <Route path="/edit-profile" element={<EditProfile />} />
               <Route
