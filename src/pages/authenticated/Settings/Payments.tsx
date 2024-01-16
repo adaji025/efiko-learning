@@ -1,83 +1,85 @@
-import { Fragment, useState } from "react";
-import { Button, TextInput } from "@mantine/core";
-import { DatePickerInput } from "@mantine/dates";
-import { useSelector } from "react-redux";
-import { ProfileTypes } from "../../../types/auth";
-import { RootState } from "../../../redux/store";
+import { Fragment, useEffect, useState } from "react";
+import { Button, LoadingOverlay } from "@mantine/core";
+import SubscriptionCard from "./components/SubscriptionCard";
+import { SubscriptionTypes } from "../../../types/admins/subscription";
+import { getAllSbubscritions } from "../../../services/admin/subscription";
+import useNotification from "../../../hooks/useNotification";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 
 const Payments = () => {
+  const [loading, setLoading] = useState(false);
+  const [subscriptions, setSubscriptions] = useState<SubscriptionTypes[]>([]);
   const [cards, setCards] = useState(false);
-  const userData: ProfileTypes = useSelector(
-    (state: RootState) => state.user.userData
+
+  const stripePromise = loadStripe(
+    import.meta.env.VITE_APP_STRIPE_PUBLISHABLE_KEY
   );
 
+  const { handleError } = useNotification();
+  useEffect(() => {
+    handleGetSubscriptions();
+  }, []);
+
+  const handleGetSubscriptions = () => {
+    setLoading(true);
+    getAllSbubscritions()
+      .then((res: any) => {
+        setSubscriptions(res.data.data);
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  // const handleSubmit = async (event: any) => {
+  //   event.preventDefault();
+  //   if (!stripe || !elements) {
+  //     return;
+  //   }
+  //   if (clientSecret) {
+  //     const { error }: any = await stripe.confirmCardPayment(clientSecret, {
+  //       payment_method: {
+  //         card: elements.getElement(CardElement),
+  //       },
+  //     });
+  //   }
+  //   // Handle payment result
+  // };
+
   return (
-    <div className="mt-[50px] lg:mt-5">
-      <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-        Payments
-      </div>
+    <Elements stripe={stripePromise}>
+      <Fragment>
+        <LoadingOverlay visible={loading} />
+        <div className="mt-[50px] lg:mt-5">
+          <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
+            Payments
+          </div>
 
-      {!cards && (
-        <div className="mt-10 h-[60vh] flex flex-col items-center justify-center">
-          <div>Add payment method and automate your payments.</div>
-          <Button
-            type="submit"
-            size="md"
-            mt={30}
-            className="bg-primary"
-            onClick={() => setCards(true)}
-          >
-            {userData?.accountType === "student"
-              ? "Add Payment Method"
-              : "Withdraw Money"}
-          </Button>
-        </div>
-      )}
-
-      {cards && (
-        <Fragment>
-          <div className="mt-10 max-w-[600px] mx-auto border rounded-xl p-5">
-            <div className="font-medium text-lg text-primary">
-              Enter Your Card Details
+          <div className="mt-10 px-4 lg:px-10">
+            <div className="flex gap-2">
+              <h3 className="font-medium">Subscription</h3>
+              <div>Weekly</div>
             </div>
-            <TextInput
-              required
-              size="md"
-              mt={16}
-              label="Card Holder Name"
-              placeholder="Enter card name"
-            />
-
-            <TextInput
-              required
-              size="md"
-              mt={16}
-              label="Card Number"
-              placeholder="Enter card number"
-            />
-            <DatePickerInput
-              required
-              size="md"
-              mt={16}
-              label="Exp Date"
-              placeholder="Enter exp date"
-            />
-            <TextInput
-              required
-              size="md"
-              mt={16}
-              label="CSV"
-              placeholder="Enter CSV number"
-            />
+            <div className="mt-5">
+              <Button
+                size="md"
+                className="bg-primary"
+                onClick={() => setCards(true)}
+              >
+                Add Payment
+              </Button>
+            </div>
+            <div className="mt-10">
+              {cards && <SubscriptionCard subscriptions={subscriptions} />}
+            </div>
           </div>
-          <div className="flex justify-center">
-            <Button type="submit" size="md" mt={30} className="bg-primary">
-              Save Card Details
-            </Button>
-          </div>
-        </Fragment>
-      )}
-    </div>
+        </div>
+      </Fragment>
+    </Elements>
   );
 };
 
