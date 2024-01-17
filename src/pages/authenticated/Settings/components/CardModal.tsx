@@ -37,7 +37,7 @@ const CardModal = ({ close, opened, clientSecret }: IProps) => {
     const { error }: any = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:3000",
+        return_url: `${window.location.origin}/success`
       },
     });
 
@@ -49,6 +49,7 @@ const CardModal = ({ close, opened, clientSecret }: IProps) => {
     }
 
     setLoading(false);
+    close();
   };
 
   return (
@@ -68,7 +69,7 @@ const CardModal = ({ close, opened, clientSecret }: IProps) => {
           <div className="flex justify-end mt-5">
             <Button
               loading={loading}
-              disabled={loading}
+              disabled={!stripe && loading}
               size="md"
               className="bg-primary"
               type="submit"
