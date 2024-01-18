@@ -2,7 +2,7 @@ import { Button, Modal } from "@mantine/core";
 import { Elements, PaymentElement } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type IProps = {
   opened: boolean;
@@ -12,7 +12,7 @@ type IProps = {
 
 const CardModal = ({ close, opened, clientSecret }: IProps) => {
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
 
   const stripe = useStripe();
   const elements = useElements();
@@ -25,6 +25,36 @@ const CardModal = ({ close, opened, clientSecret }: IProps) => {
     clientSecret,
   };
 
+  useEffect(() => {
+    if (!stripe) {
+      return;
+    }
+
+    if (!clientSecret) {
+      return;
+    }
+
+    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
+      switch (paymentIntent?.status) {
+        case "succeeded":
+          setMessage("Payment successful");
+          break;
+        case "processing":
+          setMessage("Processing payment");
+          setLoading(false);
+          break;
+        case "requires_payment_method":
+          setMessage("Payment failed, please Select a payment method");
+          setLoading(false);
+          break;
+        default:
+          setMessage("Something went wrong, please try again");
+          setLoading(false);
+          break;
+      }
+    });
+  }, [stripe]);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
@@ -33,11 +63,12 @@ const CardModal = ({ close, opened, clientSecret }: IProps) => {
     }
 
     setLoading(true);
+    close;
 
     const { error }: any = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}/success`
+        return_url: `${window.location.origin}/success`,
       },
     });
 
@@ -69,7 +100,7 @@ const CardModal = ({ close, opened, clientSecret }: IProps) => {
           <div className="flex justify-end mt-5">
             <Button
               loading={loading}
-              disabled={!stripe && loading}
+              // disabled={!stripe && loading}
               size="md"
               className="bg-primary"
               type="submit"
