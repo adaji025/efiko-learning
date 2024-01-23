@@ -42,6 +42,7 @@ import ViewStudent from "../../pages/authenticated/Admin/ManageStudents/ViewStud
 import RecordedSessionDetails from "../../pages/authenticated/Admin/Session/RecordedSessionDetails";
 import Subscriptions from "../../pages/authenticated/Admin/Subscriptions/Subscriptions";
 import ManageSessionRequest from "../../pages/authenticated/Admin/Session/ManageSessionRequest";
+import PaymentSuccess from "../../pages/authenticated/Settings/PaymentSuccess";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -165,6 +166,7 @@ const Authenticated = () => {
               <Route path="/manage-tutors/view-tutor" element={<ViewTutor />} />
               <Route path="/manage-issues" element={<ManageIssues />} />
               <Route path="/subscriptions" element={<Subscriptions />} />
+              <Route path="user/payment-success" element={<PaymentSuccess />} />
             </Routes>
           </main>
         </div>

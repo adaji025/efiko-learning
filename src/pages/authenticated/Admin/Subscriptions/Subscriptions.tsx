@@ -31,7 +31,7 @@ const Subscriptions = () => {
       .then((res: any) => {
         setSubscriptions(res.data);
       })
-      .then((err) => {
+      .catch((err) => {
         handleError(err);
       })
       .finally(() => {
@@ -68,7 +68,7 @@ const Subscriptions = () => {
                       setSearch(search);
                       handleGetSubscriptions();
                     }
-                  }else if (e.code === "Backspace") {
+                  } else if (e.code === "Backspace") {
                     handleGetSubscriptions();
                   }
                 }}

@@ -19,6 +19,18 @@ export const getSbubscritions = (
   });
 };
 
+export const getAllSbubscritions = () => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(`${APIS.SUBSCRIPTION}`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export const addSubscription = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(`${APIS.SUBSCRIPTION}`, data)
