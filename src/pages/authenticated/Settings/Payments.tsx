@@ -64,6 +64,10 @@ const Payments = () => {
               <h3 className="font-medium">Subscription</h3>
               <div>Weekly</div>
             </div>
+            <div className="flex gap-2 mt-2">
+              <h3 className="font-medium">Expiry date</h3>
+              <div>12/02/24</div>
+            </div>
             <div className="mt-5">
               <Button
                 size="md"

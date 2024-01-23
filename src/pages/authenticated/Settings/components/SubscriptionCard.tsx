@@ -49,9 +49,6 @@ const SubscriptionCard = ({ subscriptions }: IProps) => {
     };
     initiateTransaction(data)
       .then((res: any) => {
-        // setClientSecret(res.data.data.clientSecret);
-        // setTransactionID(res.data.data.transactionId);
-        // open();
         window.location.replace(res.data.data.url);
       })
       .catch((err) => {
@@ -74,20 +71,29 @@ const SubscriptionCard = ({ subscriptions }: IProps) => {
             placeholder="Select subscription Type"
             label="Subscription Type"
             data={subscriptions.map((subscription) => ({
-              label: `${subscription.type} - ${subscription.currency === "USD" ? "$" : "₦"}${subscription.amount}`,
+              label: `${subscription.type} - ${
+                subscription.currency === "USD" ? "$" : "₦"
+              }${subscription.amount}`,
               value: subscription._id,
             }))}
             onChange={setValue}
           />
 
           <div className="mt-5 flex justify-end">
-            <Button disabled={!payload} size="md" className="bg-primary" type="submit">
-              {payload ? `Pay ${payload.currency === "USD" ? "$" : "₦"}${payload.amount}` : "Make Payment"}
+            <Button
+              disabled={!payload}
+              size="md"
+              className="bg-primary"
+              type="submit"
+            >
+              {payload
+                ? `Pay ${payload.currency === "USD" ? "$" : "₦"}${
+                    payload.amount
+                  }`
+                : "Make Payment"}
             </Button>
           </div>
         </form>
-
-        {/* <CardElement /> */}
       </div>
     </Fragment>
   );

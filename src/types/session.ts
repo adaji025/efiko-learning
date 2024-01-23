@@ -9,6 +9,7 @@ export type SessionTypes = {
   start: boolean
   date: string
   time: string
+  timeAndDate: string
   charges: number
   averageRating: number
   status: string

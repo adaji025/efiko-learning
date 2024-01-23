@@ -33,6 +33,8 @@ const ExploreSession = () => {
         setLoading(false);
       });
   };
+
+
   return (
     <Fragment>
       <LoadingOverlay visible={loading} />
@@ -55,7 +57,11 @@ const ExploreSession = () => {
                 sessions.map((session, index) => (
                   <SessionCard
                     btnText="Book session"
-                    handleBtnClick={() => navigate("/explore-sessions/first")}
+                    handleBtnClick={() =>
+                      navigate(`/explore-sessions/${session._id}`, {
+                        state: session,
+                      })
+                    }
                     key={index}
                     item={session}
                   />
