@@ -10,6 +10,7 @@ import { RootState } from "../../../redux/store";
 import { SessionTypes } from "../../../types/session";
 import useNotification from "../../../hooks/useNotification";
 import { getSession } from "../../../services/session";
+import { BiArrowBack } from "react-icons/bi";
 
 const RedcordedSession = () => {
   const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
@@ -45,7 +46,10 @@ const RedcordedSession = () => {
       <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-          Recorded Sesions
+          <div className="flex items-center gap-2">
+            <BiArrowBack onClick={() => navigate(-1)} />
+            <div> Recorded Sessions</div>
+          </div>
         </div>
         <div className="px-4 lg:px-10">
           <div className="flex justify-end">
