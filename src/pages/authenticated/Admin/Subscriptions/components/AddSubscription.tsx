@@ -34,6 +34,7 @@ const AddSubscription = ({ close, opened, callback, subscription }: Props) => {
       title: "",
       amount: "",
       type: "",
+      currency: "",
     },
   });
 
@@ -137,10 +138,21 @@ const AddSubscription = ({ close, opened, callback, subscription }: Props) => {
             ]}
             {...form.getInputProps("type")}
           />
+          <Select
+            required
+            mt={8}
+            label="Currency Type"
+            placeholder="Select Currency type"
+            data={[
+              { label: "USD", value: "USD" },
+              { label: "NGN", value: "NGN" },
+            ]}
+            {...form.getInputProps("currency")}
+          />
 
           <div className="flex justify-end">
             <Button type="submit" mt={16} className="bg-primary">
-              {subscription? "Update" : "Add"} Subscription
+              {subscription ? "Update" : "Add"} Subscription
             </Button>
           </div>
         </form>

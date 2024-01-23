@@ -12,3 +12,14 @@ export const initiateTransaction = (data: any) => {
       });
   });
 };
+export const confirmTransaction = (userId: string, uuid: string) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(`${APIS.CONFIRM_TRANSACTION}?uuid=${uuid}&userId=${userId}`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

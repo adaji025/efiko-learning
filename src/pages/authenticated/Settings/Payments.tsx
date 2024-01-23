@@ -70,7 +70,7 @@ const Payments = () => {
                 className="bg-primary"
                 onClick={() => setCards(true)}
               >
-                Add Payment
+                Make Payment
               </Button>
             </div>
             <div className="mt-10">
