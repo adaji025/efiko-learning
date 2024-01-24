@@ -6,11 +6,19 @@ import { getAllSbubscritions } from "../../../services/admin/subscription";
 import useNotification from "../../../hooks/useNotification";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { getPayments } from "../../../services/transaction";
+import { PaymentState } from "../../../types/payment";
+import PaymentsTable from "./components/PaymentsTable";
+import TableSkeleton from "../../../components/TableSkeleton";
 
 const Payments = () => {
   const [loading, setLoading] = useState(false);
+  const [limit] = useState(10);
+  const [skip, setSkip] = useState(0);
+  const [search] = useState("");
   const [subscriptions, setSubscriptions] = useState<SubscriptionTypes[]>([]);
   const [cards, setCards] = useState(false);
+  const [payments, setPayments] = useState<PaymentState | null>(null);
 
   const stripePromise = loadStripe(
     import.meta.env.VITE_APP_STRIPE_PUBLISHABLE_KEY
@@ -19,6 +27,7 @@ const Payments = () => {
   const { handleError } = useNotification();
   useEffect(() => {
     handleGetSubscriptions();
+    handleGetPayment()
   }, []);
 
   const handleGetSubscriptions = () => {
@@ -35,20 +44,15 @@ const Payments = () => {
       });
   };
 
-  // const handleSubmit = async (event: any) => {
-  //   event.preventDefault();
-  //   if (!stripe || !elements) {
-  //     return;
-  //   }
-  //   if (clientSecret) {
-  //     const { error }: any = await stripe.confirmCardPayment(clientSecret, {
-  //       payment_method: {
-  //         card: elements.getElement(CardElement),
-  //       },
-  //     });
-  //   }
-  //   // Handle payment result
-  // };
+  const handleGetPayment = () => {
+    getPayments(limit, skip, search)
+      .then((res: any) => {
+        setPayments(res.data);
+      })
+      .catch((err) => {
+        handleError(err);
+      });
+  };
 
   return (
     <Elements stripe={stripePromise}>
@@ -80,6 +84,17 @@ const Payments = () => {
             <div className="mt-10">
               {cards && <SubscriptionCard subscriptions={subscriptions} />}
             </div>
+
+            {!loading && (
+            <PaymentsTable
+              payments={payments}
+              limit={limit}
+              skip={skip}
+              setSkip={setSkip}
+            />
+          )}
+
+          {loading && <TableSkeleton />}
           </div>
         </div>
       </Fragment>
