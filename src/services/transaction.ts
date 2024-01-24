@@ -23,3 +23,15 @@ export const confirmTransaction = (userId: string, uuid: string) => {
       });
   });
 };
+
+export const getPayments = (limit: number, skip: number, search: string) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(`${APIS.SUBCRIPTION_LIST}?limit=${limit}&skip=${skip}&search=${search}`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

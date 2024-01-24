@@ -1,4 +1,4 @@
-import { Button, LoadingOverlay, Select } from "@mantine/core";
+import { Button, LoadingOverlay, Modal, Select } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { ProfileTypes } from "../../../../types/auth";
 import { RootState } from "../../../../redux/store";
@@ -9,8 +9,10 @@ import { useForm } from "@mantine/form";
 
 type IProps = {
   subscriptions: SubscriptionTypes[];
+  opened: boolean;
+  close: () => void;
 };
-const SubscriptionCard = ({ subscriptions }: IProps) => {
+const SubscriptionCard = ({ subscriptions, close, opened }: IProps) => {
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState<string | null>(null);
   const [payload, setPayload] = useState<SubscriptionTypes | null>(null);
@@ -36,9 +38,6 @@ const SubscriptionCard = ({ subscriptions }: IProps) => {
     },
   });
 
-  console.log(userData._id);
-  console.log(payload);
-
   const submit = () => {
     setLoading(true);
 
@@ -49,9 +48,6 @@ const SubscriptionCard = ({ subscriptions }: IProps) => {
     };
     initiateTransaction(data)
       .then((res: any) => {
-        // setClientSecret(res.data.data.clientSecret);
-        // setTransactionID(res.data.data.transactionId);
-        // open();
         window.location.replace(res.data.data.url);
       })
       .catch((err) => {
@@ -65,8 +61,7 @@ const SubscriptionCard = ({ subscriptions }: IProps) => {
   return (
     <Fragment>
       <LoadingOverlay visible={loading} />
-
-      <div className="max-w-[500px]">
+      <Modal centered opened={opened} onClose={close}>
         <form onSubmit={form.onSubmit(submit)}>
           <Select
             size="md"
@@ -74,21 +69,30 @@ const SubscriptionCard = ({ subscriptions }: IProps) => {
             placeholder="Select subscription Type"
             label="Subscription Type"
             data={subscriptions.map((subscription) => ({
-              label: `${subscription.type} - ${subscription.currency === "USD" ? "$" : "₦"}${subscription.amount}`,
+              label: `${subscription.type} - ${
+                subscription.currency === "USD" ? "$" : "₦"
+              }${subscription.amount}`,
               value: subscription._id,
             }))}
             onChange={setValue}
           />
 
           <div className="mt-5 flex justify-end">
-            <Button disabled={!payload} size="md" className="bg-primary" type="submit">
-              {payload ? `Pay ${payload.currency === "USD" ? "$" : "₦"}${payload.amount}` : "Make Payment"}
+            <Button
+              disabled={!payload}
+              size="md"
+              className="bg-primary"
+              type="submit"
+            >
+              {payload
+                ? `Pay ${payload.currency === "USD" ? "$" : "₦"}${
+                    payload.amount
+                  }`
+                : "Make Payment"}
             </Button>
           </div>
         </form>
-
-        {/* <CardElement /> */}
-      </div>
+      </Modal>
     </Fragment>
   );
 };

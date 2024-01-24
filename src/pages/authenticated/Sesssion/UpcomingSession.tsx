@@ -7,6 +7,7 @@ import { SessionTypes } from "../../../types/session";
 import useNotification from "../../../hooks/useNotification";
 import { getUpcomingSession } from "../../../services/session";
 import SessionCard from "../Dashboard/components/SessionCard";
+import { BiArrowBack } from "react-icons/bi";
 
 const UpcomingSession = () => {
   const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
@@ -39,7 +40,10 @@ const UpcomingSession = () => {
       <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-          Upcoming Sessions
+          <div className="flex items-center gap-2">
+            <BiArrowBack onClick={() => navigate(-1)} />
+            <div> Upcoming Sessions</div>
+          </div>
         </div>
         <div className="px-4 lg:px-10">
           <div className="flex justify-end">

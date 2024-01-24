@@ -28,4 +28,5 @@ export const APIS = {
   },
   TRANSACTION: `${api}/transaction/initiate`,
   CONFIRM_TRANSACTION: `${api}/transaction/verify`,
+  SUBCRIPTION_LIST: `${api}/subscription-order`
 };
