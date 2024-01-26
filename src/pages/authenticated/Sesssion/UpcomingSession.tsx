@@ -61,7 +61,9 @@ const UpcomingSession = () => {
                   key={index}
                   item={item}
                   btnText="Join session"
-                  handleBtnClick={() => navigate("/upcoming-sessions/first")}
+                  handleBtnClick={() =>
+                    navigate(`/upcoming-sessions/${item._id}`, { state: item })
+                  }
                 />
               ))}
             </div>
