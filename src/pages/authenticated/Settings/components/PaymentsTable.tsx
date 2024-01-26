@@ -20,7 +20,7 @@ const PaymentsTable = ({ limit, payments, setSkip, skip }: IProps) => {
   }, [payments, limit]);
 
   function isToday(date: any) {
-    var givenDate = new Date(date); // You can replace this with your desired date
+    var givenDate = new Date(date);
 
     // Get the current date
     var currentDate = new Date();
@@ -54,6 +54,7 @@ const PaymentsTable = ({ limit, payments, setSkip, skip }: IProps) => {
                   key={payment._id}
                   className={`${
                     isToday(moment(payment.expiresAt).format("YYYY-MM-DD")) &&
+                    isToday(moment(payment.expiresAt).format("HH: MM")) &&
                     "text-red-500"
                   }`}
                 >

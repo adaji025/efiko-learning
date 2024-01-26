@@ -7,6 +7,7 @@ export type SessionTypes = {
   description: string
   outcome: string
   start: boolean
+  meetingLink: string
   date: string
   time: string
   timeAndDate: string
