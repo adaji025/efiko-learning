@@ -1,17 +1,16 @@
 import { useState, Fragment, useEffect } from "react";
 import { TextInput, LoadingOverlay } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
-import { sessionData } from "../../../components/data";
 import SessionCard from "../Dashboard/components/SessionCard";
 import EmptyIcon from "../../../assets/svgs/empty.svg";
 import { useNavigate } from "react-router-dom";
 import { getSession } from "../../../services/session";
 import useNotification from "../../../hooks/useNotification";
-import { SessionTypes } from "../../../types/session";
+import { SessionState } from "../../../types/session";
 
 const ExploreSession = () => {
   const [loading, setLoading] = useState(false);
-  const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
+  const [sessions, setSessions] = useState<SessionState | null>(null);
   const navigate = useNavigate();
   const { handleError } = useNotification();
 
@@ -24,7 +23,8 @@ const ExploreSession = () => {
 
     getSession()
       .then((res: any) => {
-        setSessions(res.data.data);
+        setSessions(res.data);
+        console.log(res.data);
       })
       .catch((err: any) => {
         handleError(err);
@@ -33,7 +33,6 @@ const ExploreSession = () => {
         setLoading(false);
       });
   };
-
 
   return (
     <Fragment>
@@ -51,10 +50,10 @@ const ExploreSession = () => {
               placeholder="search.."
             />
           </div>
-          {sessionData.length !== 0 && (
+          {sessions && (
             <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
               {sessions &&
-                sessions.map((session, index) => (
+                sessions.data.map((session, index) => (
                   <SessionCard
                     btnText="Book session"
                     handleBtnClick={() =>
@@ -69,10 +68,10 @@ const ExploreSession = () => {
             </div>
           )}
 
-          {sessionData.length === 0 && (
+          {sessions && (sessions.data.length === 0 || !sessions) && (
             <div className="w-full h-[50vh] flex flex-col justify-center items-center">
               <img src={EmptyIcon} alt="" />
-              <div>No such session found!</div>
+              <div>No session found!</div>
             </div>
           )}
         </div>

@@ -1,16 +1,16 @@
 import { Fragment, useEffect, useState } from "react";
 import { TextInput, LoadingOverlay } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
-import { sessionData } from "../../../components/data";
 import { useNavigate } from "react-router-dom";
-import { SessionTypes } from "../../../types/session";
+import { SessionState} from "../../../types/session";
 import useNotification from "../../../hooks/useNotification";
 import { getUpcomingSession } from "../../../services/session";
 import SessionCard from "../Dashboard/components/SessionCard";
 import { BiArrowBack } from "react-icons/bi";
+import EmptyIcon from "../../../assets/svgs/empty.svg";
 
 const UpcomingSession = () => {
-  const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
+  const [sessions, setSessions] = useState<SessionState | null>(null);
   const [loading, setLoading] = useState(false);
 
   const { handleError } = useNotification();
@@ -25,7 +25,7 @@ const UpcomingSession = () => {
 
     getUpcomingSession()
       .then((res: any) => {
-        setSessions(res.data.data);
+        setSessions(res.data);
       })
       .catch((err: any) => {
         handleError(err);
@@ -54,9 +54,9 @@ const UpcomingSession = () => {
               placeholder="search.."
             />
           </div>
-          {sessions?.length !== 0 && (
+          {sessions?.data.length !== 0 && (
             <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
-              {sessions?.map((item, index) => (
+              {sessions?.data.map((item, index) => (
                 <SessionCard
                   key={index}
                   item={item}
@@ -69,9 +69,10 @@ const UpcomingSession = () => {
             </div>
           )}
 
-          {sessionData.length === 0 && (
+          {sessions && (sessions.data.length === 0 || !sessions) && (
             <div className="w-full h-[50vh] flex flex-col justify-center items-center">
-              <div>No upcoming session scheduled.</div>
+              <img src={EmptyIcon} alt="" />
+              <div>No session found!</div>
             </div>
           )}
         </div>
