@@ -1,19 +1,19 @@
 import { useEffect, useState, Fragment } from "react";
 import { TextInput, LoadingOverlay } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
-import { sessionData } from "../../../components/data";
 import SessionCard from "../Dashboard/components/SessionCard";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { ProfileTypes } from "../../../types/auth";
 import { RootState } from "../../../redux/store";
-import { SessionTypes } from "../../../types/session";
+import { SessionState } from "../../../types/session";
 import useNotification from "../../../hooks/useNotification";
 import { getSession } from "../../../services/session";
 import { BiArrowBack } from "react-icons/bi";
+import EmptyIcon from "../../../assets/svgs/empty.svg";
 
 const RedcordedSession = () => {
-  const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
+  const [sessions, setSessions] = useState<SessionState | null>(null);
   const [loading, setLoading] = useState(false);
 
   const userData: ProfileTypes = useSelector(
@@ -32,7 +32,7 @@ const RedcordedSession = () => {
 
     getSession()
       .then((res: any) => {
-        setSessions(res.data.data);
+        setSessions(res.data);
       })
       .catch((err: any) => {
         handleError(err);
@@ -62,7 +62,7 @@ const RedcordedSession = () => {
           </div>
           {sessions?.length !== 0 && (
             <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
-              {sessions?.map((item, index) => (
+              {sessions?.data.map((item, index) => (
                 <SessionCard
                   btnText={
                     userData?.accountType === "student"
@@ -82,9 +82,10 @@ const RedcordedSession = () => {
             </div>
           )}
 
-          {sessionData.length === 0 && (
+          {sessions && (sessions.data.length === 0 || !sessions) && (
             <div className="w-full h-[50vh] flex flex-col justify-center items-center">
-              <div>No recorded session available.</div>
+              <img src={EmptyIcon} alt="" />
+              <div>No session found!</div>
             </div>
           )}
         </div>

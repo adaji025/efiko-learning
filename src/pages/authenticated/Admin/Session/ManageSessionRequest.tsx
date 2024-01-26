@@ -1,18 +1,45 @@
 import { TextInput } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import TableSkeleton from "../../../../components/TableSkeleton";
 import SessionRequestTable from "./components/SessionRequestTable";
+import { getSessionRequest } from "../../../../services/admin/session";
+import { AdminSessionState } from "../../../../types/admins/session";
+import useNotification from "../../../../hooks/useNotification";
 
 const ManageSessionRequest = () => {
-  const [loading] = useState(false);
+  const [sessions, setSessions] = useState<AdminSessionState | null>(null);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [limit] = useState(5);
+  const [skip, setSkip] = useState(1);
 
-  const handleGetSessionRequest = () => {};
+  const { handleError } = useNotification();
+
+  console.log(sessions)
+
+  useEffect(() => {
+    handleGetSessionRequest();
+  }, [limit, skip]);
+
+  const handleGetSessionRequest = () => {
+    setLoading(true);
+
+    getSessionRequest(limit, skip, search)
+      .then((res: any) => {
+        setSessions(res.data);
+      })
+      .catch((err: any) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-       Sesion Request
+        Sesion Request
       </div>
 
       <div className="px-4 lg:px-10">
@@ -37,7 +64,15 @@ const ManageSessionRequest = () => {
           />
         </div>
 
-        {!loading && <SessionRequestTable />}
+        {!loading && (
+          <SessionRequestTable
+            sessions={sessions}
+            limit={limit}
+            skip={skip}
+            setSkip={setSkip}
+            handleGetSessionRequest={handleGetSessionRequest}
+          />
+        )}
 
         {loading && <TableSkeleton />}
       </div>

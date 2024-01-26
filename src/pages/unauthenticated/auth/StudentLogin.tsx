@@ -37,7 +37,7 @@ const StudentLogin = () => {
       <LoadingOverlay visible={loading} />
       <div className="h-screen flex">
         <div className="sign-in w-1/2 h-full hidden md:block" />
-        <div className="flex-1 px-[40px] sm:px-[100px]">
+        <div className="flex-1 px-[40px] md:px-[100px]">
           <div className="flex justify-center mt-16">
             <img src={Logo} alt="efiko learning" />
           </div>
@@ -51,7 +51,7 @@ const StudentLogin = () => {
                 required
                 size="md"
                 label="Email"
-                className="w-full"
+                className="w-full placeholder:text-xs"
                 {...form.getInputProps("email")}
               />
               <Button
@@ -74,7 +74,7 @@ const StudentLogin = () => {
             </h2>
             <Button
               size="md"
-              className="bg-primary w-full rounded-full"
+              className="bg-primary w-full rounded-full text-xs sm:text-base"
               onClick={() => navigate("/register")}
             >
               Sign up and Book a free trial class now

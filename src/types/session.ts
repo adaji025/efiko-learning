@@ -1,3 +1,11 @@
+export type SessionState = {
+  success: boolean;
+  msg: string;
+  data: SessionTypes[];
+  length: number;
+  total: number;
+};
+
 export type SessionTypes = {
   _id: string
   title: string

@@ -7,34 +7,33 @@ import AssignTutorModal from "./AssignTutorModal";
 import { getAllTutors } from "../../../../../services/admin/tutors";
 import useNotification from "../../../../../hooks/useNotification";
 import { TutorTypes } from "../../../../../types/admins/tutor";
+import { AdminSessionState } from "../../../../../types/admins/session";
+import moment from "moment";
 
-const sessionRequest = [
-  {
-    name: "john Doe",
-    sessionTitle: "session 1",
-    date: "2024-06-15",
-    time: "14:14",
-    status: "pending",
-    tutor: "Jane Doe",
-    _id: "one",
-  },
-  {
-    name: "john Doe",
-    sessionTitle: "session 1",
-    date: "2024-06-15",
-    time: "14:14",
-    status: "pending",
-    tutor: "not assigned",
-    _id: "two",
-  },
-];
+type SessionProps = {
+  sessions: AdminSessionState | null;
+  skip: number;
+  limit: number;
+  setSkip: React.Dispatch<React.SetStateAction<number>>;
+  handleGetSessionRequest?: () => void;
+};
 
-const SessionRequestTable = () => {
+const SessionRequestTable = ({
+  limit,
+  sessions,
+  setSkip,
+  skip,
+}: SessionProps) => {
   const [approvalModal, setApprovalModal] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
-  const [tutors, setTutors] = useState<TutorTypes[] >([])
-  
-  const {handleError} = useNotification()
+  const [tutors, setTutors] = useState<TutorTypes[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const { handleError } = useNotification();
+
+  useEffect(() => {
+    if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
+  }, [sessions, limit]);
 
   useEffect(() => {
     handleGetTutors();
@@ -47,8 +46,7 @@ const SessionRequestTable = () => {
       })
       .then((err) => {
         handleError(err);
-      })
-      
+      });
   };
   return (
     <Fragment>
@@ -74,14 +72,16 @@ const SessionRequestTable = () => {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {sessionRequest &&
-              sessionRequest.map((session) => (
+            {sessions &&
+              sessions.data.map((session) => (
                 <Table.Tr key={session._id}>
-                  <Table.Td>{session.name}</Table.Td>
-                  <Table.Td>{session.sessionTitle}</Table.Td>
-                  <Table.Td>{session.date}</Table.Td>
-                  <Table.Td>{session.time}</Table.Td>
-                  <Table.Td>{session.tutor}</Table.Td>
+                  <Table.Td>{session.studentId.email}</Table.Td>
+                  <Table.Td>{session.title}</Table.Td>
+                  <Table.Td>
+                    {moment(session.time).format("YYYY-MM-DD")}
+                  </Table.Td>
+                  <Table.Td>{moment(session.time).format("HH : MM")}</Table.Td>
+                  <Table.Td>{session.tutorId.fullName}</Table.Td>
                   <Table.Td>{session.status}</Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
@@ -115,7 +115,7 @@ const SessionRequestTable = () => {
               ))}
           </Table.Tbody>
         </Table>
-        {sessionRequest && (sessionRequest.length === 0 || !sessionRequest) && (
+        {sessions && (sessions.data.length === 0 || !sessions) && (
           <div className="w-full h-[50vh] flex flex-col justify-center items-center">
             <div>No recorded session available.</div>
           </div>
@@ -123,10 +123,10 @@ const SessionRequestTable = () => {
       </div>
       <div className="mt-10">
         <Pagination
-          total={20}
+          total={totalPages}
           siblings={1}
-          value={1}
-          onChange={() => {}}
+          value={skip}
+          onChange={setSkip}
           className="text-primary"
         />
       </div>

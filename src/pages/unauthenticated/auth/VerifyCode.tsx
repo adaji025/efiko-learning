@@ -53,7 +53,7 @@ const VerifyCode = () => {
             Enter the Login code sent to your Email
           </div>
         </div>
-        <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
+        <div className="mt-10 bg-white border shadow px-[20px] md:p-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
           <form
             onSubmit={form.onSubmit((values) => submit(values))}
             className="mx-auto flex flex-col items-center"
