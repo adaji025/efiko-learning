@@ -2,6 +2,7 @@ import { Pagination, Table } from "@mantine/core";
 import moment from "moment";
 import React, { Fragment, useEffect, useState } from "react";
 import { PaymentState } from "../../../../types/payment";
+import { isToday } from "../../../../utils";
 
 type IProps = {
   payments: PaymentState | null;
@@ -13,25 +14,9 @@ type IProps = {
 const PaymentsTable = ({ limit, payments, setSkip, skip }: IProps) => {
   const [totalPages, setTotalPages] = useState(1);
 
-  console.log(payments);
-
   useEffect(() => {
     if (payments) setTotalPages(Math.ceil(payments?.length / limit));
   }, [payments, limit]);
-
-  function isToday(date: any) {
-    var givenDate = new Date(date);
-
-    // Get the current date
-    var currentDate = new Date();
-
-    // Check if the given date is equal to today's date
-    if (givenDate < currentDate) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 
   return (
     <Fragment>
@@ -70,7 +55,8 @@ const PaymentsTable = ({ limit, payments, setSkip, skip }: IProps) => {
                     {moment(payment.expiresAt).format("HH : MM")}
                   </Table.Td>
                   <Table.Td>
-                    {isToday(moment(payment.expiresAt).format("YYYY-MM-DD"))
+                    {isToday(moment(payment.expiresAt).format("YYYY-MM-DD")) &&
+                    isToday(moment(payment.expiresAt).format("HH : MM"))
                       ? "Expired"
                       : "Active"}
                   </Table.Td>
