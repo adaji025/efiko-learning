@@ -33,3 +33,17 @@ export function convertMinutesToHours(minutes: number) {
 
   return hours + " hours " + remainingMinutes + " minutes";
 }
+
+export function isToday(date: any) {
+  var givenDate = new Date(date);
+
+  // Get the current date
+  var currentDate = new Date();
+
+  // Check if the given date is equal to today's date
+  if (givenDate < currentDate) {
+    return true;
+  } else {
+    return false;
+  }
+}

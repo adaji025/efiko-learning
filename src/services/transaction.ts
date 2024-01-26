@@ -26,7 +26,7 @@ export const confirmTransaction = (userId: string, uuid: string) => {
 
 export const getPayments = (limit: number, skip: number, search: string) => {
   return new Promise((resolve, reject) => {
-    AxoisApi.get(`${APIS.SUBCRIPTION_LIST}?limit=${limit}&skip=${skip}&search=${search}`)
+    AxoisApi.get(`${APIS.SUBCRIPTION_LIST}?limit=${limit}&skip=${skip}&search=${search}&sort=desc`)
       .then((res: any) => {
         resolve(res);
       })

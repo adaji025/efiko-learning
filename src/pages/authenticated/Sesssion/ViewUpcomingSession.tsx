@@ -3,28 +3,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { SessionTypes } from "../../../types/session";
 import { BiArrowBack } from "react-icons/bi";
 import moment from "moment";
+import { isToday } from "../../../utils";
 
 const ViewUpcomingSession = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const session: SessionTypes = location.state;
-
-  function isToday(date: any) {
-    var givenDate = new Date(date);
-
-    // Get the current date
-    var currentDate = new Date();
-
-    // Check if the given date is equal to today's date
-    if (givenDate < currentDate) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  console.log(moment(session.time).format("YYYY-MM-DD"));
-  console.log(isToday(moment(session.time).format("YYYY-MM-DD")));
 
   return (
     <div className="mt-[50px] lg:mt-5">
