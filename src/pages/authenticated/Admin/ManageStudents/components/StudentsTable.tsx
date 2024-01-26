@@ -35,6 +35,8 @@ const StudentsTable = ({
   const { handleError } = useNotification();
   const navigate = useNavigate();
 
+  console.log(students)
+
   useEffect(() => {
     if (students) setTotalPages(Math.ceil(students?.total / limit));
   }, [students, limit]);
