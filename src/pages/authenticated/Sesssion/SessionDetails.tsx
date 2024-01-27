@@ -23,6 +23,7 @@ const SessionDetails = () => {
   const session: SessionTypes = location.state;
 
   const bookSession = () => {
+    setLoading(true);
     const data = {
       book: true,
     };
@@ -92,11 +93,6 @@ const SessionDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="mt-5">
-            <div className="sm:text-lg font-medium">Session Charges:</div>
-            <div className="text-sm ml-2">$25</div>
-          </div> */}
           </div>
         </div>
 

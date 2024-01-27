@@ -18,6 +18,7 @@ export type SessionTypes = {
   meetingLink: string
   date: string
   time: string
+  duration: string
   timeAndDate: string
   charges: number
   averageRating: number

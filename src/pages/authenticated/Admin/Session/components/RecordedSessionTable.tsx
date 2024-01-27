@@ -20,6 +20,8 @@ const RecordedSessionTable = ({
 }: SessionProps) => {
   const [totalPages, setTotalPages] = useState(1);
 
+  console.log(sessions)
+
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
   }, [sessions, limit]);
@@ -84,7 +86,7 @@ const RecordedSessionTable = ({
               ))}
           </Table.Tbody>
         </Table>
-        {sessions && (sessions.length === 0 || !sessions) && (
+        {sessions && (sessions.data.length === 0 || !sessions) && (
           <div className="w-full h-[50vh] flex flex-col justify-center items-center">
             <div>No recorded session available.</div>
           </div>

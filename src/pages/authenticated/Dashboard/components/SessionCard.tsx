@@ -3,6 +3,7 @@ import { IoMdTime } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
 import { SessionTypes } from "../../../../types/session";
 import moment from "moment";
+import { convertMinutesToHours } from "../../../../utils";
 
 type IProps = {
   item: SessionTypes;
@@ -23,11 +24,13 @@ const SessionCard = ({ item, btnText, handleBtnClick }: IProps) => {
         <div className="flex justify-between mt-2">
           <div className="flex items-center gap-2">
             <MdDateRange />
-            <div className="text-sm">{moment(item?.date).format("DD MMM, YYYY")}</div>
+            <div className="text-sm">
+              {moment(item?.date).format("DD MMM, YYYY")}
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <IoMdTime />
-            <div>3 hrs</div>
+            <div>{convertMinutesToHours(Number(item.duration))}</div>
           </div>
         </div>
       </div>
