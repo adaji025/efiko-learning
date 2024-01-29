@@ -37,7 +37,8 @@ const StudentProfilSetup = () => {
 
   const form = useForm({
     initialValues: {
-      fullName: "",
+      firstName: "",
+      lastName: "",
       age: "",
       country: "",
       education: "",
@@ -45,7 +46,8 @@ const StudentProfilSetup = () => {
       subject: [],
     },
     validate: {
-      fullName: (value) => (value === "" ? "Input full name" : null),
+      lastName: (value) => (value === "" ? "Input full name" : null),
+      firstName: (value) => (value === "" ? "Input full name" : null),
       country: (value) => (value === "" ? "Input Country" : null),
       age: (value) => (value === "" ? "Input age" : null),
       education: (value) => (value === "" ? "Input Education" : null),
@@ -61,7 +63,8 @@ const StudentProfilSetup = () => {
     const formData = new FormData();
 
     // Append regular key-value pairs
-    formData.append("fullName", form.values.fullName);
+    formData.append("firstName", form.values.firstName);
+    formData.append("lastName", form.values.lastName);
     formData.append("age", form.values.age);
     formData.append("country", form.values.country);
 
@@ -88,7 +91,8 @@ const StudentProfilSetup = () => {
 
   const validate = useCallback((): boolean => {
     if (
-      form.values.fullName === "" ||
+      form.values.lastName === "" ||
+      form.values.firstName === "" ||
       form.values.age === "" ||
       form.values.country === ""
     )
@@ -131,14 +135,15 @@ const StudentProfilSetup = () => {
                   mt={16}
                   size="md"
                   label="First Name"
-                  {...form.getInputProps("fullName")}
+                  {...form.getInputProps("firstName")}
                 />
-                {/* <TextInput
+                <TextInput
                   required
                   mt={16}
                   size="md"
                   label="Last Name"
-                /> */}
+                  {...form.getInputProps("lastName")}
+                />
                 <NumberInput
                   hideControls
                   required

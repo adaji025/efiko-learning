@@ -18,13 +18,14 @@ const ExploreSession = () => {
     handleGetSessions();
   }, []);
 
+  console.log(sessions)
+
   const handleGetSessions = () => {
     setLoading(true);
 
     getSession()
       .then((res: any) => {
         setSessions(res.data);
-        console.log(res.data);
       })
       .catch((err: any) => {
         handleError(err);

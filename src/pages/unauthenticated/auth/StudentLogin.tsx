@@ -36,8 +36,8 @@ const StudentLogin = () => {
     <Fragment>
       <LoadingOverlay visible={loading} />
       <div className="h-screen flex">
-        <div className="sign-in w-1/2 h-full hidden md:block" />
-        <div className="flex-1 px-[40px] md:px-[100px]">
+        <div className="sign-in w-1/2 h-full hidden lg:block" />
+        <div className="flex-1 px-[40px] md:px-[100px] max-w-[600px] mx-auto">
           <div className="flex justify-center mt-16">
             <img src={Logo} alt="efiko learning" />
           </div>

@@ -10,9 +10,13 @@ import { updateSession } from "../../../services/session";
 import { toast } from "react-toastify";
 import useNotification from "../../../hooks/useNotification";
 import { Fragment, useState } from "react";
+import SubscriptionPromp from "./components/SubscriptionPromp";
+import { useDisclosure } from "@mantine/hooks";
 
 const SessionDetails = () => {
   const [loading, setLoading] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
+
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
   );
@@ -23,6 +27,7 @@ const SessionDetails = () => {
   const session: SessionTypes = location.state;
 
   const bookSession = () => {
+    setLoading(true);
     const data = {
       book: true,
     };
@@ -33,6 +38,8 @@ const SessionDetails = () => {
         })
         .catch((err) => {
           handleError(err);
+          err.response.data.message === "User does not have subscription" &&
+            open();
         })
         .finally(() => {
           setLoading(false);
@@ -40,6 +47,7 @@ const SessionDetails = () => {
   };
   return (
     <Fragment>
+      <SubscriptionPromp close={close} opened={opened} />
       <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -92,11 +100,6 @@ const SessionDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className="mt-5">
-            <div className="sm:text-lg font-medium">Session Charges:</div>
-            <div className="text-sm ml-2">$25</div>
-          </div> */}
           </div>
         </div>
 
