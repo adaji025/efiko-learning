@@ -131,12 +131,16 @@ const SessionRequestTable = ({
             {sessions &&
               sessions.data.map((session) => (
                 <Table.Tr key={session._id}>
-                  <Table.Td>{session.studentId.email}</Table.Td>
+                  <Table.Td>
+                    {session.studentId?.firstName} {session.studentId?.lastName}
+                  </Table.Td>
                   <Table.Td>{session.title}</Table.Td>
                   <Table.Td>
                     {moment(session.timeAndDate).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>{moment(session.timeAndDate).format("HH : MM")}</Table.Td>
+                  <Table.Td>
+                    {moment(session.timeAndDate).format("HH : MM")}
+                  </Table.Td>
                   <Table.Td>{session?.tutorId?.fullName}</Table.Td>
                   <Table.Td>{session.status}</Table.Td>
                   <Table.Td>
@@ -150,21 +154,25 @@ const SessionRequestTable = ({
                         </div>
                       </Menu.Target>
                       <Menu.Dropdown>
-                        <Menu.Item
-                          onClick={() => {
-                            setApprovalModal(true);
-                            setSessionId(session._id);
-                          }}
-                        >
-                          Aprrove
-                        </Menu.Item>
-                        <Menu.Item
-                          onClick={() => {
-                            open();
-                          }}
-                        >
-                          Assign Tutor
-                        </Menu.Item>
+                        {session.status !== "approved" && (
+                          <Menu.Item
+                            onClick={() => {
+                              setApprovalModal(true);
+                              setSessionId(session._id);
+                            }}
+                          >
+                            Aprrove
+                          </Menu.Item>
+                        )}
+                        {!session.tutorId && (
+                          <Menu.Item
+                            onClick={() => {
+                              open();
+                            }}
+                          >
+                            Assign Tutor
+                          </Menu.Item>
+                        )}
                       </Menu.Dropdown>
                     </Menu>
                   </Table.Td>

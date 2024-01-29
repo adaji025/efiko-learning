@@ -47,6 +47,8 @@ export interface TutorTypes {
   fullName: string;
 }
 export type studentTypes = {
-  email: string;
   _id: string;
+  email: string
+  firstName: string
+  lastName: string
 };
