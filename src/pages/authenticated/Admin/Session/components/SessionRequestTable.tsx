@@ -134,9 +134,9 @@ const SessionRequestTable = ({
                   <Table.Td>{session.studentId.email}</Table.Td>
                   <Table.Td>{session.title}</Table.Td>
                   <Table.Td>
-                    {moment(session.time).format("YYYY-MM-DD")}
+                    {moment(session.timeAndDate).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>{session.time}</Table.Td>
+                  <Table.Td>{moment(session.timeAndDate).format("HH : MM")}</Table.Td>
                   <Table.Td>{session?.tutorId?.fullName}</Table.Td>
                   <Table.Td>{session.status}</Table.Td>
                   <Table.Td>
