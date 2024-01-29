@@ -12,11 +12,10 @@ const ManageSessionRequest = () => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [limit] = useState(5);
-  const [skip, setSkip] = useState(1);
+  const [skip, setSkip] = useState(0);
 
   const { handleError } = useNotification();
 
-  console.log(sessions)
 
   useEffect(() => {
     handleGetSessionRequest();
@@ -36,6 +35,7 @@ const ManageSessionRequest = () => {
         setLoading(false);
       });
   };
+
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">

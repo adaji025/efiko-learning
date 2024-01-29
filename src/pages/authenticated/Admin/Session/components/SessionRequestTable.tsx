@@ -1,4 +1,4 @@
-import { Menu, Pagination, Table } from "@mantine/core";
+import { LoadingOverlay, Menu, Pagination, Table } from "@mantine/core";
 import { Fragment, useEffect, useState } from "react";
 import { SlOptionsVertical } from "react-icons/sl";
 import ConfirmaApproval from "../../../../../components/Confirmation";
@@ -9,13 +9,15 @@ import useNotification from "../../../../../hooks/useNotification";
 import { TutorTypes } from "../../../../../types/admins/tutor";
 import { AdminSessionState } from "../../../../../types/admins/session";
 import moment from "moment";
+import { updateSession } from "../../../../../services/session";
+import { toast } from "react-toastify";
 
 type SessionProps = {
   sessions: AdminSessionState | null;
   skip: number;
   limit: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
-  handleGetSessionRequest?: () => void;
+  handleGetSessionRequest: () => void;
 };
 
 const SessionRequestTable = ({
@@ -23,11 +25,16 @@ const SessionRequestTable = ({
   sessions,
   setSkip,
   skip,
+  handleGetSessionRequest,
 }: SessionProps) => {
+  const [loading, setLoading] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const [approvalModal, setApprovalModal] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [tutors, setTutors] = useState<TutorTypes[]>([]);
   const [totalPages, setTotalPages] = useState(1);
+
+  console.log(sessions);
 
   const { handleError } = useNotification();
 
@@ -48,16 +55,65 @@ const SessionRequestTable = ({
         handleError(err);
       });
   };
+
+  const handleApproveSessionRequest = () => {
+    setLoading(true);
+
+    const value = {
+      status: "approved",
+    };
+
+    sessionId &&
+      updateSession(sessionId, value)
+        .then(() => {
+          toast.success("Session Approved successfully");
+          handleGetSessionRequest();
+        })
+        .catch((err: any) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
+
+  const handleAssignTutors = (id: string) => {
+    setLoading(true);
+
+    const value = {
+      tutorId: id,
+    };
+
+    sessionId &&
+      updateSession(sessionId, value)
+        .then(() => {
+          toast.success("Tutor Assigned successfully");
+          handleGetSessionRequest();
+        })
+        .catch((err: any) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
+
   return (
     <Fragment>
       <ConfirmaApproval
         opened={approvalModal}
         close={() => setApprovalModal(false)}
         callback={() => {}}
-        handleClick={() => {}}
+        handleClick={handleApproveSessionRequest}
         btnText="approve session request"
       />
-      <AssignTutorModal tutors={tutors} close={close} opened={opened} />
+      <AssignTutorModal
+        tutors={tutors}
+        close={close}
+        opened={opened}
+        handleAssignTutors={handleAssignTutors}
+      />
+      <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -80,8 +136,8 @@ const SessionRequestTable = ({
                   <Table.Td>
                     {moment(session.time).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>{moment(session.time).format("HH : MM")}</Table.Td>
-                  <Table.Td>{session.tutorId.fullName}</Table.Td>
+                  <Table.Td>{session.time}</Table.Td>
+                  <Table.Td>{session?.tutorId?.fullName}</Table.Td>
                   <Table.Td>{session.status}</Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
@@ -97,6 +153,7 @@ const SessionRequestTable = ({
                         <Menu.Item
                           onClick={() => {
                             setApprovalModal(true);
+                            setSessionId(session._id);
                           }}
                         >
                           Aprrove
