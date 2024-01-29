@@ -39,7 +39,7 @@ const ReviewCard = ({ session }: RProps) => {
       <div
         className="mt-4 cursor-pointer hover:underline hover:text-primary"
         onClick={() =>
-          navigate(`/my-profile/${session._id}`, { state: session})
+          navigate(`/my-profile/${session._id}`, { state: session })
         }
       >
         Read Remarks from all the students
@@ -52,7 +52,6 @@ const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [userProfile, setUserProfile] = useState<UserProfileTypes | null>(null);
 
-  const userId = localStorage.getItem("userId") ?? "";
   const { handleError } = useNotification();
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
@@ -62,12 +61,10 @@ const Profile = () => {
     handleGetUserProfile();
   }, []);
 
-  console.log(userProfile);
-
   const handleGetUserProfile = () => {
     setLoading(true);
 
-    getUserProfile(userId)
+    getUserProfile(userData._id)
       .then((res: any) => {
         setUserProfile(res.data);
       })
@@ -91,7 +88,9 @@ const Profile = () => {
             <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
               <Avatar size="xl" className="mt-5" />
               <div className="font-semibold mt-5 capitalize">
-                {userProfile?.data.fullName}
+                {userData.accountType === "student"
+                  ? `${userProfile?.data.firstName}  ${userProfile?.data.lastName}`
+                  : userData?.fullName}
               </div>
               <div className="text-sm mt-2 capitalize">
                 {userProfile?.data.accountType}
@@ -124,7 +123,10 @@ const Profile = () => {
                   Personal Details
                 </div>
                 <div className="mt-2 text-sm">
-                  Name: {userProfile?.data.fullName}{" "}
+                  Name:{" "}
+                  {userData.accountType === "student"
+                    ? `${userProfile?.data.firstName}  ${userProfile?.data.lastName}`
+                    : userData?.fullName}
                 </div>
                 <div className="mt-2 text-sm">
                   Age: {userProfile?.data.age} Years

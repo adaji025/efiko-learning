@@ -24,6 +24,8 @@ export interface Data {
   country: string;
   description: string;
   fullName: string;
+  firstName: string;
+  lastName: string;
 }
 
 export type TutorEducationDetailsTypes = {
