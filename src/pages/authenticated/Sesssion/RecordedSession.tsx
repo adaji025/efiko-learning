@@ -73,7 +73,7 @@ const RedcordedSession = () => {
                     userData?.accountType === "student" &&
                       navigate("/recorded-sessions/63ednecdsth");
                     userData?.accountType === "tutor" &&
-                      navigate("/recorded-sessions-details/63ednecdsth");
+                      navigate(`/recorded-sessions-details/${item._id}`);
                   }}
                   key={index}
                   item={item}

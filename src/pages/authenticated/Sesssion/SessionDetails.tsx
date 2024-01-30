@@ -57,8 +57,8 @@ const SessionDetails = () => {
           </div>
         </div>
         <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
-          <div className="w-full border-b px-4 lg:px-10 py-4 font-semibold">
-            {session?.title}: {session?.description}
+          <div className="w-full border-b px-4 lg:px-10 py-4 font-semibold capitalize">
+            {session?.title}
           </div>
           <div className="px-4 lg:px-10 mt-3">
             <div>

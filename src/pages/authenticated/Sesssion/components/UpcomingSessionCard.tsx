@@ -3,16 +3,16 @@ import { IoMdTime } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
 import { SessionTypes } from "../../../../types/session";
 import moment from "moment";
+import { isToday } from "../../../../utils";
 
 type IProps = {
   item: SessionTypes;
-  btnEditText: string;
   btnStartText: string;
-  handleEditClick: () => void;
-  handleStartClick: () => void;
 };
 
-const UpcomingSessionCard = ({ item, btnEditText, btnStartText, handleEditClick, handleStartClick }: IProps) => {
+const UpcomingSessionCard = ({
+  item,
+}: IProps) => {
   return (
     <div className="pt-5 bg-white shadow-lg rounded-xl mb-10 border">
       <div className="px-5">
@@ -25,7 +25,9 @@ const UpcomingSessionCard = ({ item, btnEditText, btnStartText, handleEditClick,
         <div className="flex justify-between mt-2">
           <div className="flex items-center gap-2">
             <MdDateRange />
-            <div className="text-sm">{moment(item?.date).format("DD MMM, YYYY")}</div>
+            <div className="text-sm">
+              {moment(item?.date).format("DD MMM, YYYY")}
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <IoMdTime />
@@ -35,16 +37,23 @@ const UpcomingSessionCard = ({ item, btnEditText, btnStartText, handleEditClick,
       </div>
       <div className="flex">
         <button
-          className="bg-[#F5F5F5] text-primary font-bold w-full border-t rounded-b-xl py-2 mt-2 mb-0 border-r"
-          onClick={handleEditClick}
+          className="bg-[#F5F5F5] text-primary font-bold w-full border-t rounded-b-xl py-2 mt-2 mb-0 disabled:bg-primary/70"
+          disabled={
+            !isToday(moment(item.time).format("YYYY-MM-DD")) &&
+            !isToday(moment(item.time).format("HH : MM"))
+          }
         >
-          {btnEditText}
-        </button>
-        <button
-          className="bg-[#F5F5F5] text-primary font-bold w-full border-t rounded-b-xl py-2 mt-2 mb-0"
-          onClick={handleStartClick}
-        >
-          {btnStartText}
+           <a
+            target="_blank"
+            href={item.meetingLink}
+            className={`${
+              !isToday(moment(item.time).format("YYYY-MM-DD")) &&
+              !isToday(moment(item.time).format("HH : MM")) &&
+              "pointer-events-none"
+            }`}
+          >
+            Join Session
+          </a>
         </button>
       </div>
     </div>
