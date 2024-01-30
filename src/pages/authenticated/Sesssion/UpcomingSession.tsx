@@ -35,6 +35,8 @@ const UpcomingSession = () => {
       });
   };
 
+  console.log(sessions)
+
   return (
     <Fragment>
       <LoadingOverlay visible={loading} />

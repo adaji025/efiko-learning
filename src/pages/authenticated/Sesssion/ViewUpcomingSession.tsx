@@ -10,6 +10,8 @@ const ViewUpcomingSession = () => {
   const location = useLocation();
   const session: SessionTypes = location.state;
 
+  console.log(session);
+
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -19,8 +21,8 @@ const ViewUpcomingSession = () => {
         </div>
       </div>
       <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
-        <div className="w-full border-b px-4 lg:px-10 py-4 font-semibold">
-          {session?.title}: {session?.description}
+        <div className="w-full border-b px-4 lg:px-10 py-4 font-semibold capitalize">
+          {session?.title}
         </div>
         <div className="px-4 lg:px-10 mt-3">
           <div>
@@ -55,7 +57,7 @@ const ViewUpcomingSession = () => {
             <div>
               <div className="sm:text-lg font-medium">Session Time: </div>
               <div className="text-sm ml-2">
-                {moment(session.time).format("HH : MM")}
+                {moment(session.timeAndDate).format("HH : MM")}
               </div>
             </div>
           </div>

@@ -21,8 +21,6 @@ const Header = ({ openMobileNav }: Props) => {
     handleGetUserProfile();
   }, []);
 
-  console.log(userProfile);
-
   const handleGetUserProfile = () => {
     getUserProfile(userData._id).then((res: any) => {
       setUserProfile(res.data);

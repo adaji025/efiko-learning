@@ -1,12 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { TextInput, LoadingOverlay } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
-import { useNavigate } from "react-router-dom";
 import { SessionState } from "../../../types/session";
 import useNotification from "../../../hooks/useNotification";
 import { getTutorUpcomingSession } from "../../../services/session";
 import UpcomingSessionCard from "./components/UpcomingSessionCard";
-import { toast } from "react-toastify";
 import EmptyIcon from "../../../assets/svgs/empty.svg";
 
 const UpcomingSessionTutor = () => {
@@ -16,7 +14,6 @@ const UpcomingSessionTutor = () => {
   const userId = localStorage.getItem("userId") ?? "";
 
   const { handleError } = useNotification();
-  const navigate = useNavigate();
 
   useEffect(() => {
     handleGetSessions();
@@ -59,19 +56,12 @@ const UpcomingSessionTutor = () => {
                 <UpcomingSessionCard
                   key={item._id}
                   item={item}
-                  btnEditText="Edit"
                   btnStartText="Start"
-                  handleEditClick={() =>
-                    navigate(`/schedule-sessions/edit/${item._id}`, {
-                      state: item,
-                    })
-                  }
-                  handleStartClick={() => toast.success("Session has started")}
                 />
               ))}
             </div>
           )}
-          
+
           {sessions && (sessions.data.length === 0 || !sessions) && (
             <div className="w-full h-[50vh] flex flex-col justify-center items-center">
               <img src={EmptyIcon} alt="" />
