@@ -25,6 +25,7 @@ export const APIS = {
   },
   NOTIFICATION: {
     GET_NOTIFICATION: (id: string) => `${api}/notification?recipientId=${id}`,
+    GET_ADMIN_NOTIFICATION: `${api}/notification?userType=Admin`,
   },
   TRANSACTION: `${api}/transaction/initiate`,
   CONFIRM_TRANSACTION: `${api}/transaction/verify`,

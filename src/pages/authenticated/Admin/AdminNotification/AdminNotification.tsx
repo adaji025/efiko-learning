@@ -1,13 +1,13 @@
 import { LiaTimesSolid } from "react-icons/lia";
 import { useState, Fragment, useEffect } from "react";
 import { LoadingOverlay } from "@mantine/core";
-import { getNotification } from "../../../services/notification";
-import useNotification from "../../../hooks/useNotification";
-import { NotificationState } from "../../../types/notification";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+import useNotification from "../../../../hooks/useNotification";
+import { NotificationState } from "../../../../types/notification";
+import { getAdminNotification } from "../../../../services/admin/notification";
 
-const Notification = () => {
+const AdminNotification = () => {
   const [loading, setLoading] = useState(false);
   const [notifications, setNotifications] = useState<NotificationState | null>(
     null
@@ -16,8 +16,8 @@ const Notification = () => {
   TimeAgo.addLocale(en);
   const timeAgo = new TimeAgo("en-US");
 
-  const userId = localStorage.getItem("userId") ?? "";
   const { handleError } = useNotification();
+  console.log(notifications)
 
   useEffect(() => {
     handleGetNotification();
@@ -26,7 +26,7 @@ const Notification = () => {
   const handleGetNotification = () => {
     setLoading(true);
 
-    getNotification(userId)
+    getAdminNotification()
       .then((res: any) => {
         setNotifications(res.data);
       })
@@ -60,4 +60,4 @@ const Notification = () => {
   );
 };
 
-export default Notification;
+export default AdminNotification;

@@ -215,6 +215,11 @@ const Sidebar = ({ openMobileNav }: IProps) => {
       ],
     },
     {
+      title: "Notifications",
+      icon: <NotificationIcon />,
+      route: "/admin-notifications",
+    },
+    {
       title: "Manage Admin",
       icon: <FaUsers />,
       route: "/manage-admins",
@@ -272,7 +277,7 @@ const Sidebar = ({ openMobileNav }: IProps) => {
         "manage-upcoming-sessions",
         "manage-recorded-sessions",
         "preview-sessions",
-        "manage-session-requests"
+        "manage-session-requests",
       ],
       children: [
         {
@@ -292,6 +297,11 @@ const Sidebar = ({ openMobileNav }: IProps) => {
           route: "manage-session-requests",
         },
       ],
+    },
+    {
+      title: "Notifications",
+      icon: <NotificationIcon />,
+      route: "/admin-notifications",
     },
     {
       title: "Manage Students",

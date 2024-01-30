@@ -43,6 +43,7 @@ import RecordedSessionDetails from "../../pages/authenticated/Admin/Session/Reco
 import Subscriptions from "../../pages/authenticated/Admin/Subscriptions/Subscriptions";
 import ManageSessionRequest from "../../pages/authenticated/Admin/Session/ManageSessionRequest";
 import PaymentSuccess from "../../pages/authenticated/Settings/PaymentSuccess";
+import AdminNotification from "../../pages/authenticated/Admin/AdminNotification/AdminNotification";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -167,6 +168,7 @@ const Authenticated = () => {
               <Route path="/manage-issues" element={<ManageIssues />} />
               <Route path="/subscriptions" element={<Subscriptions />} />
               <Route path="user/payment-success" element={<PaymentSuccess />} />
+              <Route path="/admin-notifications" element={<AdminNotification />} />
             </Routes>
           </main>
         </div>
