@@ -264,7 +264,7 @@ const StudentProfilSetup = () => {
                 <Button
                   size="md"
                   className="bg-primary w-full mt-10"
-                  onClick={() => navigate("/student-login")}
+                  onClick={() => navigate("/dashboard")}
                 >
                   Login
                 </Button>

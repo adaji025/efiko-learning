@@ -306,7 +306,7 @@ const TutorProfilSetup = () => {
                 <Button
                   size="md"
                   className="bg-primary w-full mt-10"
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/dashboard")}
                 >
                   Login
                 </Button>
