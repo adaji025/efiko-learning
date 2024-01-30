@@ -69,9 +69,9 @@ const SubscriptionCard = ({ subscriptions, close, opened }: IProps) => {
             placeholder="Select subscription Type"
             label="Subscription Type"
             data={subscriptions.map((subscription) => ({
-              label: `${subscription.type} - ${
+              label: `${subscription.title} - (${subscription.type} - ${
                 subscription.currency === "USD" ? "$" : "₦"
-              }${subscription.amount}`,
+              }${subscription.amount})`,
               value: subscription._id,
             }))}
             onChange={setValue}
