@@ -2,21 +2,19 @@ import { useEffect, useState, Fragment } from "react";
 import { useSelector } from "react-redux";
 import { Menu, Button, LoadingOverlay } from "@mantine/core";
 import { BiChevronDown } from "react-icons/bi";
-import { useNavigate } from "react-router-dom";
 import { ProfileTypes } from "../../../types/auth";
 import { RootState } from "../../../redux/store";
 import Chart from "./components/Chart";
-import SessionCard from "./components/SessionCard";
 import { SessionTypes } from "../../../types/session";
 import { getTutorSession } from "../../../services/session";
 import useNotification from "../../../hooks/useNotification";
+import UpcomingSessionCard from "../Sesssion/components/UpcomingSessionCard";
 
 const TutorDashboard = () => {
   const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
   const [loading, setLoading] = useState(false);
 
   const { handleError } = useNotification();
-  const navigate = useNavigate();
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
   );
@@ -66,23 +64,11 @@ const TutorDashboard = () => {
           <h2 className="text-xl font-semibold">My Upcoming Sessions</h2>
           <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
             {sessions &&
-              sessions.map((item, index) => (
-                <SessionCard
-                  key={index}
+              sessions.map((item) => (
+                <UpcomingSessionCard
+                  key={item._id}
                   item={item}
-                  btnText={
-                    userData?.accountType === "student"
-                      ? "Book session"
-                      : "Update Details"
-                  }
-                  handleBtnClick={() => {
-                    userData?.accountType === "student" &&
-                      navigate("/explore-sessions");
-                    userData?.accountType === "tutor" &&
-                      navigate(`/schedule-sessions/edit/${item._id}`, {
-                        state: item,
-                      });
-                  }}
+                  btnStartText="Start"
                 />
               ))}
           </div>

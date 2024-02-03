@@ -33,8 +33,10 @@ const SessionRequestTable = ({
   const [opened, { open, close }] = useDisclosure(false);
   const [tutors, setTutors] = useState<TutorTypes[]>([]);
   const [totalPages, setTotalPages] = useState(1);
+  const [tutorId, setTutorId] = useState<string | null>("");
 
-  console.log(sessions);
+
+  
 
   const { handleError } = useNotification();
 
@@ -84,8 +86,8 @@ const SessionRequestTable = ({
       tutorId: id,
     };
 
-    sessionId &&
-      updateSession(sessionId, value)
+    tutorId &&
+      updateSession(tutorId, value)
         .then(() => {
           toast.success("Tutor Assigned successfully");
           handleGetSessionRequest();
@@ -112,6 +114,8 @@ const SessionRequestTable = ({
         close={close}
         opened={opened}
         handleAssignTutors={handleAssignTutors}
+        setTutorId={setTutorId}
+        tutorId={tutorId}
       />
       <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">

@@ -68,19 +68,10 @@ const Dashboard = () => {
                 <SessionCard
                   key={index}
                   item={item}
-                  btnText={
-                    userData?.accountType === "student"
-                      ? "Book session"
-                      : "Update Details"
+                  btnText="Join session"
+                  handleBtnClick={() =>
+                    navigate(`/upcoming-sessions/${item._id}`, { state: item })
                   }
-                  handleBtnClick={() => {
-                    userData?.accountType === "student" &&
-                      navigate("/explore-sessions");
-                    userData?.accountType === "tutor" &&
-                      navigate(`/schedule-sessions/edit/${item._id}`, {
-                        state: item,
-                      });
-                  }}
                 />
               ))}
           </div>

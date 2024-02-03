@@ -10,11 +10,9 @@ type IProps = {
   btnStartText: string;
 };
 
-const UpcomingSessionCard = ({
-  item,
-}: IProps) => {
+const UpcomingSessionCard = ({ item }: IProps) => {
   return (
-    <div className="pt-5 bg-white shadow-lg rounded-xl mb-10 border">
+    <div className="pt-5 flex flex-col justify-between bg-white shadow-lg rounded-xl mb-10 border">
       <div className="px-5">
         <div className="font-semibold">{item?.title}</div>
         <div className="mt-3 flex items-center gap-2 text-sm">
@@ -38,19 +36,12 @@ const UpcomingSessionCard = ({
       <div className="flex">
         <button
           className="bg-[#F5F5F5] text-primary font-bold w-full border-t rounded-b-xl py-2 mt-2 mb-0 disabled:bg-primary/70"
-          disabled={
-            !isToday(moment(item.time).format("YYYY-MM-DD")) &&
-            !isToday(moment(item.time).format("HH : MM"))
-          }
+          disabled={isToday(item.time)}
         >
-           <a
+          <a
             target="_blank"
             href={item.meetingLink}
-            className={`${
-              !isToday(moment(item.time).format("YYYY-MM-DD")) &&
-              !isToday(moment(item.time).format("HH : MM")) &&
-              "pointer-events-none"
-            }`}
+            className={`${isToday(item.time) && "pointer-events-none"}`}
           >
             Join Session
           </a>

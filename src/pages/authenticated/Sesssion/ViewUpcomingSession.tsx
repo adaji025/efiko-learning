@@ -10,7 +10,12 @@ const ViewUpcomingSession = () => {
   const location = useLocation();
   const session: SessionTypes = location.state;
 
-  console.log(session);
+  console.log(session?.timeAndDate);
+  console.log(isToday(session?.timeAndDate));
+  const date = new Date();
+
+  console.log(session.timeAndDate);
+  console.log(new Date(session.timeAndDate) < date);
 
   return (
     <div className="mt-[50px] lg:mt-5">
@@ -66,10 +71,7 @@ const ViewUpcomingSession = () => {
 
       <div className="mt-10 flex justify-center">
         <Button
-          disabled={
-            !isToday(moment(session.time).format("YYYY-MM-DD")) &&
-            !isToday(moment(session.time).format("HH : MM"))
-          }
+          disabled={isToday(session.time)}
           size="md"
           className=" bg-primary w-1/2 sm:w-1/3 mx-auto disabled:bg-primary/70"
         >
@@ -77,9 +79,7 @@ const ViewUpcomingSession = () => {
             target="_blank"
             href={session.meetingLink}
             className={`${
-              !isToday(moment(session.time).format("YYYY-MM-DD")) &&
-              !isToday(moment(session.time).format("HH : MM")) &&
-              "pointer-events-none"
+              !isToday(session.timeAndDate) && "pointer-events-none"
             }`}
           >
             Join Session
