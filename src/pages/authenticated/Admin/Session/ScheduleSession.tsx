@@ -106,6 +106,7 @@ const ScheduleSession = () => {
   };
 
   const previewData = form.values;
+  console.log(previewData)
 
   return (
     <Fragment>

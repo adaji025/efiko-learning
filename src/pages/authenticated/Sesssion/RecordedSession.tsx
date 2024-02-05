@@ -74,7 +74,7 @@ const RedcordedSession = () => {
                   }
                   handleBtnClick={() => {
                     userData?.accountType === "student" &&
-                      navigate("/recorded-sessions/63ednecdsth");
+                      navigate(`/explore-sessions/${item._id}`);
                     userData?.accountType === "tutor" &&
                       navigate(`/recorded-sessions-details/${item._id}`);
                   }}

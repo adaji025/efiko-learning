@@ -95,7 +95,7 @@ const SessionDetails = () => {
               <div>
                 <div className="sm:text-lg font-medium">Session Time: </div>
                 <div className="text-sm ml-2">
-                  {moment(session.timeAndDate).format("HH : MM")}
+                  {moment(session?.timeAndDate).format("HH : MM")}
                 </div>
               </div>
             </div>

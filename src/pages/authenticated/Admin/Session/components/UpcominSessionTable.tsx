@@ -26,7 +26,7 @@ const UpcomingSessionTable = ({
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
   }, [sessions, limit]);
 
-  console.log(sessions)
+  console.log(sessions);
 
   return (
     <Fragment>
@@ -56,13 +56,11 @@ const UpcomingSessionTable = ({
                   >
                     {session.title}
                   </Table.Td>
-                  <Table.Td>{ }</Table.Td>
+                  <Table.Td>{}</Table.Td>
                   <Table.Td>
                     {moment(session.timeAndDate).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>
-                    {moment(session.timeAndDate).format("HH : MM")}
-                  </Table.Td>
+                  <Table.Td>{session.time}</Table.Td>
                   <Table.Td>3</Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
