@@ -24,7 +24,6 @@ const EditSession = () => {
   const location = useLocation();
   const session: AdminSessionType = location.state;
 
-  const userId = localStorage.getItem("userId") ?? "";
   const { handleError } = useNotification();
   const navigate = useNavigate();
 
@@ -66,11 +65,12 @@ const EditSession = () => {
   const submit = (values: any) => {
     setLoading(true);
 
-    updateSession(userId, values)
+    updateSession(session._id, values)
       .then(() => {
         toast.success("Session updated successfully");
         form.reset();
-        navigate("/upcoming-sessions");
+        navigate("/manage-upcoming-sessions");
+        console.log(values)
       })
       .catch((err) => {
         handleError(err);
@@ -93,14 +93,12 @@ const EditSession = () => {
         <form onSubmit={form.onSubmit((values) => submit(values))}>
           <div className="mt-10 px-4 lg:px-10 max-w-[1000px]">
             <TextInput
-              required
               size="md"
               label="Title of the session"
               {...form.getInputProps("title")}
               defaultValue={session?.title}
             />
             <Select
-              required
               size="md"
               mt={16}
               label="Subject Category"
@@ -132,7 +130,6 @@ const EditSession = () => {
             />
             <div className="grid grid-cols-2 gap-[16px]">
               <DatePickerInput
-                required
                 size="md"
                 mt={16}
                 label="Pick date"
@@ -144,7 +141,6 @@ const EditSession = () => {
               <TimeInput
                 ref={timeRef}
                 size="md"
-                required
                 mt={16}
                 label="Session Time"
                 placeholder="Pick time"
@@ -156,7 +152,6 @@ const EditSession = () => {
               <NumberInput
                 hideControls
                 size="md"
-                required
                 label="Session duration"
                 placeholder="Enter duration in hours"
                 className="flex-1"

@@ -107,7 +107,10 @@ const SubscriptionTable = ({
                   {subscription.title}
                 </Table.Td>
                 <Table.Td>{subscription.type}</Table.Td>
-                <Table.Td>${subscription.amount}</Table.Td>
+                <Table.Td>
+                  {subscription.currency === "USD" ? "$" : "₦"}
+                  {subscription.amount}
+                </Table.Td>
                 <Table.Td>{subscription.status}</Table.Td>
                 <Table.Td>
                   <div className="flex items-center gap-3">

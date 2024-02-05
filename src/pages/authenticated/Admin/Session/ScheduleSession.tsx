@@ -30,7 +30,7 @@ const ScheduleSession = () => {
   const [checked, setChecked] = useState(false);
   const timeRef = useRef<HTMLInputElement>(null);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { handleError } = useNotification();
 
   const pickerControl = (
@@ -113,10 +113,11 @@ const ScheduleSession = () => {
       {!preview && (
         <div className="mt-[50px] lg:mt-5">
           <div className="flex items-center gap-2 py-4 font-bold text-xl border-b px-4 lg:px-10">
-            <FaArrowLeft className="cursor-pointer" onClick={() => navigate(-1)} />
-            <div>
-              Schedule Sesions
-            </div>
+            <FaArrowLeft
+              className="cursor-pointer"
+              onClick={() => navigate(-1)}
+            />
+            <div>Schedule Sesions</div>
           </div>
 
           <form

@@ -49,6 +49,18 @@ export const getUpcomingSession = () => {
   });
 };
 
+export const getRecordedSession = (limit: number, skip: number, search: string) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(`${APIS.SESSION.SESSION}?type=recorded&limit=${limit}&skip=${skip}&search=${search}`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export const addSession = (data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.post(APIS.SESSION.SESSION, data)
