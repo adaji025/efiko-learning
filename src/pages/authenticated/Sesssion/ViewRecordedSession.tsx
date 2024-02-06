@@ -1,10 +1,10 @@
 import { Button } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
-import { SessionTypes } from "../../../../types/session";
 import moment from "moment";
 import { FaArrowLeft } from "react-icons/fa6";
+import { SessionTypes } from "../../../types/session";
 
-const RecordedSessionDetails = () => {
+const ViewRecordedSession = () => {
   const location = useLocation();
   const session: SessionTypes = location.state;
 
@@ -74,4 +74,4 @@ const RecordedSessionDetails = () => {
   );
 };
 
-export default RecordedSessionDetails;
+export default ViewRecordedSession;

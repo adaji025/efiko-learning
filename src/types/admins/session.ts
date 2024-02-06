@@ -17,8 +17,10 @@ export type AdminSessionType = {
   outcome: string;
   duration: string;
   meetingLink: string;
+  recordingLink: string;
   start: boolean;
   timeAndDate: string;
+  date: string;
   time: string;
   meetingPassword: string;
   averageRating: number;

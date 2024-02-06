@@ -8,7 +8,7 @@ import { ProfileTypes } from "../../../types/auth";
 import { RootState } from "../../../redux/store";
 import { SessionState } from "../../../types/session";
 import useNotification from "../../../hooks/useNotification";
-import { getRecordedSession, } from "../../../services/session";
+import { getRecordedSession } from "../../../services/session";
 import { BiArrowBack } from "react-icons/bi";
 import EmptyIcon from "../../../assets/svgs/empty.svg";
 
@@ -73,10 +73,7 @@ const RedcordedSession = () => {
                       : "View Recorded Session"
                   }
                   handleBtnClick={() => {
-                    userData?.accountType === "student" &&
-                      navigate(`/explore-sessions/${item._id}`);
-                    userData?.accountType === "tutor" &&
-                      navigate(`/recorded-sessions-details/${item._id}`);
+                    navigate(`/recorded-sessions/${item._id}`, { state: item });
                   }}
                   key={index}
                   item={item}

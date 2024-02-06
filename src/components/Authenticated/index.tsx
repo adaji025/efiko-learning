@@ -44,6 +44,7 @@ import Subscriptions from "../../pages/authenticated/Admin/Subscriptions/Subscri
 import ManageSessionRequest from "../../pages/authenticated/Admin/Session/ManageSessionRequest";
 import PaymentSuccess from "../../pages/authenticated/Settings/PaymentSuccess";
 import AdminNotification from "../../pages/authenticated/Admin/AdminNotification/AdminNotification";
+import ViewRecordedSession from "../../pages/authenticated/Sesssion/ViewRecordedSession";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -112,8 +113,12 @@ const Authenticated = () => {
               />
               <Route path="/recorded-sessions" element={<RedcordedSession />} />
               <Route
-                path="/recorded-sessions/:id"
+                path="/recorded-sessions/review/:id"
                 element={<ReviewSession />}
+              />
+              <Route
+                path="/recorded-sessions/:id"
+                element={<ViewRecordedSession />}
               />
               <Route
                 path="/upcoming-sessions/:id"
@@ -143,7 +148,7 @@ const Authenticated = () => {
                 element={<ManageRecordedSession />}
               />
               <Route
-                path="/manage-recorded-sessions/details"
+                path="/manage-recorded-sessions/:id"
                 element={<RecordedSessionDetails />}
               />
               <Route
