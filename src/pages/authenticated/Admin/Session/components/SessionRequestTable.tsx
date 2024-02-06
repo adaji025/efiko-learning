@@ -35,10 +35,8 @@ const SessionRequestTable = ({
   const [totalPages, setTotalPages] = useState(1);
   const [tutorId, setTutorId] = useState<string | null>("");
 
-
-  
-
   const { handleError } = useNotification();
+  console.log(sessions)
 
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
@@ -86,8 +84,8 @@ const SessionRequestTable = ({
       tutorId: id,
     };
 
-    tutorId &&
-      updateSession(tutorId, value)
+    sessionId &&
+      updateSession(sessionId, value)
         .then(() => {
           toast.success("Tutor Assigned successfully");
           handleGetSessionRequest();
@@ -145,7 +143,11 @@ const SessionRequestTable = ({
                   <Table.Td>
                     {moment(session.timeAndDate).format("HH : MM")}
                   </Table.Td>
-                  <Table.Td>{session?.tutorId?.fullName}</Table.Td>
+                  <Table.Td>
+                    {session.tutorId
+                      ? session?.tutorId?.fullName
+                      : "Not assigned"}
+                  </Table.Td>
                   <Table.Td>{session.status}</Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
@@ -172,6 +174,7 @@ const SessionRequestTable = ({
                           <Menu.Item
                             onClick={() => {
                               open();
+                              setSessionId(session._id);
                             }}
                           >
                             Assign Tutor

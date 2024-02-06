@@ -26,8 +26,6 @@ const UpcomingSessionTable = ({
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
   }, [sessions, limit]);
 
-  console.log(sessions);
-
   return (
     <Fragment>
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
@@ -56,7 +54,11 @@ const UpcomingSessionTable = ({
                   >
                     {session.title}
                   </Table.Td>
-                  <Table.Td>{}</Table.Td>
+                  <Table.Td>
+                    {session?.tutorId
+                      ? session?.tutorId?.fullName
+                      : "Not assigned"}
+                  </Table.Td>
                   <Table.Td>
                     {moment(session.timeAndDate).format("YYYY-MM-DD")}
                   </Table.Td>
