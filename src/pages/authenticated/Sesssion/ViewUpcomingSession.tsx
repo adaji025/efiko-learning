@@ -62,7 +62,7 @@ const ViewUpcomingSession = () => {
             <div>
               <div className="sm:text-lg font-medium">Session Time: </div>
               <div className="text-sm ml-2">
-                {moment(session.timeAndDate).format("HH : MM")}
+                {session.time}
               </div>
             </div>
           </div>

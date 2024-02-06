@@ -64,14 +64,16 @@ const Dashboard = () => {
           <h2 className="text-xl font-semibold">Trending Sessions</h2>
           <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
             {sessions &&
-              sessions.map((item, index) => (
+              sessions.map((session) => (
                 <SessionCard
-                  key={index}
-                  item={item}
-                  btnText="Join session"
+                  btnText="Book session"
                   handleBtnClick={() =>
-                    navigate(`/upcoming-sessions/${item._id}`, { state: item })
+                    navigate(`/explore-sessions/${session._id}`, {
+                      state: session,
+                    })
                   }
+                  key={session._id}
+                  item={session}
                 />
               ))}
           </div>

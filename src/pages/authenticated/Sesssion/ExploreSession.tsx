@@ -18,7 +18,7 @@ const ExploreSession = () => {
     handleGetSessions();
   }, []);
 
-  console.log(sessions)
+  console.log(sessions);
 
   const handleGetSessions = () => {
     setLoading(true);
@@ -54,7 +54,7 @@ const ExploreSession = () => {
           {sessions && (
             <div className="gap-10 mt-5 grid sm:grid-cols-2 2xl:grid-cols-3">
               {sessions &&
-                sessions.data.map((session, index) => (
+                sessions.data.map((session) => (
                   <SessionCard
                     btnText="Book session"
                     handleBtnClick={() =>
@@ -62,7 +62,7 @@ const ExploreSession = () => {
                         state: session,
                       })
                     }
-                    key={index}
+                    key={session._id}
                     item={session}
                   />
                 ))}
