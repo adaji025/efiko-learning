@@ -41,7 +41,7 @@ export function isToday(date: any) {
   var currentDate = new Date();
 
   // Check if the given date is equal to today's date
-  if (givenDate < currentDate) {
+  if (givenDate <= currentDate) {
     return true;
   } else {
     return false;

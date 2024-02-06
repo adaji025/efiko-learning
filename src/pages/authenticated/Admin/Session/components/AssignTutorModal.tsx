@@ -1,12 +1,13 @@
 import { Button, Modal, Select } from "@mantine/core";
 import { TutorTypes } from "../../../../../types/admins/tutor";
-import { useState } from "react";
 
 type IProps = {
   opened: boolean;
   close: () => void;
   tutors: TutorTypes[];
   handleAssignTutors: (id: string) => void;
+  tutorId: string | null
+  setTutorId: React.Dispatch<React.SetStateAction<string | null>>
 };
 
 const AssignTutorModal = ({
@@ -14,10 +15,11 @@ const AssignTutorModal = ({
   opened,
   tutors,
   handleAssignTutors,
+  setTutorId,
+  tutorId
 }: IProps) => {
-  const [tutorId, setTutorId] = useState<string | null>("");
 
-  console.log(tutorId);
+
 
   return (
     <Modal
@@ -37,7 +39,7 @@ const AssignTutorModal = ({
         mt={19}
         value={tutorId}
         data={tutors?.map((item) => ({
-          label: item?._id,
+          label: item?.fullName,
           value: item?._id,
         }))}
         onChange={setTutorId}

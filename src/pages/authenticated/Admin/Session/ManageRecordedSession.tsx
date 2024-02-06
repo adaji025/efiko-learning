@@ -3,7 +3,7 @@ import { TextInput } from "@mantine/core";
 import { CiSearch } from "react-icons/ci";
 import useNotification from "../../../../hooks/useNotification";
 import RecordedSessionTable from "./components/RecordedSessionTable";
-import { getAdminUpcomingSession } from "../../../../services/admin/session";
+import { getRecordedSession } from "../../../../services/admin/session";
 import { AdminSessionState } from "../../../../types/admins/session";
 import TableSkeleton from "../../../../components/TableSkeleton";
 
@@ -11,7 +11,7 @@ const ManageRecordedSession = () => {
   const [sessions, setSessions] = useState<AdminSessionState | null>(null);
   const [loading, setLoading] = useState(false);
   const [limit] = useState(5);
-  const [skip, setSkip] = useState(1);
+  const [skip, setSkip] = useState(0);
   const [search, setSearch] = useState("");
 
   const { handleError } = useNotification();
@@ -23,7 +23,7 @@ const ManageRecordedSession = () => {
   const handleGetSessions = () => {
     setLoading(true);
 
-    getAdminUpcomingSession(limit, skip, search)
+    getRecordedSession(limit, skip, search)
       .then((res: any) => {
         setSessions(res.data);
       })

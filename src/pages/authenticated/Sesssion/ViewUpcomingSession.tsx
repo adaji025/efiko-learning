@@ -10,8 +10,6 @@ const ViewUpcomingSession = () => {
   const location = useLocation();
   const session: SessionTypes = location.state;
 
-  console.log(session);
-
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -51,14 +49,12 @@ const ViewUpcomingSession = () => {
             <div>
               <div className="sm:text-lg font-medium">Session Date: </div>
               <div className="text-sm ml-2">
-                {moment(session?.timeAndDate).format("YYYY-MM-DD")}
+                {moment(session?.date).format("YYYY-MM-DD")}
               </div>
             </div>
             <div>
               <div className="sm:text-lg font-medium">Session Time: </div>
-              <div className="text-sm ml-2">
-                {moment(session.timeAndDate).format("HH : MM")}
-              </div>
+              <div className="text-sm ml-2">{session.time}</div>
             </div>
           </div>
         </div>
@@ -66,10 +62,7 @@ const ViewUpcomingSession = () => {
 
       <div className="mt-10 flex justify-center">
         <Button
-          disabled={
-            !isToday(moment(session.time).format("YYYY-MM-DD")) &&
-            !isToday(moment(session.time).format("HH : MM"))
-          }
+          disabled={!isToday(moment(session.date).format())}
           size="md"
           className=" bg-primary w-1/2 sm:w-1/3 mx-auto disabled:bg-primary/70"
         >
@@ -77,9 +70,7 @@ const ViewUpcomingSession = () => {
             target="_blank"
             href={session.meetingLink}
             className={`${
-              !isToday(moment(session.time).format("YYYY-MM-DD")) &&
-              !isToday(moment(session.time).format("HH : MM")) &&
-              "pointer-events-none"
+              !isToday(session.timeAndDate) && "pointer-events-none"
             }`}
           >
             Join Session

@@ -11,7 +11,7 @@ const ManageUpcomingSession = () => {
   const [sessions, setSessions] = useState<AdminSessionState | null>(null);
   const [loading, setLoading] = useState(false);
   const [limit] = useState(5);
-  const [skip, setSkip] = useState(1);
+  const [skip, setSkip] = useState(0);
   const [search, setSearch] = useState("");
 
   const { handleError } = useNotification();

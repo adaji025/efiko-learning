@@ -33,10 +33,10 @@ const SessionRequestTable = ({
   const [opened, { open, close }] = useDisclosure(false);
   const [tutors, setTutors] = useState<TutorTypes[]>([]);
   const [totalPages, setTotalPages] = useState(1);
-
-  console.log(sessions);
+  const [tutorId, setTutorId] = useState<string | null>("");
 
   const { handleError } = useNotification();
+  console.log(sessions)
 
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
@@ -112,6 +112,8 @@ const SessionRequestTable = ({
         close={close}
         opened={opened}
         handleAssignTutors={handleAssignTutors}
+        setTutorId={setTutorId}
+        tutorId={tutorId}
       />
       <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
@@ -141,7 +143,11 @@ const SessionRequestTable = ({
                   <Table.Td>
                     {moment(session.timeAndDate).format("HH : MM")}
                   </Table.Td>
-                  <Table.Td>{session?.tutorId?.fullName}</Table.Td>
+                  <Table.Td>
+                    {session.tutorId
+                      ? session?.tutorId?.fullName
+                      : "Not assigned"}
+                  </Table.Td>
                   <Table.Td>{session.status}</Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
@@ -168,6 +174,7 @@ const SessionRequestTable = ({
                           <Menu.Item
                             onClick={() => {
                               open();
+                              setSessionId(session._id);
                             }}
                           >
                             Assign Tutor

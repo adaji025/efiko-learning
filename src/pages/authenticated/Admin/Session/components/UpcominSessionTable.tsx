@@ -54,14 +54,15 @@ const UpcomingSessionTable = ({
                   >
                     {session.title}
                   </Table.Td>
-                  <Table.Td>Tutor</Table.Td>
+                  <Table.Td>
+                    {session?.tutorId
+                      ? session?.tutorId?.fullName
+                      : "Not assigned"}
+                  </Table.Td>
                   <Table.Td>
                     {moment(session.timeAndDate).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>
-                    {/* {moment(session.time).format("HH : MM")} */}
-                    {session.time}
-                  </Table.Td>
+                  <Table.Td>{session.time}</Table.Td>
                   <Table.Td>3</Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>

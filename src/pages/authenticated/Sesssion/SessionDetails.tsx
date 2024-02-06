@@ -95,8 +95,7 @@ const SessionDetails = () => {
               <div>
                 <div className="sm:text-lg font-medium">Session Time: </div>
                 <div className="text-sm ml-2">
-                  {moment(session.time).format("HH : MM")}
-                  Time
+                  {session?.time}
                 </div>
               </div>
             </div>
