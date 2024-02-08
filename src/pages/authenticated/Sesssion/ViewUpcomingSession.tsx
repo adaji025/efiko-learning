@@ -70,7 +70,7 @@ const ViewUpcomingSession = () => {
             target="_blank"
             href={session.meetingLink}
             className={`${
-              !isToday(session.timeAndDate) && "pointer-events-none"
+              !isToday(session.date) && "pointer-events-none"
             }`}
           >
             Join Session
