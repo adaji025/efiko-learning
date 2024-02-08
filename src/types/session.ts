@@ -20,7 +20,6 @@ export type SessionTypes = {
   date: string;
   time: string;
   duration: string;
-  timeAndDate: string;
   charges: number;
   averageRating: number;
   status: string;

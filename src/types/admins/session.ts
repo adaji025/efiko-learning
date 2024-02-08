@@ -19,7 +19,6 @@ export type AdminSessionType = {
   meetingLink: string;
   recordingLink: string;
   start: boolean;
-  timeAndDate: string;
   date: string;
   time: string;
   meetingPassword: string;
@@ -50,7 +49,7 @@ export interface TutorTypes {
 }
 export type studentTypes = {
   _id: string;
-  email: string
-  firstName: string
-  lastName: string
+  email: string;
+  firstName: string;
+  lastName: string;
 };

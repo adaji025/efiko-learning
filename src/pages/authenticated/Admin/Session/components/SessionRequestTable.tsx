@@ -138,10 +138,10 @@ const SessionRequestTable = ({
                   </Table.Td>
                   <Table.Td>{session.title}</Table.Td>
                   <Table.Td>
-                    {moment(session.timeAndDate).format("YYYY-MM-DD")}
+                    {moment(session.date).format("YYYY-MM-DD")}
                   </Table.Td>
                   <Table.Td>
-                    {moment(session.timeAndDate).format("HH : MM")}
+                    {moment(session.date).format("HH : MM")}
                   </Table.Td>
                   <Table.Td>
                     {session.tutorId
