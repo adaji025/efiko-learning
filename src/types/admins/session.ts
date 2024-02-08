@@ -17,8 +17,9 @@ export type AdminSessionType = {
   outcome: string;
   duration: string;
   meetingLink: string;
+  recordingLink: string;
   start: boolean;
-  timeAndDate: string;
+  date: string;
   time: string;
   meetingPassword: string;
   averageRating: number;
@@ -48,7 +49,7 @@ export interface TutorTypes {
 }
 export type studentTypes = {
   _id: string;
-  email: string
-  firstName: string
-  lastName: string
+  email: string;
+  firstName: string;
+  lastName: string;
 };

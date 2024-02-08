@@ -16,10 +16,10 @@ export type SessionTypes = {
   outcome: string;
   start: boolean;
   meetingLink: string;
+  recordingLink: string;
   date: string;
   time: string;
   duration: string;
-  timeAndDate: string;
   charges: number;
   averageRating: number;
   status: string;

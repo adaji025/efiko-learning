@@ -20,7 +20,7 @@ const RecordedSessionTable = ({
 }: SessionProps) => {
   const [totalPages, setTotalPages] = useState(1);
 
-  console.log(sessions)
+  console.log(sessions);
 
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
@@ -49,17 +49,17 @@ const RecordedSessionTable = ({
                   <Table.Td>{session.title}</Table.Td>
                   <Table.Td>{session.tutorId?.fullName}</Table.Td>
                   <Table.Td>
-                    {moment(session?.timeAndDate).format("YYYY-MM-DD")}
+                    {moment(session?.date).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>{moment(session.time).format("HH : MM")}</Table.Td>
+                  <Table.Td>{session.time}</Table.Td>
                   <Table.Td>3</Table.Td>
-                  <Table.Td>
-                    <a
-                      href="https://us06web.zoom.us/rec/share/5dSFVtzhTWah94Nt992ZZfTJcuTBmMAGgyaOSH4vguI4Fk6QSEIiiSOedmWsSjas.M0sPx_IdqV2pHObO"
-                      target="_blank"
-                    >
-                      View record
-                    </a>
+                  <Table.Td
+                    className="cursor-pointer"
+                    onClick={() =>
+                      navigate(`${session._id}`, { state: session })
+                    }
+                  >
+                    View record
                   </Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
@@ -74,7 +74,7 @@ const RecordedSessionTable = ({
                       <Menu.Dropdown>
                         <Menu.Item
                           onClick={() =>
-                            navigate("details", { state: session })
+                            navigate(`${session._id}`, { state: session })
                           }
                         >
                           View session

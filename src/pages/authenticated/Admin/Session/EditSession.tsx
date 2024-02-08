@@ -55,7 +55,7 @@ const EditSession = () => {
       category: session ? session?.category : "",
       description: session ? session?.description : "",
       outcome: session ? session?.outcome : "",
-      date: new Date(session.timeAndDate),
+      date: new Date(session.date),
       time: session ? session?.time : "",
       duration: session ? session?.duration : "",
       // @ts-ignore
@@ -70,7 +70,7 @@ const EditSession = () => {
         toast.success("Session updated successfully");
         form.reset();
         navigate("/manage-upcoming-sessions");
-        console.log(values)
+        console.log(values);
       })
       .catch((err) => {
         handleError(err);
@@ -105,7 +105,7 @@ const EditSession = () => {
               data={subjects.map((subject) => subject)}
               searchable
               {...form.getInputProps("category")}
-              defaultValue={session.category}
+              defaultValue={session?.category}
             />
             <Textarea
               mt={16}
@@ -115,7 +115,7 @@ const EditSession = () => {
               size="sm"
               className=""
               {...form.getInputProps("description")}
-              defaultValue={session.description}
+              defaultValue={session?.description}
             />
 
             <Textarea
@@ -136,7 +136,7 @@ const EditSession = () => {
                 placeholder="Pick date"
                 className="flex-1"
                 {...form.getInputProps("date")}
-                defaultValue={new Date(session.timeAndDate)}
+                defaultValue={new Date(session?.date)}
               />
               <TimeInput
                 ref={timeRef}
@@ -147,7 +147,7 @@ const EditSession = () => {
                 className="flex-1"
                 rightSection={pickerControl}
                 {...form.getInputProps("time")}
-                defaultValue={session.time}
+                defaultValue={session?.time}
               />
               <NumberInput
                 hideControls
@@ -156,7 +156,7 @@ const EditSession = () => {
                 placeholder="Enter duration in hours"
                 className="flex-1"
                 {...form.getInputProps("duration")}
-                defaultValue={session.duration}
+                defaultValue={session?.duration}
               />
             </div>
 

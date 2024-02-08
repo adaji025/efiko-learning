@@ -60,7 +60,7 @@ const UpcomingSessionTable = ({
                       : "Not assigned"}
                   </Table.Td>
                   <Table.Td>
-                    {moment(session.timeAndDate).format("YYYY-MM-DD")}
+                    {moment(session.date).format("YYYY-MM-DD")}
                   </Table.Td>
                   <Table.Td>{session.time}</Table.Td>
                   <Table.Td>3</Table.Td>

@@ -8,16 +8,14 @@ import { ProfileTypes } from "../../../types/auth";
 import { RootState } from "../../../redux/store";
 import { SessionState } from "../../../types/session";
 import useNotification from "../../../hooks/useNotification";
-import { getRecordedSession, } from "../../../services/session";
+
 import { BiArrowBack } from "react-icons/bi";
 import EmptyIcon from "../../../assets/svgs/empty.svg";
+import { getStudentRecordedSession } from "../../../services/session";
 
 const RedcordedSession = () => {
   const [sessions, setSessions] = useState<SessionState | null>(null);
   const [loading, setLoading] = useState(false);
-  const [limit] = useState(5);
-  const [skip] = useState(0);
-  const [search] = useState("");
 
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
@@ -33,7 +31,7 @@ const RedcordedSession = () => {
   const handleGetSessions = () => {
     setLoading(true);
 
-    getRecordedSession(limit, skip, search)
+    getStudentRecordedSession()
       .then((res: any) => {
         setSessions(res.data);
       })
@@ -73,10 +71,7 @@ const RedcordedSession = () => {
                       : "View Recorded Session"
                   }
                   handleBtnClick={() => {
-                    userData?.accountType === "student" &&
-                      navigate(`/explore-sessions/${item._id}`);
-                    userData?.accountType === "tutor" &&
-                      navigate(`/recorded-sessions-details/${item._id}`);
+                    navigate(`/recorded-sessions/${item._id}`, { state: item });
                   }}
                   key={index}
                   item={item}

@@ -89,7 +89,7 @@ const SessionDetails = () => {
               <div>
                 <div className="sm:text-lg font-medium">Session Date: </div>
                 <div className="text-sm ml-2">
-                  {moment(session?.timeAndDate).format("YYYY-MM-DD")}
+                  {moment(session?.date).format("YYYY-MM-DD")}
                 </div>
               </div>
               <div>

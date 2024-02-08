@@ -8,15 +8,12 @@ const RecordedSessionDetails = () => {
   const location = useLocation();
   const session: SessionTypes = location.state;
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10 flex items-center gap-2">
-      <FaArrowLeft
-            className="cursor-pointer"
-            onClick={() => navigate(-1)}
-          />
+        <FaArrowLeft className="cursor-pointer" onClick={() => navigate(-1)} />
         Recorded Sesion Details
       </div>
       <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
@@ -55,7 +52,7 @@ const RecordedSessionDetails = () => {
             </div>
             <div>
               <div className="sm:text-lg font-medium">Session Time: </div>
-                          <div className="text-sm ml-2">{session.time} WAT</div>
+              <div className="text-sm ml-2">{session.time} WAT</div>
             </div>
           </div>
 
@@ -68,10 +65,7 @@ const RecordedSessionDetails = () => {
 
       <div className="mt-10 flex justify-center">
         <Button size="md" className=" bg-primary w-1/2 sm:w-1/3 mx-auto">
-          <a
-            href="https://us06web.zoom.us/rec/share/5dSFVtzhTWah94Nt992ZZfTJcuTBmMAGgyaOSH4vguI4Fk6QSEIiiSOedmWsSjas.M0sPx_IdqV2pHObO"
-            target="_blank"
-          >
+          <a href={session.recordingLink} target="_blank">
             View record
           </a>
         </Button>

@@ -49,9 +49,9 @@ export const getUpcomingSession = () => {
   });
 };
 
-export const getRecordedSession = (limit: number, skip: number, search: string) => {
+export const getStudentRecordedSession = () => {
   return new Promise((resolve, reject) => {
-    AxoisApi.get(`${APIS.SESSION.SESSION}?type=recorded&limit=${limit}&skip=${skip}&search=${search}`)
+    AxoisApi.get(`${APIS.SESSION.SESSION}?type=recorded`)
       .then((res: any) => {
         resolve(res);
       })
