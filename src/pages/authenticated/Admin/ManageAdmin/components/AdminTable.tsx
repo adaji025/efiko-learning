@@ -64,13 +64,13 @@ const AdminTable = ({
       <AddAdmin
         close={() => setEdit(false)}
         opened={edit}
-        callback={handleGetAdmins}
+        callback={() => handleGetAdmins()}
         admin={admin}
       />
       <ConfirmDisable
         opened={opened}
         close={close}
-        handleClick={handleUpdateAdmin}
+        handleClick={() => handleUpdateAdmin()}
         btnText={status === "Inactive" ? "Deactivate user" : "Activate user"}
       />
 
