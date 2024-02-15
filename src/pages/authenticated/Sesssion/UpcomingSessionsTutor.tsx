@@ -51,7 +51,7 @@ const UpcomingSessionTutor = () => {
             />
           </div>
           {sessions?.length !== 0 && (
-            <div className="gap-10 mt-5 grid sm:grid-cols-2 md:grid-cols-3">
+            <div className="gap-10 mt-5 grid sm:grid-cols-2 xl:grid-cols-3">
               {sessions?.data.map((item) => (
                 <UpcomingSessionCard
                   key={item._id}

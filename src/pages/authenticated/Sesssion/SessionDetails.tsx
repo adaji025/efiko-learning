@@ -76,7 +76,7 @@ const SessionDetails = () => {
 
             <div className="mt-5">
               <div className="sm:text-lg font-medium">Learning Outcome:</div>
-              <ul className="ml-6 list-disc">
+              <ul className="ml-2">
                 <li>{session?.outcome}</li>
                 {/* <li>
                 You will know what you can further expect from this domain.

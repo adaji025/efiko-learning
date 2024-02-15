@@ -4,6 +4,8 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminSessionState } from "../../../../../types/admins/session";
+import { CopyButton } from "@mantine/core";
+import { FaRegCopy } from "react-icons/fa6";
 
 type SessionProps = {
   sessions: AdminSessionState | null;
@@ -37,6 +39,7 @@ const UpcomingSessionTable = ({
               <Table.Th>Date</Table.Th>
               <Table.Th>Time</Table.Th>
               <Table.Th>Students</Table.Th>
+              <Table.Th>Meeting Links</Table.Th>
               <Table.Th>Actions</Table.Th>
             </Table.Tr>
           </Table.Thead>
@@ -64,6 +67,19 @@ const UpcomingSessionTable = ({
                   </Table.Td>
                   <Table.Td>{session.time}</Table.Td>
                   <Table.Td>3</Table.Td>
+                  <Table.Td>
+                    <CopyButton value={session.meetingLink}>
+                      {({ copied, copy }) => (
+                        <button
+                          className="text-primary flex gap-2 items-center"
+                          color={copied ? "teal" : "blue"}
+                          onClick={copy}
+                        >
+                          {copied ? "Copied" : "Meeting link"} <FaRegCopy />
+                        </button>
+                      )}
+                    </CopyButton>
+                  </Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
                       <Menu.Target>
