@@ -35,3 +35,15 @@ export const getPayments = (limit: number, skip: number, search: string, id:stri
       });
   });
 };
+
+export const getAllPayments = (limit: number, skip: number, search: string,) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(`${APIS.SUBCRIPTION_LIST}?limit=${limit}&skip=${skip}&search=${search}&sort=desc`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
