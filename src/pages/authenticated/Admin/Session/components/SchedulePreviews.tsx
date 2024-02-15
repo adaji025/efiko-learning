@@ -21,10 +21,11 @@ const SchedulePreviews = ({
   previewData,
   setPreview,
   curriculum,
-  free
+  free,
 }: PreviewType) => {
-  const singleCurriculum = curriculum.find((curriculum) => curriculum._id)?.title;
-
+  const singleCurriculum = curriculum.find(
+    (curriculum) => curriculum._id
+  )?.title;
 
   return (
     <div className="mt-[50px] lg:mt-5">
@@ -81,10 +82,7 @@ const SchedulePreviews = ({
             </div>
             <div>
               <div className="sm:text-lg font-medium">Session Time: </div>
-              <div className="text-sm ml-2">
-                {" "}
-                {previewData.date.toLocaleTimeString()}
-              </div>
+              <div className="text-sm ml-2">{previewData.time}</div>
             </div>
             <div>
               <div className="sm:text-lg font-medium">Session Duration: </div>
@@ -95,9 +93,7 @@ const SchedulePreviews = ({
             </div>
           </div>
 
-          <div className="mt-5">
-            {free ? "Free" : "Paid"} Session
-          </div>
+          <div className="mt-5">{free ? "Free" : "Paid"} Session</div>
         </div>
       </div>
     </div>
