@@ -52,7 +52,7 @@ const ExploreSession = () => {
             />
           </div>
           {sessions && (
-            <div className="gap-10 mt-5 grid sm:grid-cols-2 2xl:grid-cols-3">
+            <div className="gap-10 mt-5 grid sm:grid-cols-2 xl:grid-cols-3">
               {sessions &&
                 sessions.data.map((session) => (
                   <SessionCard

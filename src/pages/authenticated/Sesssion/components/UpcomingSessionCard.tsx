@@ -29,7 +29,7 @@ const UpcomingSessionCard = ({ item }: IProps) => {
           </div>
           <div className="flex items-center gap-2">
             <IoMdTime />
-            <div>3 hrs</div>
+            <div>{item.time } WAT</div>
           </div>
         </div>
       </div>
@@ -43,7 +43,8 @@ const UpcomingSessionCard = ({ item }: IProps) => {
             href={item.meetingLink}
             className={`${isToday(item.time) && "pointer-events-none"}`}
           >
-            Join Session
+            {/* Join Session */}
+            Start Session
           </a>
         </button>
       </div>
