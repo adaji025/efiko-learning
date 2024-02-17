@@ -78,10 +78,6 @@ const SessionDetails = () => {
               <div className="sm:text-lg font-medium">Learning Outcome:</div>
               <ul className="ml-2">
                 <li>{session?.outcome}</li>
-                {/* <li>
-                You will know what you can further expect from this domain.
-              </li>
-              <li>Enables you to appear in SAT.</li> */}
               </ul>
             </div>
 
@@ -94,9 +90,7 @@ const SessionDetails = () => {
               </div>
               <div>
                 <div className="sm:text-lg font-medium">Session Time: </div>
-                <div className="text-sm ml-2">
-                  {session?.time}
-                </div>
+                <div className="text-sm ml-2">{session?.time}</div>
               </div>
             </div>
           </div>
