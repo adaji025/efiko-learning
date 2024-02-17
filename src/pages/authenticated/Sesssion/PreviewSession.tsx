@@ -37,10 +37,6 @@ const PreviewSession = () => {
             <div className="sm:text-lg font-medium">Learning Outcome:</div>
             <ul className="ml-6 list-disc">
               <li>{formValue?.outcome}</li>
-              {/* <li>
-                You will know what you can further expect from this domain.
-              </li>
-              <li>Enables you to appear in SAT.</li> */}
             </ul>
           </div>
 

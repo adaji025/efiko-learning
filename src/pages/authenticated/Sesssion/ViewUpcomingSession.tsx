@@ -4,6 +4,8 @@ import { SessionTypes } from "../../../types/session";
 import { BiArrowBack } from "react-icons/bi";
 import moment from "moment";
 import { isToday } from "../../../utils";
+import { CopyButton } from "@mantine/core";
+import { FaRegCopy } from "react-icons/fa6";
 
 const ViewUpcomingSession = () => {
   const navigate = useNavigate();
@@ -38,12 +40,22 @@ const ViewUpcomingSession = () => {
             <div className="sm:text-lg font-medium">Learning Outcome:</div>
             <ul className="ml-6 list-disc">
               <li>{session?.outcome}</li>
-              {/* <li>
-                You will know what you can further expect from this domain.
-              </li>
-              <li>Enables you to appear in SAT.</li> */}
             </ul>
           </div>
+
+          <div className="mt-5 ml-2">
+              <CopyButton value={session.passCode}>
+                {({ copied, copy }) => (
+                  <button
+                    className="text-primary flex gap-2 items-center"
+                    color={copied ? "teal" : "blue"}
+                    onClick={copy}
+                  >
+                    {copied ? session.passCode : "Meeting link"} <FaRegCopy />
+                  </button>
+                )}
+              </CopyButton>
+            </div>
 
           <div className="mt-5 flex flex-col sm:flex-row gap-5 justify-between">
             <div>

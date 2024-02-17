@@ -17,6 +17,7 @@ export type SessionTypes = {
   start: boolean;
   meetingLink: string;
   recordingLink: string;
+  passCode: string;
   date: string;
   time: string;
   duration: string;

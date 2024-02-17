@@ -4,6 +4,8 @@ import { MdDateRange } from "react-icons/md";
 import { SessionTypes } from "../../../../types/session";
 import moment from "moment";
 import { isToday } from "../../../../utils";
+import { CopyButton } from "@mantine/core";
+import { FaRegCopy } from "react-icons/fa6";
 
 type IProps = {
   item: SessionTypes;
@@ -20,6 +22,19 @@ const UpcomingSessionCard = ({ item }: IProps) => {
           <div>by: {item?.tutorId.fullName}</div>
         </div>
         <div className="mt-2 text-sm">{item?.description}</div>
+        <div className="my-5 text-sm">
+          <CopyButton value={item.passCode}>
+            {({ copied, copy }) => (
+              <button
+                className="text-primary flex gap-2 items-center"
+                color={copied ? "teal" : "blue"}
+                onClick={copy}
+              >
+                {copied ? item.passCode : "Meeting link"} <FaRegCopy />
+              </button>
+            )}
+          </CopyButton>
+        </div>
         <div className="flex justify-between mt-2">
           <div className="flex items-center gap-2">
             <MdDateRange />
@@ -29,7 +44,7 @@ const UpcomingSessionCard = ({ item }: IProps) => {
           </div>
           <div className="flex items-center gap-2">
             <IoMdTime />
-            <div>{item.time } WAT</div>
+            <div>{item.time} WAT</div>
           </div>
         </div>
       </div>

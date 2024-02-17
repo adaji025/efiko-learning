@@ -18,6 +18,7 @@ export type AdminSessionType = {
   duration: string;
   meetingLink: string;
   recordingLink: string;
+  passCode: string;
   start: boolean;
   date: string;
   time: string;
