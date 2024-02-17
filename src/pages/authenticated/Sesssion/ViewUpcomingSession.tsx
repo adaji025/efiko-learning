@@ -51,7 +51,7 @@ const ViewUpcomingSession = () => {
                     color={copied ? "teal" : "blue"}
                     onClick={copy}
                   >
-                    {copied ? session.passCode : "Meeting link"} <FaRegCopy />
+                    {copied ? session.passCode : "Meeting Pass code"} <FaRegCopy />
                   </button>
                 )}
               </CopyButton>
