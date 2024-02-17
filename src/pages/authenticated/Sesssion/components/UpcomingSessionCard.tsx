@@ -30,7 +30,7 @@ const UpcomingSessionCard = ({ item }: IProps) => {
                 color={copied ? "teal" : "blue"}
                 onClick={copy}
               >
-                {copied ? item.passCode : "Meeting link"} <FaRegCopy />
+                {copied ? item.passCode : "Meeting Pass code"} <FaRegCopy />
               </button>
             )}
           </CopyButton>
