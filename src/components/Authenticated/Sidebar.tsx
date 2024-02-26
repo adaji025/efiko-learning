@@ -58,10 +58,6 @@ const Sidebar = ({ openMobileNav }: IProps) => {
           title: "Upcoming Sessions",
           route: "upcoming-sessions",
         },
-        {
-          title: "Recorded Sessions",
-          route: "recorded-sessions",
-        },
       ],
     },
     {
@@ -83,7 +79,7 @@ const Sidebar = ({ openMobileNav }: IProps) => {
       title: "Settings",
       icon: <FiSettings size={20} />,
       route: "/settings",
-      key: ["edit-profile", "payments"],
+      key: ["edit-profile"],
       children: [
         {
           title: "Profile",
