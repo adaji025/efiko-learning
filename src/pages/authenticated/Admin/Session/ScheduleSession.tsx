@@ -118,7 +118,7 @@ const ScheduleSession = () => {
               className="cursor-pointer"
               onClick={() => navigate(-1)}
             />
-            <div>Schedule Sesions</div>
+            <div>Schedule Sessions</div>
           </div>
 
           <form

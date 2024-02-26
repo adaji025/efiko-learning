@@ -11,7 +11,7 @@ const SessionDetails = () => {
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-        Book Sesions
+        Book Sessions
       </div>
       <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
         <div className="w-full border-b px-4 lg:px-10 py-4 font-semibold">

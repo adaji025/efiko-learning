@@ -30,7 +30,7 @@ const SchedulePreviews = ({
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-        Book Sesions
+        Book Sessions
       </div>
       <div
         className="flex gap-2 px-4 items-center mt-10 cursor-pointer"
