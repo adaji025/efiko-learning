@@ -4,7 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import SessionCard from "../Dashboard/components/SessionCard";
 import EmptyIcon from "../../../assets/svgs/empty.svg";
 import { useNavigate } from "react-router-dom";
-import { getSession } from "../../../services/session";
+import { getExploreSession } from "../../../services/session";
 import useNotification from "../../../hooks/useNotification";
 import { SessionState } from "../../../types/session";
 
@@ -23,7 +23,7 @@ const ExploreSession = () => {
   const handleGetSessions = () => {
     setLoading(true);
 
-    getSession()
+    getExploreSession()
       .then((res: any) => {
         setSessions(res.data);
       })

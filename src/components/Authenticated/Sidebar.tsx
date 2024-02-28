@@ -16,6 +16,7 @@ import { FaUsers } from "react-icons/fa";
 import { IoSchool } from "react-icons/io5";
 import { GiSecretBook } from "react-icons/gi";
 import { MdOutlinePayment } from "react-icons/md";
+import { FaQuestion } from "react-icons/fa";
 
 type IProps = {
   openMobileNav: React.Dispatch<React.SetStateAction<boolean>>;
@@ -65,6 +66,7 @@ const Sidebar = ({ openMobileNav }: IProps) => {
       icon: <NotificationIcon />,
       route: "/notifications",
     },
+
     {
       title: "My Profiles",
       icon: <FiUser size={20} />,
@@ -88,15 +90,16 @@ const Sidebar = ({ openMobileNav }: IProps) => {
       ],
     },
     {
+      title: "FAQs",
+      icon: <FaQuestion />,
+      route: "/faqs",
+    },
+    {
       title: "Help & Support",
       icon: <IoIosHelpCircleOutline size={20} />,
       route: "/support",
-      key: ["FAQs", "Report Issues"],
+      key: ["Report Issues"],
       children: [
-        {
-          title: "FAQs",
-          route: "/faqs",
-        },
         {
           title: "Report Issues",
           route: "/report-issues",
@@ -146,28 +149,25 @@ const Sidebar = ({ openMobileNav }: IProps) => {
       title: "Settings",
       icon: <FiSettings size={20} />,
       route: "/settings",
-      key: ["edit-profile", "payments"],
+      key: ["edit-profile"],
       children: [
         {
           title: "Profile",
           route: "/edit-profile",
         },
-        {
-          title: "Payments",
-          route: "/payments",
-        },
       ],
+    },
+    {
+      title: "FAQs",
+      icon: <FaQuestion />,
+      route: "/faqs",
     },
     {
       title: "Help & Support",
       icon: <IoIosHelpCircleOutline size={20} />,
       route: "/support",
-      key: ["FAQs", "Report Issues"],
+      key: ["Report Issues"],
       children: [
-        {
-          title: "FAQs",
-          route: "/faqs",
-        },
         {
           title: "Report Issues",
           route: "/report-issues",
