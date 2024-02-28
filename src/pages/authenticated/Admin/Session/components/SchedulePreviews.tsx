@@ -1,6 +1,7 @@
 import { BiArrowBack } from "react-icons/bi";
 import { convertMinutesToHours } from "../../../../../utils";
 import { CurriculumTypes } from "../../../../../types/curriculum";
+import { TutorTypes } from "../../../../../types/admins/session";
 
 type PreviewType = {
   previewData: {
@@ -15,6 +16,7 @@ type PreviewType = {
   };
   free: boolean;
   curriculum: CurriculumTypes[];
+  tutors: TutorTypes[];
   setPreview: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const SchedulePreviews = ({
@@ -22,10 +24,13 @@ const SchedulePreviews = ({
   setPreview,
   curriculum,
   free,
+  tutors,
 }: PreviewType) => {
   const singleCurriculum = curriculum.find(
     (curriculum) => curriculum._id
   )?.title;
+
+  const singleTutors = tutors.find((tutor) => tutor._id)?.fullName;
 
   return (
     <div className="mt-[50px] lg:mt-5">
@@ -94,6 +99,10 @@ const SchedulePreviews = ({
           </div>
 
           <div className="mt-5">{free ? "Free" : "Paid"} Session</div>
+          <div className="mt-5">
+            <div className="font-bold">Tutor</div>
+          <div className="">{singleTutors}</div>
+          </div>
         </div>
       </div>
     </div>

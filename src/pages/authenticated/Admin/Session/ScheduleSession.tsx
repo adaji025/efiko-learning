@@ -22,10 +22,13 @@ import { CurriculumTypes } from "../../../../types/curriculum";
 import { getAllCurriculums } from "../../../../services/admin/curriculum";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { TutorTypes } from "../../../../types/admins/tutor";
+import { getAllTutors } from "../../../../services/admin/tutors";
 
 const ScheduleSession = () => {
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(false);
+  const [tutors, setTutors] = useState<TutorTypes[]>([]);
   const [curriculum, setCurriculum] = useState<CurriculumTypes[]>([]);
   const [checked, setChecked] = useState(false);
   const timeRef = useRef<HTMLInputElement>(null);
@@ -54,6 +57,7 @@ const ScheduleSession = () => {
       duration: "",
       curriculumId: "",
       free: checked,
+      tutorId: "",
     },
   });
 
@@ -71,7 +75,18 @@ const ScheduleSession = () => {
 
   useEffect(() => {
     handleGetCurriculum();
+    handleGetTutors();
   }, []);
+
+  const handleGetTutors = () => {
+    getAllTutors()
+      .then((res: any) => {
+        setTutors(res.data.data);
+      })
+      .then((err) => {
+        handleError(err);
+      });
+  };
 
   const handleGetCurriculum = () => {
     setLoading(true);
@@ -106,7 +121,7 @@ const ScheduleSession = () => {
   };
 
   const previewData = form.values;
-  console.log(previewData)
+  console.log(previewData);
 
   return (
     <Fragment>
@@ -181,7 +196,7 @@ const ScheduleSession = () => {
                 className="flex-1"
                 {...form.getInputProps("date")}
                 // @ts-ignore
-                minDate={new Date().toJSON().slice(0, 10)}
+                minDate={new Date()}
               />
               <TimeInput
                 ref={timeRef}
@@ -211,6 +226,19 @@ const ScheduleSession = () => {
                 checked={checked}
                 onChange={(event) => setChecked(event.currentTarget.checked)}
                 label="Check if it's a free session"
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-[16px]">
+              <Select
+                searchable
+                size="md"
+                required
+                mt={19}
+                data={tutors?.map((item) => ({
+                  label: item?.fullName,
+                  value: item?._id,
+                }))}
+                {...form.getInputProps("tutorId")}
               />
             </div>
 
@@ -243,6 +271,7 @@ const ScheduleSession = () => {
           previewData={previewData}
           curriculum={curriculum}
           free={checked}
+          tutors={tutors}
         />
       )}
     </Fragment>
