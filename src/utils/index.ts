@@ -47,3 +47,29 @@ export function isToday(date: any) {
     return false;
   }
 }
+
+
+export function convertTo12HourClock(time24: string): string {
+  // Split the time string into hours and minutes
+  const timeSplit: string[] = time24.split(":");
+  let hours: number = parseInt(timeSplit[0]);
+  const minutes: string = timeSplit[1];
+
+  // Determine AM or PM
+  const meridiem: string = (hours >= 12) ? "PM" : "AM";
+
+  // Convert hours to 12-hour format
+  hours = (hours > 12) ? hours - 12 : hours;
+  hours = (hours === 0) ? 12 : hours;
+
+  // Add leading zero to hours if less than 10
+  const formattedHours: string = (hours < 10) ? "0" + hours : hours.toString();
+
+  // Return the formatted time
+  return formattedHours + ":" + minutes + " " + meridiem;
+}
+
+
+
+
+

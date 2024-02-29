@@ -45,6 +45,7 @@ import ManageSessionRequest from "../../pages/authenticated/Admin/Session/Manage
 import PaymentSuccess from "../../pages/authenticated/Settings/PaymentSuccess";
 import AdminNotification from "../../pages/authenticated/Admin/AdminNotification/AdminNotification";
 import ViewRecordedSession from "../../pages/authenticated/Sesssion/ViewRecordedSession";
+import AdminSessionDetails from "../../pages/authenticated/Admin/Session/AdminSessionDetails";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -154,6 +155,10 @@ const Authenticated = () => {
               <Route
                 path="/manage-upcoming-sessions"
                 element={<ManageUpcomingSession />}
+              />
+              <Route
+                path="/manage-upcoming-sessions/:id"
+                element={<AdminSessionDetails />}
               />
               <Route
                 path="/manage-session-requests"

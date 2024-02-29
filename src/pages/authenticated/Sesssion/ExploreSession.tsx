@@ -4,7 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import SessionCard from "../Dashboard/components/SessionCard";
 import EmptyIcon from "../../../assets/svgs/empty.svg";
 import { useNavigate } from "react-router-dom";
-import { getSession } from "../../../services/session";
+import { getExploreSession } from "../../../services/session";
 import useNotification from "../../../hooks/useNotification";
 import { SessionState } from "../../../types/session";
 
@@ -23,7 +23,7 @@ const ExploreSession = () => {
   const handleGetSessions = () => {
     setLoading(true);
 
-    getSession()
+    getExploreSession()
       .then((res: any) => {
         setSessions(res.data);
       })
@@ -40,7 +40,7 @@ const ExploreSession = () => {
       <LoadingOverlay visible={loading} />
       <div className="mt-[50px] lg:mt-5">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
-          Explore Sesion
+          Explore Session
         </div>
         <div className="px-4 lg:px-10">
           <div className="flex justify-end">

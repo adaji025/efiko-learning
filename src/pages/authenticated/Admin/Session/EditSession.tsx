@@ -88,7 +88,7 @@ const EditSession = () => {
             className="cursor-pointer"
             onClick={() => navigate(-1)}
           />
-          <div>Edit Sesions</div>
+          <div>Edit Sessions</div>
         </div>
         <form onSubmit={form.onSubmit((values) => submit(values))}>
           <div className="mt-10 px-4 lg:px-10 max-w-[1000px]">

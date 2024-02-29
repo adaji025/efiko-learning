@@ -25,6 +25,18 @@ export const getSession = () => {
   });
 };
 
+export const getExploreSession = () => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(`${APIS.SESSION.SESSION}?book=false`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export const getTutorUpcomingSession = (id: string) => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(`${APIS.SESSION.SESSION}?start=false&tutorId=${id}`)
@@ -39,7 +51,9 @@ export const getTutorUpcomingSession = (id: string) => {
 
 export const getUpcomingSession = () => {
   return new Promise((resolve, reject) => {
-    AxoisApi.get(`${APIS.SESSION.SESSION}?start=false&sort=desc&status=approved`)
+    AxoisApi.get(
+      `${APIS.SESSION.SESSION}?status=approved&sort=desc`
+    )
       .then((res: any) => {
         resolve(res);
       })

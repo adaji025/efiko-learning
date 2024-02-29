@@ -17,7 +17,7 @@ const ViewUpcomingSession = () => {
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
         <div className="flex items-center gap-2">
           <BiArrowBack onClick={() => navigate(-1)} />
-          <div>Join Sesions</div>
+          <div>Join Sessions</div>
         </div>
       </div>
       <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">

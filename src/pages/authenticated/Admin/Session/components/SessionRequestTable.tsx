@@ -1,7 +1,8 @@
-import { LoadingOverlay, Menu, Pagination, Table } from "@mantine/core";
+import { Badge, LoadingOverlay, Menu, Pagination, Table } from "@mantine/core";
 import { Fragment, useEffect, useState } from "react";
 import { SlOptionsVertical } from "react-icons/sl";
-import ConfirmaApproval from "../../../../../components/Confirmation";
+import ConfirmApproval from "../../../../../components/Confirmation";
+import ConfirmDisapproval from "../../../../../components/Confirmation";
 import { useDisclosure } from "@mantine/hooks";
 import AssignTutorModal from "./AssignTutorModal";
 import { getAllTutors } from "../../../../../services/admin/tutors";
@@ -11,6 +12,7 @@ import { AdminSessionState } from "../../../../../types/admins/session";
 import moment from "moment";
 import { updateSession } from "../../../../../services/session";
 import { toast } from "react-toastify";
+import { convertTo12HourClock } from "../../../../../utils";
 
 type SessionProps = {
   sessions: AdminSessionState | null;
@@ -30,13 +32,14 @@ const SessionRequestTable = ({
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [approvalModal, setApprovalModal] = useState(false);
+  const [disApprovalModal, setDisapprovalModal] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [tutors, setTutors] = useState<TutorTypes[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [tutorId, setTutorId] = useState<string | null>("");
 
   const { handleError } = useNotification();
-  console.log(sessions)
+  console.log(sessions);
 
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
@@ -77,6 +80,27 @@ const SessionRequestTable = ({
         });
   };
 
+  const handleDisApproveSessionRequest = () => {
+    setLoading(true);
+
+    const value = {
+      status: "disapproved",
+    };
+
+    sessionId &&
+      updateSession(sessionId, value)
+        .then(() => {
+          toast.success("Session Approved successfully");
+          handleGetSessionRequest();
+        })
+        .catch((err: any) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
+
   const handleAssignTutors = (id: string) => {
     setLoading(true);
 
@@ -100,12 +124,19 @@ const SessionRequestTable = ({
 
   return (
     <Fragment>
-      <ConfirmaApproval
+      <ConfirmApproval
         opened={approvalModal}
         close={() => setApprovalModal(false)}
         callback={() => {}}
         handleClick={handleApproveSessionRequest}
         btnText="approve session request"
+      />
+      <ConfirmDisapproval
+        opened={disApprovalModal}
+        close={() => setDisapprovalModal(false)}
+        callback={() => {}}
+        handleClick={handleDisApproveSessionRequest}
+        btnText="Disapprove session request"
       />
       <AssignTutorModal
         tutors={tutors}
@@ -140,15 +171,26 @@ const SessionRequestTable = ({
                   <Table.Td>
                     {moment(session.date).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>
-                    {session.time}
-                  </Table.Td>
+                  <Table.Td>{convertTo12HourClock(session.time)}</Table.Td>
                   <Table.Td>
                     {session.tutorId
                       ? session?.tutorId?.fullName
                       : "Not assigned"}
                   </Table.Td>
-                  <Table.Td>{session.status}</Table.Td>
+                  <Table.Td>
+                    <Badge
+                      className="min-w-[100px]"
+                      color={
+                        session.status === "approved"
+                          ? "green"
+                          : session.status === "pending"
+                          ? "yellow"
+                          : "red"
+                      }
+                    >
+                      {session.status}
+                    </Badge>
+                  </Table.Td>
                   <Table.Td>
                     <Menu shadow="md" width={150}>
                       <Menu.Target>
@@ -167,7 +209,17 @@ const SessionRequestTable = ({
                               setSessionId(session._id);
                             }}
                           >
-                            Aprrove
+                            Approve
+                          </Menu.Item>
+                        )}
+                        {session.status === "approved" && (
+                          <Menu.Item
+                            onClick={() => {
+                              setDisapprovalModal(true);
+                              setSessionId(session._id);
+                            }}
+                          >
+                            Disapprove
                           </Menu.Item>
                         )}
                         {!session.tutorId && (

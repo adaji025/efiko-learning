@@ -5,7 +5,6 @@ import {
   TextInput,
   Select,
   MultiSelect,
-  NumberInput,
   LoadingOverlay,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -17,6 +16,7 @@ import { majors, qaulification, subjects } from "../../../components/data";
 import { profileSetUp } from "../../../services/user";
 import useNotification from "../../../hooks/useNotification";
 import { toast } from "react-toastify";
+import { DateInput } from "@mantine/dates";
 
 const StudentProfilSetup = () => {
   const [active, setActive] = useState(0);
@@ -39,7 +39,7 @@ const StudentProfilSetup = () => {
     initialValues: {
       firstName: "",
       lastName: "",
-      age: "",
+      dateOfBirth: "",
       country: "",
       education: "",
       majors: "",
@@ -49,7 +49,7 @@ const StudentProfilSetup = () => {
       lastName: (value) => (value === "" ? "Input full name" : null),
       firstName: (value) => (value === "" ? "Input full name" : null),
       country: (value) => (value === "" ? "Input Country" : null),
-      age: (value) => (value === "" ? "Input age" : null),
+      dateOfBirth: (value) => (value === "" ? "Input age" : null),
       education: (value) => (value === "" ? "Input Education" : null),
       majors: (value) => (value === "" ? "Input Majors" : null),
       subject: (value) => (value.length < 6 ? "Input Majors" : null),
@@ -65,7 +65,7 @@ const StudentProfilSetup = () => {
     // Append regular key-value pairs
     formData.append("firstName", form.values.firstName);
     formData.append("lastName", form.values.lastName);
-    formData.append("age", form.values.age);
+    formData.append("age", form.values.dateOfBirth);
     formData.append("country", form.values.country);
 
     // Append nested object key-value pairs
@@ -93,7 +93,7 @@ const StudentProfilSetup = () => {
     if (
       form.values.lastName === "" ||
       form.values.firstName === "" ||
-      form.values.age === "" ||
+      form.values.dateOfBirth === "" ||
       form.values.country === ""
     )
       return true;
@@ -144,13 +144,12 @@ const StudentProfilSetup = () => {
                   label="Last Name"
                   {...form.getInputProps("lastName")}
                 />
-                <NumberInput
-                  hideControls
+                <DateInput
                   required
                   mt={16}
                   size="md"
-                  label="Age"
-                  {...form.getInputProps("age")}
+                  label="Date of Birth"
+                  {...form.getInputProps("dateOfBirth")}
                 />
 
                 <Select

@@ -12,6 +12,7 @@ import useNotification from "../../../hooks/useNotification";
 import { Fragment, useState } from "react";
 import SubscriptionPromp from "./components/SubscriptionPromp";
 import { useDisclosure } from "@mantine/hooks";
+import { convertTo12HourClock } from "../../../utils";
 
 const SessionDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -53,7 +54,7 @@ const SessionDetails = () => {
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           <div className="flex items-center gap-2">
             <BiArrowBack onClick={() => navigate(-1)} />
-            <div>Book Sesions</div>
+            <div>Book Sessions</div>
           </div>
         </div>
         <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
@@ -90,7 +91,7 @@ const SessionDetails = () => {
               </div>
               <div>
                 <div className="sm:text-lg font-medium">Session Time: </div>
-                <div className="text-sm ml-2">{session?.time}</div>
+                <div className="text-sm ml-2">{convertTo12HourClock(session?.time)}</div>
               </div>
             </div>
           </div>
