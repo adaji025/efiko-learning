@@ -1,4 +1,4 @@
-import { Menu, Pagination, Table } from "@mantine/core";
+import { LoadingOverlay, Menu, Pagination, Table } from "@mantine/core";
 import moment from "moment";
 import { SlOptionsVertical } from "react-icons/sl";
 import { Fragment, useEffect, useState } from "react";
@@ -6,6 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { AdminSessionState } from "../../../../../types/admins/session";
 import { CopyButton } from "@mantine/core";
 import { FaRegCopy } from "react-icons/fa6";
+import ConfirmDeleteSession from "../../../../../components/Confirmation";
+import { useDisclosure } from "@mantine/hooks";
+import { deleteSession } from "../../../../../services/admin/session";
+import { toast } from "react-toastify";
+import useNotification from "../../../../../hooks/useNotification";
+import { convertTo12HourClock } from "../../../../../utils";
 
 type SessionProps = {
   sessions: AdminSessionState | null;
@@ -17,19 +23,53 @@ type SessionProps = {
 
 const UpcomingSessionTable = ({
   sessions,
-  limit,
+  handleGetSessions,
   setSkip,
   skip,
+  limit
 }: SessionProps) => {
+  const [loading, setLoading] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
   }, [sessions, limit]);
 
+
+  const { handleError } = useNotification();
+
+  console.log(sessions);
+
+  const handleDeleteSession = () => {
+    setLoading(true);
+
+    sessionId &&
+      deleteSession(sessionId)
+        .then(() => {
+          toast.success("Session deleted successfully");
+          handleGetSessions && handleGetSessions();
+        })
+        .catch((err) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
+
   return (
     <Fragment>
+      <ConfirmDeleteSession
+        opened={opened}
+        close={close}
+        btnText="Delete session"
+        handleClick={handleDeleteSession}
+      />
+      <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
         <Table>
           <Table.Thead>
@@ -38,7 +78,7 @@ const UpcomingSessionTable = ({
               <Table.Th>Tutor</Table.Th>
               <Table.Th>Date</Table.Th>
               <Table.Th>Time</Table.Th>
-              <Table.Th>Students</Table.Th>
+              {/* <Table.Th>Students</Table.Th> */}
               <Table.Th>Meeting Links</Table.Th>
               <Table.Th>Actions</Table.Th>
             </Table.Tr>
@@ -65,8 +105,8 @@ const UpcomingSessionTable = ({
                   <Table.Td>
                     {moment(session.date).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>{session.time}</Table.Td>
-                  <Table.Td>3</Table.Td>
+                  <Table.Td>{convertTo12HourClock(session.time)}</Table.Td>
+                  {/* <Table.Td>3</Table.Td> */}
                   <Table.Td>
                     <CopyButton value={session.meetingLink}>
                       {({ copied, copy }) => (
@@ -93,7 +133,7 @@ const UpcomingSessionTable = ({
                       <Menu.Dropdown>
                         <Menu.Item
                           onClick={() =>
-                            navigate(`/schedule-sessions/edit/${session._id}`, {
+                            navigate(`/manage-upcoming-sessions/${session._id}`, {
                               state: session,
                             })
                           }
@@ -108,6 +148,15 @@ const UpcomingSessionTable = ({
                           }
                         >
                           Edit session
+                        </Menu.Item>
+                        <Menu.Item
+                          color="red"
+                          onClick={() => {
+                            setSessionId(session._id);
+                            open();
+                          }}
+                        >
+                          Delete session
                         </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>

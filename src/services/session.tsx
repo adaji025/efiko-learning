@@ -52,7 +52,7 @@ export const getTutorUpcomingSession = (id: string) => {
 export const getUpcomingSession = () => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(
-      `${APIS.SESSION.SESSION}?status=approved&book=false&sort=desc`
+      `${APIS.SESSION.SESSION}?status=approved&sort=desc`
     )
       .then((res: any) => {
         resolve(res);

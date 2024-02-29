@@ -3,6 +3,7 @@ import { IoMdTime } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
 import { SessionTypes } from "../../../../types/session";
 import moment from "moment";
+import { convertTo12HourClock } from "../../../../utils";
 
 type IProps = {
   item: SessionTypes;
@@ -29,7 +30,7 @@ const SessionCard = ({ item, btnText, handleBtnClick }: IProps) => {
           </div>
           <div className="flex items-center gap-2">
             <IoMdTime />
-            <div>{item.time} WAT</div>
+            <div>{convertTo12HourClock(item.time)}</div>
           </div>
         </div>
       </div>

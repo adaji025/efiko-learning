@@ -4,6 +4,7 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { Fragment, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AdminSessionState } from "../../../../../types/admins/session";
+import { convertTo12HourClock } from "../../../../../utils";
 
 type SessionProps = {
   sessions: AdminSessionState | null;
@@ -51,7 +52,7 @@ const RecordedSessionTable = ({
                   <Table.Td>
                     {moment(session?.date).format("YYYY-MM-DD")}
                   </Table.Td>
-                  <Table.Td>{session.time}</Table.Td>
+                  <Table.Td>{convertTo12HourClock(session.time)}</Table.Td>
                   <Table.Td>3</Table.Td>
                   <Table.Td
                     className="cursor-pointer"

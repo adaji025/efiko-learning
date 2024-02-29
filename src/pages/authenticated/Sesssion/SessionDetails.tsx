@@ -12,6 +12,7 @@ import useNotification from "../../../hooks/useNotification";
 import { Fragment, useState } from "react";
 import SubscriptionPromp from "./components/SubscriptionPromp";
 import { useDisclosure } from "@mantine/hooks";
+import { convertTo12HourClock } from "../../../utils";
 
 const SessionDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -90,7 +91,7 @@ const SessionDetails = () => {
               </div>
               <div>
                 <div className="sm:text-lg font-medium">Session Time: </div>
-                <div className="text-sm ml-2">{session?.time}</div>
+                <div className="text-sm ml-2">{convertTo12HourClock(session?.time)}</div>
               </div>
             </div>
           </div>

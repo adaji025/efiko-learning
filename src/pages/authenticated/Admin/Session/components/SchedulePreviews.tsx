@@ -13,6 +13,7 @@ type PreviewType = {
     time: string;
     duration: string;
     curriculumId: string;
+    tutorId: string;
   };
   free: boolean;
   curriculum: CurriculumTypes[];
@@ -30,7 +31,9 @@ const SchedulePreviews = ({
     (curriculum) => curriculum._id
   )?.title;
 
-  const singleTutors = tutors.find((tutor) => tutor._id)?.fullName;
+  console.log(tutors);
+
+  const singleTutors = tutors.find((tutor) => tutor._id === previewData.tutorId)?.fullName;
 
   return (
     <div className="mt-[50px] lg:mt-5">
@@ -71,10 +74,6 @@ const SchedulePreviews = ({
             <div className="sm:text-lg font-medium">Learning Outcome:</div>
             <ul className="ml-6 list-disc">
               <li>{previewData.outcome}</li>
-              {/* <li>
-                You will know what you can further expect from this domain.
-              </li>
-              <li>Enables you to appear in SAT.</li> */}
             </ul>
           </div>
 
@@ -101,7 +100,7 @@ const SchedulePreviews = ({
           <div className="mt-5">{free ? "Free" : "Paid"} Session</div>
           <div className="mt-5">
             <div className="font-bold">Tutor</div>
-          <div className="">{singleTutors}</div>
+            <div className="">{singleTutors}</div>
           </div>
         </div>
       </div>
