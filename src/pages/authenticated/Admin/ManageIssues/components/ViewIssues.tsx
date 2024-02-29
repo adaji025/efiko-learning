@@ -13,6 +13,8 @@ const ViewIssues = ({ close, opened, report }: IProps) => {
       <div>
         <span className="font-semibold">Reported by: </span>
         {report?.reportedBy.fullName}
+        {report?.reportedBy.firstName}
+        {report?.reportedBy.lastName}
       </div>
       <div className="mt-2">
         <span className="font-semibold">Title:</span> {report?.title}

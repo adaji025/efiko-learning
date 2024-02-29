@@ -179,7 +179,7 @@ const SessionRequestTable = ({
                   </Table.Td>
                   <Table.Td>
                     <Badge
-                      className="min-w-[100px]"
+                      className="min-w-[100px] py-2"
                       color={
                         session.status === "approved"
                           ? "green"
