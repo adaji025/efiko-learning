@@ -20,5 +20,7 @@ export type ReportTypes = {
 export type ReportedByTypes = {
   _id: string;
   fullName: string;
+  firstName: string;
+  lastName: string;
   email: string;
 };

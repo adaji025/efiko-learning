@@ -86,7 +86,11 @@ const IssuesTable = ({
           <Table.Tbody>
             {reports?.data.map((report, i) => (
               <Table.Tr key={i}>
-                <Table.Td>{report.reportedBy.fullName}</Table.Td>
+                <Table.Td>
+                  {report.reportedBy.firstName}
+                  {report.reportedBy.lastName}
+                  {report.reportedBy.fullName}
+                </Table.Td>
                 <Table.Td>{report.title}</Table.Td>
                 <Table.Td>{report.reportedBy.email}</Table.Td>
                 <Table.Td>{report.status}</Table.Td>

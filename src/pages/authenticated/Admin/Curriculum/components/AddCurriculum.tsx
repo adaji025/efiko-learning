@@ -55,7 +55,7 @@ const AddCurriculum = ({ close, opened, callback, curriculum }: Props) => {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("description", values.description);
-    formData.append("pdf", acceptedFiles[0]);
+    formData.append("image", acceptedFiles[0]);
 
     addCurriculum(formData)
       .then(() => {
@@ -79,7 +79,7 @@ const AddCurriculum = ({ close, opened, callback, curriculum }: Props) => {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("description", values.description);
-    formData.append("pdf", acceptedFiles[0]);
+    formData.append("image", acceptedFiles[0]);
 
     curriculum &&
       updateCurriculum(curriculum?._id, formData)
