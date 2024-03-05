@@ -12,7 +12,7 @@ import Logo from "../../../assets/svgs/logo.svg";
 import ImageDropzone from "../../../components/ImageDropzone";
 import { countryList } from "../../../utils/country";
 import { useNavigate } from "react-router-dom";
-import { majors, qaulification, subjects } from "../../../components/data";
+import { majors, subjects } from "../../../components/data";
 import { profileSetUp } from "../../../services/user";
 import useNotification from "../../../hooks/useNotification";
 import { toast } from "react-toastify";
@@ -178,7 +178,17 @@ const StudentProfilSetup = () => {
                   required
                   size="md"
                   label="Education"
-                  data={qaulification.map((qaulification) => qaulification)}
+                  data={[
+                    {label: "Grade 1", value: "grade 1"},
+                    {label: "Grade 2", value: "grade 2"},
+                    {label: "Grade 3", value: "grade 3"},
+                    {label: "Grade 4", value: "grade 4"},
+                    {label: "Grade 5", value: "grade 5"},
+                    {label: "Grade 6", value: "grade 6"},
+                    {label: "Grade 7", value: "grade 7"},
+                    {label: "Grade 8", value: "grade 8"},
+                    {label: "Grade 9", value: "grade 9"},
+                  ]}
                   {...form.getInputProps("education")}
                 />
 

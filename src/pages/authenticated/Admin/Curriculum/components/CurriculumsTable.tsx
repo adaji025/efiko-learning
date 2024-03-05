@@ -15,6 +15,8 @@ import { deleteCurriculum } from "../../../../../services/admin/curriculum";
 import { toast } from "react-toastify";
 import useNotification from "../../../../../hooks/useNotification";
 
+const baseUrl = import.meta.env.VITE_APP_API;
+
 type IProps = {
   curriculums: CurriculumState | null;
   skip: number;
@@ -36,6 +38,9 @@ const CurriculumsTable = ({
   const [curriculumId, setCurriculumId] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const [opened, { open, close }] = useDisclosure(false);
+
+  console.log(curriculum?.uniqueId);
+  const downloadUrl = (id: string) => `${baseUrl}/curriculum/download/${id}`;
 
   const { handleError } = useNotification();
 
@@ -93,8 +98,14 @@ const CurriculumsTable = ({
                     {moment(curriculum.createdAt).format("YYYY-MM-DD")}
                   </Table.Td>
                   <Table.Td>
-                    <div className="flex gap-3">
-                      <a href={curriculum.pdfFile} target="_blank">
+                    <div
+                      className="flex gap-3"
+                      onClick={() => setCurriculum(curriculum)}
+                    >
+                      <a
+                        href={downloadUrl(curriculum.uniqueId)}
+                        target="_blank"
+                      >
                         <GrCloudDownload
                           size={20}
                           className="cursor-pointer"

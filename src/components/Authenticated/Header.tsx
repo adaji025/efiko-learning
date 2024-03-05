@@ -18,7 +18,9 @@ const Header = ({ openMobileNav }: Props) => {
   );
 
   useEffect(() => {
-    handleGetUserProfile();
+    userData.accountType !== "superAdmin" &&
+      userData.accountType !== "normalAdmin" &&
+      handleGetUserProfile();
   }, []);
 
   const handleGetUserProfile = () => {

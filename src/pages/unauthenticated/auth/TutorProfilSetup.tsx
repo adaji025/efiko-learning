@@ -115,8 +115,8 @@ const TutorProfilSetup = () => {
     //   educationFormData.append(`educationImage[${index}]`, img);
     // });
 
-    if (edDocvalue) educationFormData.append("educationImage", edDocvalue);
-    if (natIdvalue) identityFormData.append("nationalId", natIdvalue);
+    if (edDocvalue) educationFormData.append("image", edDocvalue);
+    if (natIdvalue) identityFormData.append("image", natIdvalue);
 
     profileSetUp(id, formData)
       .then(() => {
