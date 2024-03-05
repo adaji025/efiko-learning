@@ -168,6 +168,7 @@ const ScheduleSession = () => {
               {...form.getInputProps("curriculumId")}
             />
             <Textarea
+            required
               mt={16}
               label="Session Description"
               autosize
@@ -178,6 +179,7 @@ const ScheduleSession = () => {
             />
 
             <Textarea
+            required
               mt={16}
               label="Learning Outcome"
               autosize
@@ -232,7 +234,7 @@ const ScheduleSession = () => {
               <Select
                 searchable
                 size="md"
-                required
+                label="Select Tutor"
                 mt={19}
                 data={tutors?.map((item) => ({
                   label: item?.fullName,
