@@ -45,7 +45,7 @@ const CurriculumsTable = ({
   const { handleError } = useNotification();
 
   useEffect(() => {
-    if (curriculums) setTotalPages(Math.ceil(curriculums?.length / limit));
+    if (curriculums) setTotalPages(Math.ceil(curriculums?.total / limit));
   }, [curriculums, limit]);
 
   const handleDeleteCurriculum = () => {

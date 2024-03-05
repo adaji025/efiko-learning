@@ -3,6 +3,7 @@ export type CurriculumState = {
     msg: string
     data: CurriculumTypes[]
     length: number
+    total: number
   }
   
   export type CurriculumTypes = {

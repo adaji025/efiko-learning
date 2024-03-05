@@ -13,12 +13,14 @@ import TableSkeleton from "../../../../components/TableSkeleton";
 const Curriculum = () => {
   const [loading, setLoading] = useState(false);
   const [curriculum, setCurriculum] = useState<CurriculumState | null>(null);
-  const [limit] = useState(10);
-  const [skip, setSkip] = useState(0);
+  const [limit] = useState(2);
+  const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
 
   const { handleError } = useNotification();
+
+  console.log(curriculum)
 
   useEffect(() => {
     handleGetCurriculum();
