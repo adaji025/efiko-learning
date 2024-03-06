@@ -20,14 +20,14 @@ const Dashboard = () => {
               Total Sessions{" "}
               {userData?.accountType === "student" ? "Joined" : "delivered"}
             </div>
-            <div className="mt-6 text-4xl">20</div>
+            <div className="mt-6 text-4xl">0</div>
           </div>
           <div className="p-5 border shadow rounded-xl flex-1">
             <div>
               Total Amount{" "}
               {userData?.accountType === "student" ? "Spent" : "Earned"}{" "}
             </div>
-            <div className="mt-6 text-4xl">$220</div>
+            <div className="mt-6 text-4xl">$0</div>
           </div>
         </div>
 

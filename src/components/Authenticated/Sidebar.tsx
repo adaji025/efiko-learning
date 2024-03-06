@@ -118,15 +118,11 @@ const Sidebar = ({ openMobileNav }: IProps) => {
       title: "Sessions",
       icon: <SessionIcon />,
       route: "/session",
-      key: ["upcoming-sessions", "recorded-sessions", "preview-sessions"],
+      key: ["upcoming-sessions"],
       children: [
         {
           title: "Upcoming Sessions",
           route: "upcoming-sessions",
-        },
-        {
-          title: "Recorded Sessions",
-          route: "recorded-sessions",
         },
       ],
     },

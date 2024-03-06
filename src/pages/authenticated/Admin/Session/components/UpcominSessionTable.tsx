@@ -12,6 +12,7 @@ import { deleteSession } from "../../../../../services/admin/session";
 import { toast } from "react-toastify";
 import useNotification from "../../../../../hooks/useNotification";
 import { convertTo12HourClock } from "../../../../../utils";
+import { downloadUrl } from "../../../../../services/admin/curriculum";
 
 type SessionProps = {
   sessions: AdminSessionState | null;
@@ -26,7 +27,7 @@ const UpcomingSessionTable = ({
   handleGetSessions,
   setSkip,
   skip,
-  limit
+  limit,
 }: SessionProps) => {
   const [loading, setLoading] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
@@ -35,10 +36,11 @@ const UpcomingSessionTable = ({
 
   const navigate = useNavigate();
 
+  console.log(sessions);
+
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
   }, [sessions, limit]);
-
 
   const { handleError } = useNotification();
 
@@ -78,7 +80,7 @@ const UpcomingSessionTable = ({
               <Table.Th>Tutor</Table.Th>
               <Table.Th>Date</Table.Th>
               <Table.Th>Time</Table.Th>
-              {/* <Table.Th>Students</Table.Th> */}
+              <Table.Th>Curriculum</Table.Th>
               <Table.Th>Meeting Links</Table.Th>
               <Table.Th>Actions</Table.Th>
             </Table.Tr>
@@ -106,7 +108,7 @@ const UpcomingSessionTable = ({
                     {moment(session.date).format("YYYY-MM-DD")}
                   </Table.Td>
                   <Table.Td>{convertTo12HourClock(session.time)}</Table.Td>
-                  {/* <Table.Td>3</Table.Td> */}
+                  <Table.Td>{session.curriculumId.title}</Table.Td>
                   <Table.Td>
                     <CopyButton value={session.meetingLink}>
                       {({ copied, copy }) => (
@@ -121,7 +123,7 @@ const UpcomingSessionTable = ({
                     </CopyButton>
                   </Table.Td>
                   <Table.Td>
-                    <Menu shadow="md" width={150}>
+                    <Menu shadow="md" >
                       <Menu.Target>
                         <div className="pl-4">
                           <SlOptionsVertical
@@ -133,9 +135,12 @@ const UpcomingSessionTable = ({
                       <Menu.Dropdown>
                         <Menu.Item
                           onClick={() =>
-                            navigate(`/manage-upcoming-sessions/${session._id}`, {
-                              state: session,
-                            })
+                            navigate(
+                              `/manage-upcoming-sessions/${session._id}`,
+                              {
+                                state: session,
+                              }
+                            )
                           }
                         >
                           View session
@@ -157,6 +162,14 @@ const UpcomingSessionTable = ({
                           }}
                         >
                           Delete session
+                        </Menu.Item>
+                        <Menu.Item>
+                          <a
+                            href={downloadUrl(session.curriculumId.uniqueId)}
+                            target="_blank"
+                          >
+                            Download Curriculum
+                          </a>
                         </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>

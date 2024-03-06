@@ -20,8 +20,6 @@ const Curriculum = () => {
 
   const { handleError } = useNotification();
 
-  console.log(curriculum)
-
   useEffect(() => {
     handleGetCurriculum();
   }, [skip, limit]);

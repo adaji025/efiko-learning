@@ -11,10 +11,12 @@ const ManageTutors = () => {
   const [loading, setLoading] = useState(false);
   const [tutors, setTutors] = useState<TutorState | null>(null);
   const [limit] = useState(5);
-  const [skip, setSkip] = useState(0);
+  const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
 
   const { handleError } = useNotification();
+  console.log(tutors)
+
 
   useEffect(() => {
     handleGetTutors();

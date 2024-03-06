@@ -66,3 +66,6 @@ export const updateCurriculum = (id: string, data: any) => {
       });
   });
 };
+
+
+export const downloadUrl = (id: string) => `${APIS.CURRICULUM}/download/${id}`;

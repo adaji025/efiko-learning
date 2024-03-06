@@ -3,9 +3,9 @@ import { IoMdTime } from "react-icons/io";
 import { MdDateRange } from "react-icons/md";
 import { SessionTypes } from "../../../../types/session";
 import moment from "moment";
-import { isToday } from "../../../../utils";
 import { CopyButton } from "@mantine/core";
 import { FaRegCopy } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 type IProps = {
   item: SessionTypes;
@@ -13,6 +13,7 @@ type IProps = {
 };
 
 const UpcomingSessionCard = ({ item }: IProps) => {
+  const navigate = useNavigate();
   return (
     <div className="pt-5 flex flex-col justify-between bg-white shadow-lg rounded-xl mb-10 border">
       <div className="px-5">
@@ -50,17 +51,12 @@ const UpcomingSessionCard = ({ item }: IProps) => {
       </div>
       <div className="flex">
         <button
-          className="bg-[#F5F5F5] text-primary font-bold w-full border-t rounded-b-xl py-2 mt-2 mb-0 disabled:bg-primary/70"
-          disabled={isToday(item.time)}
+          className="bg-[#F5F5F5] text-primary font-bold w-full border-t rounded-b-xl py-2 mt-2 mb-0"
+          onClick={() =>
+            navigate(`/upcoming-sessions/${item._id}`, { state: item })
+          }
         >
-          <a
-            target="_blank"
-            href={item.meetingLink}
-            className={`${isToday(item.time) && "pointer-events-none"}`}
-          >
-            {/* Join Session */}
-            Start Session
-          </a>
+          view Session
         </button>
       </div>
     </div>

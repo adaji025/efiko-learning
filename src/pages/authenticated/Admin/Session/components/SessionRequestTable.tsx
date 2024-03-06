@@ -13,6 +13,7 @@ import moment from "moment";
 import { updateSession } from "../../../../../services/session";
 import { toast } from "react-toastify";
 import { convertTo12HourClock } from "../../../../../utils";
+import { downloadUrl } from "../../../../../services/admin/curriculum";
 
 type SessionProps = {
   sessions: AdminSessionState | null;
@@ -232,6 +233,14 @@ const SessionRequestTable = ({
                             Assign Tutor
                           </Menu.Item>
                         )}
+                        <Menu.Item>
+                          <a
+                            href={downloadUrl(session.curriculumId.uniqueId)}
+                            target="_blank"
+                          >
+                            Download Curriculum
+                          </a>
+                        </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
                   </Table.Td>

@@ -95,7 +95,7 @@ const Authenticated = () => {
                 element={<SessionDetails />}
               />
               <Route
-                path="/schedule-sessions/:slug"
+                path="/upcoming-sessions/:id"
                 element={<PreviewSession />}
               />
               <Route

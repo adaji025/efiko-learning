@@ -57,7 +57,7 @@ const ScheduleSession = () => {
       duration: "",
       curriculumId: "",
       free: checked,
-      tutorId: "",
+      tutorId: null,
     },
   });
 

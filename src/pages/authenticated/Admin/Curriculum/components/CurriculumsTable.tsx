@@ -11,11 +11,10 @@ import {
   CurriculumTypes,
 } from "../../../../../types/curriculum";
 import moment from "moment";
-import { deleteCurriculum } from "../../../../../services/admin/curriculum";
+import { deleteCurriculum, downloadUrl } from "../../../../../services/admin/curriculum";
 import { toast } from "react-toastify";
 import useNotification from "../../../../../hooks/useNotification";
 
-const baseUrl = import.meta.env.VITE_APP_API;
 
 type IProps = {
   curriculums: CurriculumState | null;
@@ -38,9 +37,6 @@ const CurriculumsTable = ({
   const [curriculumId, setCurriculumId] = useState("");
   const [totalPages, setTotalPages] = useState(1);
   const [opened, { open, close }] = useDisclosure(false);
-
-  console.log(curriculum?.uniqueId);
-  const downloadUrl = (id: string) => `${baseUrl}/curriculum/download/${id}`;
 
   const { handleError } = useNotification();
 
@@ -109,7 +105,7 @@ const CurriculumsTable = ({
                         <GrCloudDownload
                           size={20}
                           className="cursor-pointer"
-                          onClick={() => {}}
+                          
                         />
                       </a>
                       <CiEdit

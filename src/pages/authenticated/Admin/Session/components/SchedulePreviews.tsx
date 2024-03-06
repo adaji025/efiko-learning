@@ -13,7 +13,7 @@ type PreviewType = {
     time: string;
     duration: string;
     curriculumId: string;
-    tutorId: string;
+    tutorId: string | null;
   };
   free: boolean;
   curriculum: CurriculumTypes[];
