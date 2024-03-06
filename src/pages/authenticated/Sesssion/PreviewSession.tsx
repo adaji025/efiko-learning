@@ -1,17 +1,16 @@
-import { Button } from "@mantine/core";
-import { useSelector } from "react-redux";
-import { ProfileTypes } from "../../../types/auth";
-import { RootState } from "../../../redux/store";
 import moment from "moment";
+import { convertTo12HourClock, isToday } from "../../../utils";
+import { useLocation } from "react-router-dom";
+import { downloadUrl } from "../../../services/admin/curriculum";
+import { AdminSessionType } from "../../../types/admins/session";
+import { Button } from "@mantine/core";
+import { GrCloudDownload } from "react-icons/gr";
 
 const PreviewSession = () => {
-  const userData: ProfileTypes = useSelector(
-    (state: RootState) => state.user.userData
-  );
+  const location = useLocation();
+  const session: AdminSessionType = location.state;
 
-  const formString = localStorage.getItem("scheduled_sessions") ?? "";
-  const formValue = formString && JSON.parse(formString);
-
+  console.log(session);
   return (
     <div className="mt-[50px] lg:mt-5">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
@@ -19,24 +18,24 @@ const PreviewSession = () => {
       </div>
       <div className="md:w-3/4  border mt-10 rounded-xl shadow pb-5 mx-4">
         <div className="w-full border-b px-4 lg:px-10 py-4 font-semibold">
-          {formValue?.title}
+          {session?.title}
         </div>
         <div className="px-4 lg:px-10 mt-3">
           <div>
             <div className="sm:text-lg font-medium">Subject Category: </div>
-            <div className="text-sm ml-2">{formValue?.category}</div>
+            <div className="text-sm ml-2">{session?.category}</div>
           </div>
           <div className="mt-5">
             <div className="sm:text-lg font-medium">Session Description: </div>
             <div className="text-sm ml-2 max-w-[400px]">
-              {formValue?.description}
+              {session?.description}
             </div>
           </div>
 
           <div className="mt-5">
             <div className="sm:text-lg font-medium">Learning Outcome:</div>
             <ul className="ml-6 list-disc">
-              <li>{formValue?.outcome}</li>
+              <li>{session?.outcome}</li>
             </ul>
           </div>
 
@@ -44,31 +43,52 @@ const PreviewSession = () => {
             <div>
               <div className="sm:text-lg font-medium">Session Date: </div>
               <div className="text-sm ml-2">
-                {moment(formValue?.date).format("DD-MM-YYYY")}
+                {moment(session?.date).format("DD-MM-YYYY")}
               </div>
             </div>
             <div>
               <div className="sm:text-lg font-medium">Session Time: </div>
               <div className="text-sm ml-2">
-                {formValue?.time} Eastern Standard Time
+                {convertTo12HourClock(session?.time)}
               </div>
             </div>
           </div>
 
           <div className="mt-5">
-            <div className="sm:text-lg font-medium">Session Charges:</div>
-            <div className="text-sm ml-2">${formValue?.charges}</div>
+            <div className="sm:text-lg font-medium">Session Curriculum:</div>
+            <div className="flex gap-3 items-center">
+              <div className="capitalize">{session.curriculumId.title}</div>
+              <Button
+                className="text-sm ml-2 mt-5 bg-primary"
+                leftSection={<GrCloudDownload />}
+              >
+                <a
+                  href={downloadUrl(session.curriculumId.uniqueId)}
+                  target="_blank"
+                >
+                  {session.curriculumId.title}
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
-      {userData?.accountType === "student" && (
-        <div className="mt-10 flex justify-center">
-          <Button size="md" className=" bg-primary w-1/2 sm:w-1/3 mx-auto">
-            Book Session
-          </Button>
-        </div>
-      )}
+      <div className="mt-10 flex justify-center">
+        <Button
+          className="text-[#F5F5F5] bg-primary font-bold border-t rounded-b-xl py-2 mt-2 mb-0 "
+          disabled={!isToday(moment(session.date).format())}
+          size="md"
+        >
+          <a
+            target="_blank"
+            href={session.meetingLink}
+            className={`${!isToday(session.date) && "pointer-events-none"}`}
+          >
+            Start Session
+          </a>
+        </Button>
+      </div>
     </div>
   );
 };

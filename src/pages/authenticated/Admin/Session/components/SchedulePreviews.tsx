@@ -1,5 +1,5 @@
 import { BiArrowBack } from "react-icons/bi";
-import { convertMinutesToHours } from "../../../../../utils";
+import { convertMinutesToHours, convertTo12HourClock } from "../../../../../utils";
 import { CurriculumTypes } from "../../../../../types/curriculum";
 import { TutorTypes } from "../../../../../types/admins/session";
 
@@ -13,7 +13,7 @@ type PreviewType = {
     time: string;
     duration: string;
     curriculumId: string;
-    tutorId: string;
+    tutorId: string | null;
   };
   free: boolean;
   curriculum: CurriculumTypes[];
@@ -86,7 +86,7 @@ const SchedulePreviews = ({
             </div>
             <div>
               <div className="sm:text-lg font-medium">Session Time: </div>
-              <div className="text-sm ml-2">{previewData.time}</div>
+              <div className="text-sm ml-2">{convertTo12HourClock(previewData.time)}</div>
             </div>
             <div>
               <div className="sm:text-lg font-medium">Session Duration: </div>

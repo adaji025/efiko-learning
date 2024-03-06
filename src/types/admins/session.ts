@@ -34,6 +34,7 @@ export type AdminSessionType = {
 
 export type CurriculumTypes = {
   _id: string;
+  uniqueId: string;
   title: string;
   description: string;
   pdfFile: string;

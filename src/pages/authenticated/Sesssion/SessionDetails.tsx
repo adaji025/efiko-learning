@@ -4,7 +4,6 @@ import { ProfileTypes } from "../../../types/auth";
 import { RootState } from "../../../redux/store";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
-import { SessionTypes } from "../../../types/session";
 import moment from "moment";
 import { updateSession } from "../../../services/session";
 import { toast } from "react-toastify";
@@ -13,6 +12,9 @@ import { Fragment, useState } from "react";
 import SubscriptionPromp from "./components/SubscriptionPromp";
 import { useDisclosure } from "@mantine/hooks";
 import { convertTo12HourClock } from "../../../utils";
+import { GrCloudDownload } from "react-icons/gr";
+import { AdminSessionType } from "../../../types/admins/session";
+import { downloadUrl } from "../../../services/admin/curriculum";
 
 const SessionDetails = () => {
   const [loading, setLoading] = useState(false);
@@ -25,7 +27,7 @@ const SessionDetails = () => {
   const { handleError } = useNotification();
   const navigate = useNavigate();
   const location = useLocation();
-  const session: SessionTypes = location.state;
+  const session: AdminSessionType = location.state;
 
   const bookSession = () => {
     setLoading(true);
@@ -91,7 +93,27 @@ const SessionDetails = () => {
               </div>
               <div>
                 <div className="sm:text-lg font-medium">Session Time: </div>
-                <div className="text-sm ml-2">{convertTo12HourClock(session?.time)}</div>
+                <div className="text-sm ml-2">
+                  {convertTo12HourClock(session?.time)}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <div className="sm:text-lg font-medium">Session Curriculum:</div>
+              <div className="flex gap-3 items-center">
+                <div className="capitalize">{session.curriculumId.title}</div>
+                <Button
+                  className="text-sm ml-2 mt-5 bg-primary"
+                  leftSection={<GrCloudDownload />}
+                >
+                  <a
+                    href={downloadUrl(session.curriculumId.uniqueId)}
+                    target="_blank"
+                  >
+                    {session.curriculumId.title}
+                  </a>
+                </Button>
               </div>
             </div>
           </div>

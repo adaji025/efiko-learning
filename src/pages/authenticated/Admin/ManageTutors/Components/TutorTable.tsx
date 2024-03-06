@@ -204,7 +204,7 @@ const TutorTable = ({
           </Table.Tbody>
         </Table>
 
-        {tutors && (tutors.data.length === 0 || !tutors) && (
+        {!tutors && (
           <div className="w-full h-[50vh] flex flex-col justify-center items-center">
             <div>No record available.</div>
           </div>
