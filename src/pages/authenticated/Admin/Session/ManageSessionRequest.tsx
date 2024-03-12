@@ -12,7 +12,7 @@ const ManageSessionRequest = () => {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
   const [limit] = useState(5);
-  const [skip, setSkip] = useState(0);
+  const [skip, setSkip] = useState(1);
 
   const { handleError } = useNotification();
 

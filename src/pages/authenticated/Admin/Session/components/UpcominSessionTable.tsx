@@ -82,6 +82,7 @@ const UpcomingSessionTable = ({
               <Table.Th>Time</Table.Th>
               <Table.Th>Curriculum</Table.Th>
               <Table.Th>Meeting Links</Table.Th>
+              <Table.Th>Meeting Passcode</Table.Th>
               <Table.Th>Actions</Table.Th>
             </Table.Tr>
           </Table.Thead>
@@ -123,7 +124,20 @@ const UpcomingSessionTable = ({
                     </CopyButton>
                   </Table.Td>
                   <Table.Td>
-                    <Menu shadow="md" >
+                    <CopyButton value={session.passCode}>
+                      {({ copied, copy }) => (
+                        <button
+                          className="text-primary flex gap-2 items-center"
+                          color={copied ? "teal" : "blue"}
+                          onClick={copy}
+                        >
+                          {copied ? "Copied" : session.passCode} <FaRegCopy />
+                        </button>
+                      )}
+                    </CopyButton>
+                  </Table.Td>
+                  <Table.Td>
+                    <Menu shadow="md">
                       <Menu.Target>
                         <div className="pl-4">
                           <SlOptionsVertical

@@ -41,3 +41,8 @@ thead {
   background-position: center;
   background-size: cover;
 }
+
+.m-396ce5cb[data-selected] {
+  color: aqua !important;
+  border: 1px solid aqua
+}

@@ -50,6 +50,12 @@ const AdminSessionDetails = () => {
               <li>{session.outcome}</li>
             </ul>
           </div>
+          <div className="mt-5">
+            <div className="sm:text-lg font-medium">Curriculum:</div>
+            <ul className="ml-6">
+              <li>{session.curriculumId.title}</li>
+            </ul>
+          </div>
 
           <div className="mt-5 flex flex-col sm:flex-row gap-5 justify-between">
             <div>

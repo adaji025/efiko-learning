@@ -21,8 +21,6 @@ const RecordedSessionTable = ({
 }: SessionProps) => {
   const [totalPages, setTotalPages] = useState(1);
 
-  console.log(sessions);
-
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
   }, [sessions, limit]);
