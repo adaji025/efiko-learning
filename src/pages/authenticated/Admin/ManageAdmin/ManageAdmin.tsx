@@ -13,7 +13,7 @@ const ManageAdmin = () => {
   const [loading, setLoading] = useState(false);
   const [admins, setAdmins] = useState<AdminState | null>(null);
   const [limit] = useState(5);
-  const [skip, setSkip] = useState(0);
+  const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
 

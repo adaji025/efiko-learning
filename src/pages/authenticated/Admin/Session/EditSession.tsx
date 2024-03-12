@@ -7,6 +7,7 @@ import {
   Button,
   ActionIcon,
   LoadingOverlay,
+  Checkbox,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { DatePickerInput, TimeInput } from "@mantine/dates";
@@ -17,15 +18,29 @@ import { updateSession } from "../../../../services/session";
 import useNotification from "../../../../hooks/useNotification";
 import { toast } from "react-toastify";
 import { AdminSessionType } from "../../../../types/admins/session";
+import { getAllCurriculums } from "../../../../services/admin/curriculum";
+import { CurriculumTypes } from "../../../../types/curriculum";
+import { TutorTypes } from "../../../../types/admins/tutor";
+import { getAllTutors } from "../../../../services/admin/tutors";
 
 const EditSession = () => {
   const [loading, setLoading] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const [curriculum, setCurriculum] = useState<CurriculumTypes[]>([]);
+  const [tutors, setTutors] = useState<TutorTypes[]>([]);
   const timeRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
   const session: AdminSessionType = location.state;
 
   const { handleError } = useNotification();
   const navigate = useNavigate();
+
+  console.log(session);
+
+  useEffect(() => {
+    handleGetCurriculum();
+    handleGetTutors();
+  }, []);
 
   const pickerControl = (
     <ActionIcon
@@ -46,6 +61,9 @@ const EditSession = () => {
       date: new Date(),
       time: "",
       duration: "",
+      curriculumId: "",
+      free: checked,
+      tutorId: null,
     },
   });
 
@@ -58,14 +76,41 @@ const EditSession = () => {
       date: new Date(session.date),
       time: session ? session?.time : "",
       duration: session ? session?.duration : "",
+      curriculumId: session ? session?.curriculumId._id : "",
+      free: session ? session?.free : false,
       // @ts-ignore
+      tutorId: session ? session?.tutorId._id : "",
     });
   }, [session]);
+
+  const handleGetCurriculum = () => {
+    setLoading(true);
+    getAllCurriculums()
+      .then((res: any) => {
+        setCurriculum(res.data.data);
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleGetTutors = () => {
+    getAllTutors()
+      .then((res: any) => {
+        setTutors(res.data.data);
+      })
+      .then((err) => {
+        handleError(err);
+      });
+  };
 
   const submit = (values: any) => {
     setLoading(true);
 
-    updateSession(session._id, values)
+    updateSession(session._id, { ...values, free: checked })
       .then(() => {
         toast.success("Session updated successfully");
         form.reset();
@@ -106,6 +151,18 @@ const EditSession = () => {
               searchable
               {...form.getInputProps("category")}
               defaultValue={session?.category}
+            />
+            <Select
+              required
+              size="md"
+              mt={16}
+              label="Curriculum"
+              data={curriculum.map((item) => ({
+                label: item.title,
+                value: item._id,
+              }))}
+              searchable
+              {...form.getInputProps("curriculumId")}
             />
             <Textarea
               mt={16}
@@ -157,6 +214,22 @@ const EditSession = () => {
                 className="flex-1"
                 {...form.getInputProps("duration")}
                 defaultValue={session?.duration}
+              />
+              <Select
+                searchable
+                size="md"
+                label="Select Tutor"
+                data={tutors?.map((item) => ({
+                  label: item?.fullName,
+                  value: item?._id,
+                }))}
+                {...form.getInputProps("tutorId")}
+              />
+              <Checkbox
+                mt={26}
+                checked={checked}
+                onChange={(event) => setChecked(event.currentTarget.checked)}
+                label="Check if it's a free session"
               />
             </div>
 

@@ -16,7 +16,6 @@ import Faqs from "../../pages/authenticated/Supports/Faqs";
 import ReportIssues from "../../pages/authenticated/Supports/ReportIssues";
 import ReviewSession from "../../pages/authenticated/Sesssion/ReviewSession";
 import ViewUpcomingSession from "../../pages/authenticated/Sesssion/ViewUpcomingSession";
-// import ScheduleSession from "../../pages/authenticated/Sesssion/ScheduleSession";
 import EditSession from "../../pages/authenticated/Admin/Session/EditSession";
 import Earning from "../../pages/authenticated/Earning";
 import ViewAdminReview from "../../pages/authenticated/Profile/ViewAdminReview";

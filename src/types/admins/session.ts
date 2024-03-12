@@ -26,6 +26,7 @@ export type AdminSessionType = {
   averageRating: number;
   status: string;
   type: string;
+  free: boolean;
   rating: any[];
   createdAt: string;
   updatedAt: string;

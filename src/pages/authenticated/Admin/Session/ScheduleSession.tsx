@@ -195,7 +195,7 @@ const ScheduleSession = () => {
                 mt={16}
                 label="Pick date"
                 placeholder="Pick date"
-                className="flex-1"
+                className="flex-1 text-primary"
                 {...form.getInputProps("date")}
                 // @ts-ignore
                 minDate={new Date()}
