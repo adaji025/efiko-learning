@@ -1,4 +1,4 @@
-import { LoadingOverlay, Menu, Pagination, Table } from "@mantine/core";
+import { Badge, LoadingOverlay, Menu, Pagination, Table } from "@mantine/core";
 import moment from "moment";
 import { SlOptionsVertical } from "react-icons/sl";
 import { Fragment, useEffect, useState } from "react";
@@ -13,6 +13,10 @@ import { toast } from "react-toastify";
 import useNotification from "../../../../../hooks/useNotification";
 import { convertTo12HourClock } from "../../../../../utils";
 import { downloadUrl } from "../../../../../services/admin/curriculum";
+import AssignTutorModal from "./AssignTutorModal";
+import { getAllTutors } from "../../../../../services/admin/tutors";
+import { TutorTypes } from "../../../../../types/admins/tutor";
+import { updateSession } from "../../../../../services/session";
 
 type SessionProps = {
   sessions: AdminSessionState | null;
@@ -30,6 +34,9 @@ const UpcomingSessionTable = ({
   limit,
 }: SessionProps) => {
   const [loading, setLoading] = useState(false);
+  const [tutors, setTutors] = useState<TutorTypes[]>([]);
+  const [tutorId, setTutorId] = useState<string | null>("");
+  const [assignTutorModal, setAssignTutorModal] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
@@ -44,7 +51,19 @@ const UpcomingSessionTable = ({
 
   const { handleError } = useNotification();
 
-  console.log(sessions);
+  useEffect(() => {
+    handleGetTutors();
+  }, []);
+
+  const handleGetTutors = () => {
+    getAllTutors()
+      .then((res: any) => {
+        setTutors(res.data.data);
+      })
+      .then((err) => {
+        handleError(err);
+      });
+  };
 
   const handleDeleteSession = () => {
     setLoading(true);
@@ -63,6 +82,27 @@ const UpcomingSessionTable = ({
         });
   };
 
+  const handleAssignTutors = (id: string) => {
+    setLoading(true);
+
+    const value = {
+      tutorId: id,
+    };
+
+    sessionId &&
+      updateSession(sessionId, value)
+        .then(() => {
+          toast.success("Tutor Assigned successfully");
+          handleGetSessions && handleGetSessions();
+        })
+        .catch((err: any) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
+
   return (
     <Fragment>
       <ConfirmDeleteSession
@@ -70,6 +110,14 @@ const UpcomingSessionTable = ({
         close={close}
         btnText="Delete session"
         handleClick={handleDeleteSession}
+      />
+      <AssignTutorModal
+        tutors={tutors}
+        close={() => setAssignTutorModal(false)}
+        opened={assignTutorModal}
+        handleAssignTutors={handleAssignTutors}
+        setTutorId={setTutorId}
+        tutorId={tutorId}
       />
       <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
@@ -81,8 +129,9 @@ const UpcomingSessionTable = ({
               <Table.Th>Date</Table.Th>
               <Table.Th>Time</Table.Th>
               <Table.Th>Curriculum</Table.Th>
-              <Table.Th>Meeting Links</Table.Th>
-              <Table.Th>Meeting Passcode</Table.Th>
+              <Table.Th className="whitespace-nowrap"> Type</Table.Th>
+              <Table.Th className="whitespace-nowrap">Link</Table.Th>
+              <Table.Th className="whitespace-nowrap">Passcode</Table.Th>
               <Table.Th>Actions</Table.Th>
             </Table.Tr>
           </Table.Thead>
@@ -110,6 +159,7 @@ const UpcomingSessionTable = ({
                   </Table.Td>
                   <Table.Td>{convertTo12HourClock(session.time)}</Table.Td>
                   <Table.Td>{session.curriculumId.title}</Table.Td>
+                  <Table.Td><Badge>{session.free ? "Free" : "Paid"}</Badge></Table.Td>
                   <Table.Td>
                     <CopyButton value={session.meetingLink}>
                       {({ copied, copy }) => (
@@ -185,6 +235,16 @@ const UpcomingSessionTable = ({
                             Download Curriculum
                           </a>
                         </Menu.Item>
+                        {!session.tutorId && (
+                          <Menu.Item
+                            onClick={() => {
+                              setAssignTutorModal(true)
+                              setSessionId(session._id);
+                            }}
+                          >
+                            Assign Tutor
+                          </Menu.Item>
+                        )}
                       </Menu.Dropdown>
                     </Menu>
                   </Table.Td>

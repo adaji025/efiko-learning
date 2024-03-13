@@ -64,7 +64,7 @@ const AdminTable = ({
       <AddAdmin
         close={() => setEdit(false)}
         opened={edit}
-        callback={() => handleGetAdmins()}
+        callback={handleGetAdmins}
         admin={admin}
       />
       <ConfirmDisable
