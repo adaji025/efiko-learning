@@ -72,6 +72,10 @@ const AdminSessionDetails = () => {
             <div className="sm:text-lg font-medium">Tutor:</div>
             <div className="text-sm ml-2">{session?.tutorId?.fullName }</div>
           </div>
+          <div className="mt-5">
+            <div className="sm:text-lg font-medium">Session Type:</div>
+            <div className="text-sm ml-2">{session?.free? "Free" : "Paid" }</div>
+          </div>
         </div>
       </div>
 

@@ -6,8 +6,8 @@ type IProps = {
   close: () => void;
   tutors: TutorTypes[];
   handleAssignTutors: (id: string) => void;
-  tutorId: string | null
-  setTutorId: React.Dispatch<React.SetStateAction<string | null>>
+  tutorId: string | null;
+  setTutorId: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 const AssignTutorModal = ({
@@ -16,11 +16,8 @@ const AssignTutorModal = ({
   tutors,
   handleAssignTutors,
   setTutorId,
-  tutorId
+  tutorId,
 }: IProps) => {
-
-
-
   return (
     <Modal
       overlayProps={{
@@ -36,6 +33,8 @@ const AssignTutorModal = ({
         searchable
         size="md"
         required
+        label="Tutor"
+        placeholder="Select Tutor"
         mt={19}
         value={tutorId}
         data={tutors?.map((item) => ({

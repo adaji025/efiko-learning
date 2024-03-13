@@ -24,6 +24,7 @@ export type SessionTypes = {
   charges: number;
   averageRating: number;
   status: string;
+  free: boolean;
   type: string;
   rating: any[];
   createdAt: string;
