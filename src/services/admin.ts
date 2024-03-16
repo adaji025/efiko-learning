@@ -24,6 +24,17 @@ export const updateAdmin = (id: string, data: any) => {
       });
   });
 };
+export const resetAdminPassword = (id: string) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.patch(`${APIS.ADMIN}/reset-password/${id}`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
 
 export const getAdmins = (limit: number, skip: number, search: string) => {
   return new Promise((resolve, reject) => {

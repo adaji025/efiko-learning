@@ -1,14 +1,14 @@
-import { Pagination, Table, LoadingOverlay, Select } from "@mantine/core";
+import { Pagination, Table, LoadingOverlay, Select, Menu } from "@mantine/core";
 import { Fragment, useEffect, useState } from "react";
-import { CiEdit } from "react-icons/ci";
-import { IoEye } from "react-icons/io5";
 import AddAdmin from "./AddAdmin";
 import ConfirmDisable from "../../../../../components/Confirmation";
+import ConfirmResetPassword from "../../../../../components/Confirmation";
 import { useDisclosure } from "@mantine/hooks";
 import { AdminState, AdminTypes } from "../../../../../types/admins/admin";
-import { updateAdmin } from "../../../../../services/admin";
+import { resetAdminPassword, updateAdmin } from "../../../../../services/admin";
 import { toast } from "react-toastify";
 import useNotification from "../../../../../hooks/useNotification";
+import { SlOptionsVertical } from "react-icons/sl";
 
 type AdminProps = {
   admins: AdminState | null;
@@ -33,13 +33,13 @@ const AdminTable = ({
   const [admin, setAdmin] = useState<AdminTypes | null>(null);
   const [status, setStatus] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
+  const [pwModal, openPwModal] = useState(false);
 
   useEffect(() => {
     if (admins) setTotalPages(Math.ceil(admins?.total / limit));
   }, [admins, limit]);
 
   const { handleError } = useNotification();
-
 
   const handleUpdateAdmin = () => {
     setLoading(true);
@@ -65,6 +65,24 @@ const AdminTable = ({
           setLoading(false);
         });
   };
+
+  const handleResetPassword = () => {
+    setLoading(true);
+
+    admin &&
+      resetAdminPassword(admin?._id)
+        .then(() => {
+          toast.success(
+            "Password reset successful, new password sent to admin's email"
+          );
+        })
+        .catch((err) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
   return (
     <Fragment>
       <AddAdmin
@@ -78,6 +96,12 @@ const AdminTable = ({
         close={close}
         handleClick={() => handleUpdateAdmin()}
         btnText={status === "Inactive" ? "Deactivate user" : "Activate user"}
+      />
+      <ConfirmResetPassword
+        opened={pwModal}
+        close={() => openPwModal(false)}
+        handleClick={() => handleResetPassword()}
+        btnText="Reset Password"
       />
 
       <LoadingOverlay visible={loading} />
@@ -121,22 +145,35 @@ const AdminTable = ({
                       >
                         {admin.status === "Active" ? "Deactivate" : "Activate"}
                       </button>
-                      <CiEdit
-                        size={24}
-                        className="cursor-pointer"
-                        onClick={() => {
-                          setEdit(true);
-                          setAdmin(admin);
-                        }}
-                      />
-                      <IoEye
-                        size={24}
-                        className="cursor-pointer"
-                        onClick={() => {
-                          setEdit(true);
-                          setAdmin(admin);
-                        }}
-                      />
+
+                      <Menu shadow="md">
+                        <Menu.Target>
+                          <div className="pl-4">
+                            <SlOptionsVertical
+                              size={18}
+                              className="cursor-pointer"
+                            />
+                          </div>
+                        </Menu.Target>
+                        <Menu.Dropdown>
+                          <Menu.Item
+                            onClick={() => {
+                              setEdit(true);
+                              setAdmin(admin);
+                            }}
+                          >
+                            Edit Admin
+                          </Menu.Item>
+                          <Menu.Item
+                            onClick={() => {
+                              setAdmin(admin);
+                              openPwModal(true);
+                            }}
+                          >
+                            Reset Password
+                          </Menu.Item>
+                        </Menu.Dropdown>
+                      </Menu>
                     </div>
                   </Table.Td>
                 </Table.Tr>
