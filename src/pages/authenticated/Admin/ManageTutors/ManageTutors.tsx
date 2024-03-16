@@ -10,12 +10,11 @@ import TableSkeleton from "../../../../components/TableSkeleton";
 const ManageTutors = () => {
   const [loading, setLoading] = useState(false);
   const [tutors, setTutors] = useState<TutorState | null>(null);
-  const [limit] = useState(5);
+  const [limit, setLimit] = useState(5);
   const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
 
   const { handleError } = useNotification();
-  console.log(tutors)
 
 
   useEffect(() => {
@@ -65,6 +64,7 @@ const ManageTutors = () => {
             <TutorTable
               tutors={tutors}
               limit={limit}
+              setLimit={setLimit}
               setSkip={setSkip}
               skip={skip}
               handleGetTutors={handleGetTutors}

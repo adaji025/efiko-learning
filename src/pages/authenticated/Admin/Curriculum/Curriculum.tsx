@@ -13,7 +13,7 @@ import TableSkeleton from "../../../../components/TableSkeleton";
 const Curriculum = () => {
   const [loading, setLoading] = useState(false);
   const [curriculum, setCurriculum] = useState<CurriculumState | null>(null);
-  const [limit] = useState(2);
+  const [limit, setLimit] = useState(5);
   const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
@@ -100,6 +100,7 @@ const Curriculum = () => {
               skip={skip}
               setSkip={setSkip}
               handleGetCurriculum={handleGetCurriculum}
+              setLimit={setLimit}
             />
           )}
 
