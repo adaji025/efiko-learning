@@ -21,18 +21,14 @@ const AdminDashboard = () => {
   return (
     <Fragment>
       {/* <LoadingOverlay visible={loading} /> */}
-      <div className="px-4 lg:px-10 mt-[80px] lg:mt-10">
+      <div className="px-4 lg:px-10 mt-[80px] lg:mt-10 overflow-hidden">
         <div className="flex gap-10 ">
           <div className="p-5 border shadow rounded-xl flex-1">
-            <div>
-              Total Students
-            </div>
+            <div>Total Students</div>
             <div className="mt-6 text-4xl">20</div>
           </div>
           <div className="p-5 border shadow rounded-xl flex-1">
-            <div>
-              Total Tutors
-            </div>
+            <div>Total Tutors</div>
             <div className="mt-6 text-4xl">$220</div>
           </div>
         </div>
@@ -59,7 +55,9 @@ const AdminDashboard = () => {
               </Menu.Dropdown>
             </Menu>
           </div>
-          <Chart />
+          <div className="overflow-hidden">
+            <Chart />
+          </div>
         </div>
       </div>
     </Fragment>

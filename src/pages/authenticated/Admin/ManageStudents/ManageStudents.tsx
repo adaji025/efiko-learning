@@ -37,7 +37,7 @@ const ManageStudents = () => {
   };
   return (
     <Fragment>
-      <div className="mt-[50px] lg:mt-5">
+      <div className="">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Manage Students
         </div>

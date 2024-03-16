@@ -61,9 +61,11 @@ const Chart = () => {
   };
 
   return (
-    <Box mt={50}>
-      <Bar options={options} data={data} />
-    </Box>
+    <div className="overflow-hidden">
+      <Box mt={50} className="overflow-hidden">
+        <Bar options={options} data={data} />
+      </Box>
+    </div>
   );
 };
 

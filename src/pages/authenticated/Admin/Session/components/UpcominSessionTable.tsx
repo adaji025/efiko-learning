@@ -1,4 +1,11 @@
-import { Badge, LoadingOverlay, Menu, Pagination, Select, Table } from "@mantine/core";
+import {
+  Badge,
+  LoadingOverlay,
+  Menu,
+  Pagination,
+  Select,
+  Table,
+} from "@mantine/core";
 import moment from "moment";
 import { SlOptionsVertical } from "react-icons/sl";
 import { Fragment, useEffect, useState } from "react";
@@ -8,7 +15,7 @@ import { CopyButton } from "@mantine/core";
 import { FaRegCopy } from "react-icons/fa6";
 import ConfirmDeleteSession from "../../../../../components/Confirmation";
 import { useDisclosure } from "@mantine/hooks";
-import { deleteSession } from "../../../../../services/admin/session";
+import { assignStudentToSession, deleteSession } from "../../../../../services/admin/session";
 import { toast } from "react-toastify";
 import useNotification from "../../../../../hooks/useNotification";
 import { convertTo12HourClock } from "../../../../../utils";
@@ -17,12 +24,15 @@ import AssignTutorModal from "./AssignTutorModal";
 import { getAllTutors } from "../../../../../services/admin/tutors";
 import { TutorTypes } from "../../../../../types/admins/tutor";
 import { updateSession } from "../../../../../services/session";
+import AssignStudentModal from "./AssignStudentModal";
+import { StudentsTypes } from "../../../../../types/admins/student";
+import { getAllStudents } from "../../../../../services/admin/students";
 
 type SessionProps = {
   sessions: AdminSessionState | null;
   skip: number;
   limit: number;
-  setLimit: React.Dispatch<React.SetStateAction<number>>
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
   handleGetSessions?: () => void;
 };
@@ -37,15 +47,18 @@ const UpcomingSessionTable = ({
 }: SessionProps) => {
   const [loading, setLoading] = useState(false);
   const [tutors, setTutors] = useState<TutorTypes[]>([]);
+  const [students, setStudents] = useState<StudentsTypes[]>([]);
   const [tutorId, setTutorId] = useState<string | null>("");
+  const [studentId, setStudentId] = useState<string | null>("");
   const [assignTutorModal, setAssignTutorModal] = useState(false);
+  const [assignStudenModal, setAssignStudenModal] = useState(false);
   const [opened, { open, close }] = useDisclosure(false);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState(1);
 
   const navigate = useNavigate();
 
-  console.log(sessions);
+  console.log(students);
 
   useEffect(() => {
     if (sessions) setTotalPages(Math.ceil(sessions?.total / limit));
@@ -55,12 +68,23 @@ const UpcomingSessionTable = ({
 
   useEffect(() => {
     handleGetTutors();
+    handleGetStudent();
   }, []);
 
   const handleGetTutors = () => {
     getAllTutors()
       .then((res: any) => {
         setTutors(res.data.data);
+      })
+      .then((err) => {
+        handleError(err);
+      });
+  };
+
+  const handleGetStudent = () => {
+    getAllStudents()
+      .then((res: any) => {
+        setStudents(res.data.data);
       })
       .then((err) => {
         handleError(err);
@@ -105,6 +129,27 @@ const UpcomingSessionTable = ({
         });
   };
 
+  const handleAssignStudent = (id: string) => {
+    setLoading(true);
+
+    const value = {
+      studentAssignedId: id,
+    };
+
+    sessionId &&
+    assignStudentToSession(sessionId, value)
+        .then(() => {
+          toast.success("Student Assigned successfully");
+          handleGetSessions && handleGetSessions();
+        })
+        .catch((err: any) => {
+          handleError(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+  };
+
   return (
     <Fragment>
       <ConfirmDeleteSession
@@ -118,8 +163,16 @@ const UpcomingSessionTable = ({
         close={() => setAssignTutorModal(false)}
         opened={assignTutorModal}
         handleAssignTutors={handleAssignTutors}
-        setTutorId={setTutorId}
         tutorId={tutorId}
+        setTutorId={setTutorId}
+      />
+      <AssignStudentModal
+        students={students}
+        close={() => setAssignStudenModal(false)}
+        opened={assignStudenModal}
+        handleAssignStudent={handleAssignStudent}
+        setStudentId={setStudentId}
+        studentId={studentId}
       />
       <LoadingOverlay visible={loading} />
       <div className="rounded-[15px] mt-10 border border-gray-200 overflow-auto">
@@ -161,7 +214,9 @@ const UpcomingSessionTable = ({
                   </Table.Td>
                   <Table.Td>{convertTo12HourClock(session.time)}</Table.Td>
                   <Table.Td>{session.curriculumId.title}</Table.Td>
-                  <Table.Td><Badge>{session.free ? "Free" : "Paid"}</Badge></Table.Td>
+                  <Table.Td>
+                    <Badge>{session.free ? "Free" : "Paid"}</Badge>
+                  </Table.Td>
                   <Table.Td>
                     <CopyButton value={session.meetingLink}>
                       {({ copied, copy }) => (
@@ -240,13 +295,21 @@ const UpcomingSessionTable = ({
                         {!session.tutorId && (
                           <Menu.Item
                             onClick={() => {
-                              setAssignTutorModal(true)
+                              setAssignTutorModal(true);
                               setSessionId(session._id);
                             }}
                           >
                             Assign Tutor
                           </Menu.Item>
                         )}
+                        <Menu.Item
+                          onClick={() => {
+                            setAssignStudenModal(true);
+                            setSessionId(session._id);
+                          }}
+                        >
+                          Assign Student
+                        </Menu.Item>
                       </Menu.Dropdown>
                     </Menu>
                   </Table.Td>

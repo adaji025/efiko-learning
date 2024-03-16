@@ -1,7 +1,6 @@
-import { LoadingOverlay, Pagination, Table } from "@mantine/core";
+import { LoadingOverlay, Pagination, Select, Table } from "@mantine/core";
 import { Fragment, useEffect, useState } from "react";
 import { CiEdit } from "react-icons/ci";
-import { IoEye } from "react-icons/io5";
 import AddAdmin from "./AddSubscription";
 import ConfirmDisable from "../../../../../components/Confirmation";
 import { useDisclosure } from "@mantine/hooks";
@@ -19,6 +18,7 @@ type IProps = {
   skip: number;
   limit: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
   handleGetSubscriptions: () => void;
 };
 
@@ -26,6 +26,7 @@ const SubscriptionTable = ({
   subscriptions,
   limit,
   setSkip,
+  setLimit,
   skip,
   handleGetSubscriptions,
 }: IProps) => {
@@ -142,14 +143,6 @@ const SubscriptionTable = ({
                         setSubscription(subscription);
                       }}
                     />
-                    <IoEye
-                      size={24}
-                      className="cursor-pointer"
-                      onClick={() => {
-                        setEdit(true);
-                        setSubscription(subscription);
-                      }}
-                    />
                   </div>
                 </Table.Td>
               </Table.Tr>
@@ -164,7 +157,7 @@ const SubscriptionTable = ({
             </div>
           )}
       </div>
-      <div className="mt-10">
+      <div className="mt-10 flex justify-between">
         <Pagination
           total={totalPages}
           siblings={1}
@@ -172,6 +165,23 @@ const SubscriptionTable = ({
           onChange={setSkip}
           className="text-primary"
         />
+        <div className="flex items-center gap-2">
+          <div>Per page</div>
+          <Select
+            className="w-[100px]"
+            data={[
+              { label: "5", value: "5" },
+              { label: "15", value: "15" },
+              { label: "25", value: "25" },
+              { label: "50", value: "50" },
+              { label: "75", value: "75" },
+              { label: "100", value: "100" },
+            ]}
+            value={limit.toString()}
+            // @ts-ignore
+            onChange={setLimit}
+          />
+        </div>
       </div>
     </Fragment>
   );

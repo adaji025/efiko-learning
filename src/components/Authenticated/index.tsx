@@ -56,13 +56,13 @@ const Authenticated = () => {
   return (
     <>
       <MobileSidebar {...{ mobileNav, openMobileNav }} />
-      <div className="flex overflow-x-hidden">
-        <div className="fixed h-screen hidden lg:flex lg:w-[300px]  bg-primary p-[22px]">
+      <div className="flex items-start">
+        <div className="sticky top-0 left-0 h-screen hidden lg:flex bg-primary pl-[22px]">
           <Sidebar openMobileNav={openMobileNav} />
         </div>
         <div className="w-full">
           <Header mobileNav={mobileNav} openMobileNav={openMobileNav} />
-          <main className="w-full bg-white pt-5 lg:pt-[50px] lg:ml-[300px] lg:w-[calc(100vw-300px)] mb-10">
+          <main className="w-full bg-white mb-10">
             <Routes>
               <Route
                 path="/"

@@ -66,3 +66,15 @@ export const deleteSession = (id: string) => {
       });
   });
 };
+
+export const assignStudentToSession = (id: string, data: any) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.patch(`${APIS.SESSION.SESSION}/assign/${id}`,data)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

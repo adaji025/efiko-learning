@@ -338,7 +338,7 @@ const Sidebar = ({ openMobileNav }: IProps) => {
   return (
     <Fragment>
       <ConfirmLogout close={close} opened={opened} />
-      <aside className="flex w-full h-full flex-col">
+      <aside className="flex w-[250px] overflow-auto sticky top-0 h-full flex-col">
         <div className="w-full">
           <img src={LogoMark} alt="" className="h-[100px]" />
 

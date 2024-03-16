@@ -7,8 +7,8 @@ import TableSkeleton from "../../../../components/TableSkeleton";
 
 const ManagePayments = () => {
   const [loading, setLoading] = useState(false);
-  const [limit] = useState(10);
-  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [skip, setSkip] = useState(1);
   const [search] = useState("");
   const [payments, setPayments] = useState<PaymentState | null>(null);
 
@@ -16,7 +16,7 @@ const ManagePayments = () => {
 
   useEffect(() => {
     handleGetPayment();
-  }, []);
+  }, [limit, skip, search]);
 
   const handleGetPayment = () => {
     setLoading(true);
@@ -32,7 +32,7 @@ const ManagePayments = () => {
       });
   };
   return (
-    <div className="mt-[50px] lg:mt-5">
+    <div className="">
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
         Payments
       </div>
@@ -44,6 +44,7 @@ const ManagePayments = () => {
             limit={limit}
             skip={skip}
             setSkip={setSkip}
+            setLimit={setLimit}
           />
         )}
 
