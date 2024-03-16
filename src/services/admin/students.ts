@@ -28,7 +28,21 @@ export const changeStudentActiveState = (id: string, data: any) => {
 export const getStudents = (limit: number, skip: number, search: string) => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(
-      `${APIS.ADMIN}/student?limit=${limit}&accountType=student&skip=${skip}&search=${search}`
+      `${APIS.ADMIN}/student?limit=${limit}&accountType=student&skip=${skip}&search=${search}&sort=desc`
+    )
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
+export const getAllStudents = () => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(
+      `${APIS.ADMIN}/student?accountType=student&sort=desc`
     )
       .then((res: any) => {
         resolve(res);

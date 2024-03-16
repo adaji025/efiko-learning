@@ -15,7 +15,7 @@ export const getTutorSession = (id: string) => {
 
 export const getSession = () => {
   return new Promise((resolve, reject) => {
-    AxoisApi.get(APIS.SESSION.SESSION)
+    AxoisApi.get(`${APIS.SESSION.SESSION}&sort=desc`)
       .then((res: any) => {
         resolve(res);
       })
@@ -27,7 +27,7 @@ export const getSession = () => {
 
 export const getExploreSession = () => {
   return new Promise((resolve, reject) => {
-    AxoisApi.get(`${APIS.SESSION.SESSION}?book=false`)
+    AxoisApi.get(`${APIS.SESSION.SESSION}?book=false&sort=desc`)
       .then((res: any) => {
         resolve(res);
       })
@@ -39,7 +39,7 @@ export const getExploreSession = () => {
 
 export const getTutorUpcomingSession = (id: string) => {
   return new Promise((resolve, reject) => {
-    AxoisApi.get(`${APIS.SESSION.SESSION}?start=false&tutorId=${id}`)
+    AxoisApi.get(`${APIS.SESSION.SESSION}?start=false&tutorId=${id}&sort=desc`)
       .then((res: any) => {
         resolve(res);
       })
@@ -65,7 +65,7 @@ export const getUpcomingSession = () => {
 
 export const getStudentRecordedSession = () => {
   return new Promise((resolve, reject) => {
-    AxoisApi.get(`${APIS.SESSION.SESSION}?type=recorded`)
+    AxoisApi.get(`${APIS.SESSION.SESSION}?type=recorded&sort=desc`)
       .then((res: any) => {
         resolve(res);
       })

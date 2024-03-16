@@ -8,7 +8,7 @@ export const getSbubscritions = (
 ) => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(
-      `${APIS.SUBSCRIPTION}?limit=${limit}&skip=${skip}&search=${search}`
+      `${APIS.SUBSCRIPTION}?limit=${limit}&skip=${skip}&search=${search}&sort=desc`
     )
       .then((res: any) => {
         resolve(res);

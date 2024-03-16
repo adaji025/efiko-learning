@@ -4,7 +4,7 @@ import { APIS } from "../../api/api";
 export const getTutors = (limit: number, skip: number, search: string) => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(
-      `${APIS.ADMIN}/tutor?limit=${limit}&accountType=tutor&skip=${skip}&search=${search}`
+      `${APIS.ADMIN}/tutor?limit=${limit}&accountType=tutor&skip=${skip}&search=${search}&sort=desc`
     )
       .then((res: any) => {
         resolve(res);
@@ -17,7 +17,7 @@ export const getTutors = (limit: number, skip: number, search: string) => {
 
 export const getAllTutors = () => {
   return new Promise((resolve, reject) => {
-    AxoisApi.get(`${APIS.ADMIN}/tutor?accountType=tutor`)
+    AxoisApi.get(`${APIS.ADMIN}/tutor?accountType=tutor&sort=desc`)
       .then((res: any) => {
         resolve(res);
       })
