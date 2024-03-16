@@ -14,8 +14,8 @@ const Subscriptions = () => {
   const [subscriptions, setSubscriptions] = useState<SubscriptionState | null>(
     null
   );
-  const [limit] = useState(5);
-  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -45,7 +45,7 @@ const Subscriptions = () => {
         close={close}
         callback={handleGetSubscriptions}
       />
-      <div className="mt-[50px] lg:mt-5">
+      <div className="">
         <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
           Manage Subcriptions
         </div>
@@ -81,6 +81,7 @@ const Subscriptions = () => {
               subscriptions={subscriptions}
               limit={limit}
               setSkip={setSkip}
+              setLimit={setLimit}
               skip={skip}
               handleGetSubscriptions={handleGetSubscriptions}
             />
