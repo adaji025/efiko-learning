@@ -18,7 +18,7 @@ export const addCurriculum = (data: any) => {
 export const getCurriculums = (limit: number, skip: number, search: string) => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(
-      `${APIS.CURRICULUM}?limit=${limit}&skip=${skip}&search=${search}`
+      `${APIS.CURRICULUM}?limit=${limit}&skip=${skip}&search=${search}&sort=desc`
     )
       .then((res: any) => {
         resolve(res);

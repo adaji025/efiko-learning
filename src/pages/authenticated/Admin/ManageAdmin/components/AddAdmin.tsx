@@ -16,11 +16,12 @@ import { AdminTypes } from "../../../../../types/admins/admin";
 type Props = {
   opened: boolean;
   close: () => void;
-  callback: () => void;
+  callback?: () => void;
+  handleGetAdmins: () => void
   admin?: AdminTypes | null;
 };
 
-const AddAdmin = ({ close, opened, callback, admin }: Props) => {
+const AddAdmin = ({ close, opened, handleGetAdmins, admin }: Props) => {
   const [loading, setLoading] = useState(false);
 
   const { handleError } = useNotification();
@@ -48,7 +49,7 @@ const AddAdmin = ({ close, opened, callback, admin }: Props) => {
       .then(() => {
         toast.success("Admin added successfully");
         close();
-        callback();
+        handleGetAdmins();
         form.reset();
       })
       .catch((err) => {
@@ -67,7 +68,7 @@ const AddAdmin = ({ close, opened, callback, admin }: Props) => {
         .then(() => {
           toast.success("Admin updated successfully");
           close();
-          callback();
+          handleGetAdmins();
           form.reset();
         })
         .catch((err) => {

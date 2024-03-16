@@ -40,6 +40,7 @@ const AdminTable = ({
 
   const { handleError } = useNotification();
 
+
   const handleUpdateAdmin = () => {
     setLoading(true);
 
@@ -69,7 +70,7 @@ const AdminTable = ({
       <AddAdmin
         close={() => setEdit(false)}
         opened={edit}
-        callback={handleGetAdmins}
+        handleGetAdmins={handleGetAdmins}
         admin={admin}
       />
       <ConfirmDisable
@@ -93,7 +94,7 @@ const AdminTable = ({
           </Table.Thead>
           <Table.Tbody>
             {admins &&
-              admins.data.map((admin, i) => (
+              admins.data.reverse().map((admin, i) => (
                 <Table.Tr key={i}>
                   <Table.Td
                     className="cursor-pointer"

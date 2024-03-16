@@ -8,7 +8,7 @@ export const getAdminUpcomingSession = (
 ) => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(
-      `${APIS.SESSION.SESSION}?limit=${limit}&skip=${skip}&search=${search}`
+      `${APIS.SESSION.SESSION}?limit=${limit}&skip=${skip}&search=${search}&sort=desc`
     )
       .then((res: any) => {
         resolve(res);
@@ -26,7 +26,7 @@ export const getSessionRequest = (
 ) => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(
-      `${APIS.SESSION.SESSION}?book=true&limit=${limit}&skip=${skip}&search=${search}`
+      `${APIS.SESSION.SESSION}?book=true&limit=${limit}&skip=${skip}&search=${search}&sort=desc`
     )
       .then((res: any) => {
         resolve(res);
@@ -44,7 +44,7 @@ export const getRecordedSession = (
 ) => {
   return new Promise((resolve, reject) => {
     AxoisApi.get(
-      `${APIS.SESSION.SESSION}?type=recorded&limit=${limit}&skip=${skip}&search=${search}`
+      `${APIS.SESSION.SESSION}?type=recorded&limit=${limit}&skip=${skip}&search=${search}&sort=desc`
     )
       .then((res: any) => {
         resolve(res);
