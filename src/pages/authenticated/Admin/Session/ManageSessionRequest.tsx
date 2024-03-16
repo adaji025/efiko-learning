@@ -11,7 +11,7 @@ const ManageSessionRequest = () => {
   const [sessions, setSessions] = useState<AdminSessionState | null>(null);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
-  const [limit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [skip, setSkip] = useState(1);
 
   const { handleError } = useNotification();
@@ -70,6 +70,7 @@ const ManageSessionRequest = () => {
             limit={limit}
             skip={skip}
             setSkip={setSkip}
+            setLimit={setLimit}
             handleGetSessionRequest={handleGetSessionRequest}
           />
         )}

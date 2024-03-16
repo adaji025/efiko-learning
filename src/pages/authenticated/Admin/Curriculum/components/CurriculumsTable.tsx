@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from "react";
-import { LoadingOverlay, Pagination, Table } from "@mantine/core";
+import { LoadingOverlay, Pagination, Select, Table } from "@mantine/core";
 import { CiEdit } from "react-icons/ci";
 import { GrCloudDownload } from "react-icons/gr";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -11,15 +11,18 @@ import {
   CurriculumTypes,
 } from "../../../../../types/curriculum";
 import moment from "moment";
-import { deleteCurriculum, downloadUrl } from "../../../../../services/admin/curriculum";
+import {
+  deleteCurriculum,
+  downloadUrl,
+} from "../../../../../services/admin/curriculum";
 import { toast } from "react-toastify";
 import useNotification from "../../../../../hooks/useNotification";
-
 
 type IProps = {
   curriculums: CurriculumState | null;
   skip: number;
   limit: number;
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
   handleGetCurriculum: () => void;
 };
@@ -30,6 +33,7 @@ const CurriculumsTable = ({
   setSkip,
   handleGetCurriculum,
   limit,
+  setLimit,
 }: IProps) => {
   const [loading, setLoading] = useState(false);
   const [curriculum, setCurriculum] = useState<CurriculumTypes | null>(null);
@@ -102,11 +106,7 @@ const CurriculumsTable = ({
                         href={downloadUrl(curriculum.uniqueId)}
                         target="_blank"
                       >
-                        <GrCloudDownload
-                          size={20}
-                          className="cursor-pointer"
-                          
-                        />
+                        <GrCloudDownload size={20} className="cursor-pointer" />
                       </a>
                       <CiEdit
                         size={20}
@@ -137,7 +137,7 @@ const CurriculumsTable = ({
           </div>
         )}
       </div>
-      <div className="mt-10">
+      <div className="mt-10 flex justify-between">
         <Pagination
           total={totalPages}
           siblings={1}
@@ -145,6 +145,23 @@ const CurriculumsTable = ({
           onChange={setSkip}
           className="text-primary"
         />
+        <div className="flex items-center gap-2">
+          <div>Per page</div>
+          <Select
+            className="w-[100px]"
+            data={[
+              { label: "5", value: "5" },
+              { label: "15", value: "15" },
+              { label: "25", value: "25" },
+              { label: "50", value: "50" },
+              { label: "75", value: "75" },
+              { label: "100", value: "100" },
+            ]}
+            value={limit.toString()}
+            // @ts-ignore
+            onChange={setLimit}
+          />
+        </div>
       </div>
     </Fragment>
   );

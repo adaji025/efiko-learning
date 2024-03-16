@@ -10,8 +10,8 @@ import { ReportState } from "../../../../types/admins/report";
 const ManageIssues = () => {
   const [loading, setLoading] = useState(false);
   const [reports, setReports] = useState<ReportState | null>(null);
-  const [limit] = useState(5);
-  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
   const { handleError } = useNotification();
 
@@ -63,6 +63,7 @@ const ManageIssues = () => {
           <IssuesTable
             limit={limit}
             setSkip={setSkip}
+            setLimit={setLimit}
             skip={skip}
             reports={reports}
             handleGetReport={handleGetReport}

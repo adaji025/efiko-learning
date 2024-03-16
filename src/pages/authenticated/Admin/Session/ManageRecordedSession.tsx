@@ -10,7 +10,7 @@ import TableSkeleton from "../../../../components/TableSkeleton";
 const ManageRecordedSession = () => {
   const [sessions, setSessions] = useState<AdminSessionState | null>(null);
   const [loading, setLoading] = useState(false);
-  const [limit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
 
@@ -68,6 +68,7 @@ const ManageRecordedSession = () => {
               limit={limit}
               skip={skip}
               setSkip={setSkip}
+              setLimit={setLimit}
             />
           )}
 

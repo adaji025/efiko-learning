@@ -1,4 +1,4 @@
-import { LoadingOverlay, Pagination, Table } from "@mantine/core";
+import { LoadingOverlay, Pagination, Select, Table } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import React, { Fragment, useEffect, useState } from "react";
 import ConfirmDisable from "../../../../../components/Confirmation";
@@ -16,6 +16,7 @@ type StudentProps = {
   limit: number;
   skip: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
+  setLimit: React.Dispatch<React.SetStateAction<number>>
   handleGetStudents: () => void;
 };
 
@@ -24,6 +25,7 @@ const StudentsTable = ({
   limit,
   setSkip,
   skip,
+  setLimit,
   handleGetStudents,
 }: StudentProps) => {
   const [loading, setLoading] = useState(false);
@@ -35,7 +37,6 @@ const StudentsTable = ({
   const { handleError } = useNotification();
   const navigate = useNavigate();
 
-  console.log(students)
 
   useEffect(() => {
     if (students) setTotalPages(Math.ceil(students?.total / limit));
@@ -98,7 +99,7 @@ const StudentsTable = ({
                 <Table.Td>{student.status}</Table.Td>
                 <Table.Td>
                   <button
-                    className={` w-full xl:w-1/2 text-white px-4 py-2 rounded-md ${
+                    className={`max-w-[150px] w-full text-white px-4 py-2 rounded-md ${
                       student.status === "Active" ? "bg-red-400" : "bg-primary"
                     }`}
                     onClick={() => {
@@ -123,7 +124,7 @@ const StudentsTable = ({
           </div>
         )}
       </div>
-      <div className="mt-10">
+      <div className="mt-10 flex justify-between">
         <Pagination
           total={totalPages}
           siblings={1}
@@ -131,6 +132,26 @@ const StudentsTable = ({
           onChange={setSkip}
           className="text-primary"
         />
+        <div className="flex items-center gap-2">
+          <div>Per page</div>
+          <Select
+            className="w-[100px]"
+            placeholder={limit.toString()}
+            data={[
+              { label: "5", value: "5" },
+              { label: "10", value: "10" },
+              { label: "15", value: "15" },
+              { label: "25", value: "25" },
+              { label: "50", value: "50" },
+              { label: "75", value: "75" },
+              { label: "100", value: "100" },
+            ]}
+            value={limit.toString()}
+            // @ts-ignore
+            onChange={setLimit}
+            defaultValue={limit.toString()}
+          />
+        </div>
       </div>
     </Fragment>
   );

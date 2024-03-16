@@ -1,4 +1,4 @@
-import { Badge, LoadingOverlay, Menu, Pagination, Table } from "@mantine/core";
+import { Badge, LoadingOverlay, Menu, Pagination, Select, Table } from "@mantine/core";
 import { Fragment, useEffect, useState } from "react";
 import { SlOptionsVertical } from "react-icons/sl";
 import ConfirmApproval from "../../../../../components/Confirmation";
@@ -19,6 +19,7 @@ type SessionProps = {
   sessions: AdminSessionState | null;
   skip: number;
   limit: number;
+  setLimit: React.Dispatch<React.SetStateAction<number>>
   setSkip: React.Dispatch<React.SetStateAction<number>>;
   handleGetSessionRequest: () => void;
 };
@@ -28,6 +29,7 @@ const SessionRequestTable = ({
   sessions,
   setSkip,
   skip,
+  setLimit,
   handleGetSessionRequest,
 }: SessionProps) => {
   const [loading, setLoading] = useState(false);
@@ -254,7 +256,7 @@ const SessionRequestTable = ({
           </div>
         )}
       </div>
-      <div className="mt-10">
+      <div className="mt-10 flex justify-between">
         <Pagination
           total={totalPages}
           siblings={1}
@@ -262,6 +264,24 @@ const SessionRequestTable = ({
           onChange={setSkip}
           className="text-primary"
         />
+        <div className="flex items-center gap-2">
+          <div>Per page</div>
+          <Select
+            className="w-[100px]"
+            data={[
+              { label: "5", value: "5" },
+              { label: "10", value: "10" },
+              { label: "15", value: "15" },
+              { label: "25", value: "25" },
+              { label: "50", value: "50" },
+              { label: "75", value: "75" },
+              { label: "100", value: "100" },
+            ]}
+            value={limit.toString()}
+            // @ts-ignore
+            onChange={setLimit}
+          />
+        </div>
       </div>
     </Fragment>
   );

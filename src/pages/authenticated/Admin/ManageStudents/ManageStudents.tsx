@@ -11,8 +11,8 @@ import TableSkeleton from "../../../../components/TableSkeleton";
 const ManageStudents = () => {
   const [students, setStudents] = useState<StudentState | null>(null);
   const [loading, setLoading] = useState(false);
-  const [limit] = useState(5);
-  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
 
   const { handleError } = useNotification();
@@ -75,6 +75,7 @@ const ManageStudents = () => {
          {!loading && <StudentsTable
             students={students}
             limit={limit}
+            setLimit={setLimit}
             setSkip={setSkip}
             skip={skip}
             handleGetStudents={handleGetStudents}

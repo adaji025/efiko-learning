@@ -12,7 +12,7 @@ import TableSkeleton from "../../../../components/TableSkeleton";
 const ManageAdmin = () => {
   const [loading, setLoading] = useState(false);
   const [admins, setAdmins] = useState<AdminState | null>(null);
-  const [limit] = useState(5);
+  const [limit, setLimit] = useState(10);
   const [skip, setSkip] = useState(1);
   const [search, setSearch] = useState("");
   const [opened, { open, close }] = useDisclosure(false);
@@ -78,6 +78,7 @@ const ManageAdmin = () => {
               setSkip={setSkip}
               skip={skip}
               handleGetAdmins={handleGetAdmins}
+              setLimit={setLimit}
             />
           )}
           {loading && <TableSkeleton />}
