@@ -1,4 +1,11 @@
-import { Badge, LoadingOverlay, Menu, Pagination, Select, Table } from "@mantine/core";
+import {
+  Badge,
+  LoadingOverlay,
+  Menu,
+  Pagination,
+  Select,
+  Table,
+} from "@mantine/core";
 import { Fragment, useEffect, useState } from "react";
 import { SlOptionsVertical } from "react-icons/sl";
 import ConfirmApproval from "../../../../../components/Confirmation";
@@ -19,7 +26,7 @@ type SessionProps = {
   sessions: AdminSessionState | null;
   skip: number;
   limit: number;
-  setLimit: React.Dispatch<React.SetStateAction<number>>
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
   handleGetSessionRequest: () => void;
 };
@@ -215,16 +222,16 @@ const SessionRequestTable = ({
                             Approve
                           </Menu.Item>
                         )}
-                        {session.status === "approved" && (
-                          <Menu.Item
-                            onClick={() => {
-                              setDisapprovalModal(true);
-                              setSessionId(session._id);
-                            }}
-                          >
-                            Disapprove
-                          </Menu.Item>
-                        )}
+
+                        <Menu.Item
+                          onClick={() => {
+                            setDisapprovalModal(true);
+                            setSessionId(session._id);
+                          }}
+                        >
+                          Disapprove
+                        </Menu.Item>
+
                         {!session.tutorId && (
                           <Menu.Item
                             onClick={() => {
