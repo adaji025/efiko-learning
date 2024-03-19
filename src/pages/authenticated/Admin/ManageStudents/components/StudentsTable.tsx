@@ -16,7 +16,7 @@ type StudentProps = {
   limit: number;
   skip: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
-  setLimit: React.Dispatch<React.SetStateAction<number>>
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
   handleGetStudents: () => void;
 };
 
@@ -37,7 +37,6 @@ const StudentsTable = ({
   const { handleError } = useNotification();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     if (students) setTotalPages(Math.ceil(students?.total / limit));
   }, [students, limit]);
@@ -45,7 +44,7 @@ const StudentsTable = ({
   const handleChangeStudentStatus = () => {
     setLoading(true);
     const value = {
-      action,
+      status: action,
     };
     student &&
       changeStudentActiveState(student?._id, value)
@@ -65,6 +64,7 @@ const StudentsTable = ({
           setLoading(false);
         });
   };
+
   return (
     <Fragment>
       <ConfirmDisable

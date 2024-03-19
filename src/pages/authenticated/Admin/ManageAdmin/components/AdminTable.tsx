@@ -75,6 +75,7 @@ const AdminTable = ({
           toast.success(
             "Password reset successful, new password sent to admin's email"
           );
+          openPwModal(false);
         })
         .catch((err) => {
           handleError(err);
