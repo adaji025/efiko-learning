@@ -43,7 +43,7 @@ const SubscriptionTable = ({
 
   useEffect(() => {
     if (subscriptions)
-      setTotalPages(Math.ceil(subscriptions?.total / subscriptions?.length));
+      setTotalPages(Math.ceil(subscriptions?.total / limit));
   }, [Subscriptions, limit]);
 
   const handleChangeSubscriptionStatus = () => {

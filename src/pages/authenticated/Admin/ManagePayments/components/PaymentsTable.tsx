@@ -18,7 +18,7 @@ const PaymentsTable = ({ limit, payments, setSkip, skip, setLimit }: IProps) => 
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    if (payments) setTotalPages(Math.ceil(payments?.length / limit));
+    if (payments) setTotalPages(Math.ceil(payments?.total / limit));
   }, [payments, limit]);
 
   return (
