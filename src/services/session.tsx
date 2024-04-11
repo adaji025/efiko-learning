@@ -74,6 +74,17 @@ export const getStudentRecordedSession = () => {
       });
   });
 };
+export const getStudentFreeSession = () => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.get(`${APIS.SESSION.SESSION}?free=true&book=false`)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
 
 export const addSession = (data: any) => {
   return new Promise((resolve, reject) => {

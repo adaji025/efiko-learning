@@ -6,6 +6,7 @@ import Slider from "react-slick";
 import SearchIcon from "../../../../assets/svgs/search.svg";
 import { freeSessions } from "../../../../components/data";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { getStudentFreeSession } from "../../../../services/session";
 
 type IProps = {
   item: {
@@ -36,6 +37,7 @@ const UpcomingSession = () => {
   const sliderRef = useRef(null);
   useEffect(() => {
     AOS.init();
+    handleGetFreeSession();
   }, []);
 
   const next = () => {
@@ -77,6 +79,16 @@ const UpcomingSession = () => {
         },
       },
     ],
+  };
+
+  const handleGetFreeSession = () => {
+    getStudentFreeSession()
+      .then((res: any) => {
+        console.log(res);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   };
   return (
     <div

@@ -41,7 +41,7 @@ const IssuesTable = ({
 
   useEffect(() => {
     if (reports) setTotalPages(Math.ceil(reports.total / limit));
-  }, [reports]);
+  }, [reports, limit]);
 
   const { handleError } = useNotification();
 

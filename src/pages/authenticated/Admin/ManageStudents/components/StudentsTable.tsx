@@ -16,7 +16,7 @@ type StudentProps = {
   limit: number;
   skip: number;
   setSkip: React.Dispatch<React.SetStateAction<number>>;
-  setLimit: React.Dispatch<React.SetStateAction<number>>
+  setLimit: React.Dispatch<React.SetStateAction<number>>;
   handleGetStudents: () => void;
 };
 
@@ -31,28 +31,29 @@ const StudentsTable = ({
   const [loading, setLoading] = useState(false);
   const [totalPages, setTotalPages] = useState(1);
   const [student, setStudent] = useState<StudentsTypes | null>(null);
-  const [action, setAction] = useState("");
+  const [action, setAction] = useState<"Active" | "Inactive" | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
 
   const { handleError } = useNotification();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     if (students) setTotalPages(Math.ceil(students?.total / limit));
   }, [students, limit]);
 
+  console.log(students)
+
   const handleChangeStudentStatus = () => {
     setLoading(true);
     const value = {
-      action,
+      status: action,
     };
     student &&
       changeStudentActiveState(student?._id, value)
         .then(() => {
           toast.success(
             `Student successfully ${
-              action === "Activate" ? "deactivated" : "activated"
+              action === "Active" ? "deactivated" : "activated"
             }`
           );
           handleGetStudents();
@@ -65,11 +66,12 @@ const StudentsTable = ({
           setLoading(false);
         });
   };
+
   return (
     <Fragment>
       <ConfirmDisable
         opened={opened}
-        btnText={`${action} student`}
+        btnText={`${action === "Active" ? "Activate" : "Deactivate"} student`}
         close={close}
         handleClick={handleChangeStudentStatus}
       />
@@ -106,8 +108,8 @@ const StudentsTable = ({
                       open();
                       setStudent(student);
                       student.status === "Active"
-                        ? setAction("Deactivate")
-                        : setAction("Activate");
+                        ? setAction("Inactive")
+                        : setAction("Active");
                     }}
                   >
                     {student.status === "Active" ? "Deactivate" : "Activate"}
