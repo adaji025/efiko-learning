@@ -267,7 +267,7 @@ const StudentProfilSetup = () => {
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[50px] py-10 rounded-xl max-w-[650px] w-full">
                 <div>
                   Your profile is under review. As soon as admin will approve
-                  your profile you will be eligible to start teaching on the
+                  your profile you will be eligible to start learning on the
                   platform.
                 </div>
                 <Button
