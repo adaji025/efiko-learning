@@ -56,7 +56,7 @@ const Profile = () => {
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
   );
-
+console.log(userProfile)
   useEffect(() => {
     handleGetUserProfile();
   }, []);
@@ -139,7 +139,7 @@ const Profile = () => {
                 <div className="font-semibold mt-5 text-lg text-primary">
                   Educational Details
                 </div>
-                <div className="mt-2 text-sm">Education: Bachelors </div>
+                <div className="mt-2 text-sm">Education: {userProfile?.data.studentEducationDetails.education} </div>
                 {userData.accountType === "student" && (
                   <div className="mt-2 text-sm">
                     Career Interests: Computer Science

@@ -36,6 +36,7 @@ export type TutorEducationDetailsTypes = {
 
 export type StudentEducationDetailsTypes = {
   subject: any[];
+  education: ''
 };
 
 

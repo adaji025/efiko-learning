@@ -53,7 +53,7 @@ const Login = () => {
         <img src={Logo} alt="" className="mt-10" />
         <div className="text-center">
           <h1 className="font-bold text-2xl">Sign In</h1>
-          <div>Sign in to your account and start learning.</div>
+          <div>Sign in to your account and start Teaching.</div>
         </div>
         <form
           onSubmit={form.onSubmit((values) => submit(values))}
@@ -104,7 +104,7 @@ const Login = () => {
           Don’t have an account?{" "}
           <span
             className="text-primary font-semibold cursor-pointer"
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/register", { state: { type: 'tutor' } })}
           >
             Create an account{" "}
           </span>
