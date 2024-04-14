@@ -21,6 +21,10 @@ import { DateInput } from "@mantine/dates";
 const StudentProfilSetup = () => {
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [files, setFiles] = useState([]);
+
+  console.log(files[0]);
+
   const { handleError } = useNotification();
 
   const id = localStorage.getItem("userId") ?? "";
@@ -42,8 +46,8 @@ const StudentProfilSetup = () => {
       dateOfBirth: "",
       country: "",
       education: "",
-      majors: "",
-      subject: [],
+      careerInterest: "",
+      subjectOfInterest: [],
     },
     validate: {
       lastName: (value) => (value === "" ? "Input full name" : null),
@@ -51,8 +55,10 @@ const StudentProfilSetup = () => {
       country: (value) => (value === "" ? "Input Country" : null),
       dateOfBirth: (value) => (value === "" ? "Input age" : null),
       education: (value) => (value === "" ? "Input Education" : null),
-      majors: (value) => (value === "" ? "Input Majors" : null),
-      subject: (value) => (value.length < 6 ? "Input Majors" : null),
+      careerInterest: (value) =>
+        value === "" ? "Input career of Interest" : null,
+      subjectOfInterest: (value) =>
+        value.length < 6 ? "Input subject Of Interest" : null,
     },
   });
 
@@ -63,18 +69,26 @@ const StudentProfilSetup = () => {
     const formData = new FormData();
 
     // Append regular key-value pairs
+    formData.append("image", files[0]);
     formData.append("firstName", form.values.firstName);
     formData.append("lastName", form.values.lastName);
     formData.append("age", form.values.dateOfBirth);
     formData.append("country", form.values.country);
+    formData.append("subjectOfInterest", form.values.country);
 
     // Append nested object key-value pairs
     formData.append("studentEducationDetails.education", form.values.education);
-    formData.append("studentEducationDetails.majors", form.values.majors);
+    formData.append(
+      "studentEducationDetails.careerInterest",
+      form.values.careerInterest
+    );
 
     // Append array elements
-    form.values.subject.forEach((subject, index) => {
-      formData.append(`studentEducationDetails.subject[${index}]`, subject);
+    form.values.subjectOfInterest.forEach((subject, index) => {
+      formData.append(
+        `studentEducationDetails.subjectOfInterest[${index}]`,
+        subject
+      );
     });
 
     profileSetUp(id, formData)
@@ -94,7 +108,8 @@ const StudentProfilSetup = () => {
       form.values.lastName === "" ||
       form.values.firstName === "" ||
       form.values.dateOfBirth === "" ||
-      form.values.country === ""
+      form.values.country === "" ||
+      files.length === 0
     )
       return true;
     return false;
@@ -103,8 +118,8 @@ const StudentProfilSetup = () => {
   const validateTwo = useCallback((): boolean => {
     if (
       form.values.education === "" ||
-      form.values.majors === "" ||
-      form.values.subject.length < 6
+      form.values.careerInterest === "" ||
+      form.values.subjectOfInterest.length < 6
     )
       return true;
     return false;
@@ -129,7 +144,7 @@ const StudentProfilSetup = () => {
           <Stepper active={active} onStepClick={setActive}>
             <Stepper.Step disabled>
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
-                <ImageDropzone />
+                <ImageDropzone files={files} setFiles={setFiles} />
                 <TextInput
                   required
                   mt={16}
@@ -179,15 +194,15 @@ const StudentProfilSetup = () => {
                   size="md"
                   label="Education"
                   data={[
-                    {label: "Grade 1", value: "grade 1"},
-                    {label: "Grade 2", value: "grade 2"},
-                    {label: "Grade 3", value: "grade 3"},
-                    {label: "Grade 4", value: "grade 4"},
-                    {label: "Grade 5", value: "grade 5"},
-                    {label: "Grade 6", value: "grade 6"},
-                    {label: "Grade 7", value: "grade 7"},
-                    {label: "Grade 8", value: "grade 8"},
-                    {label: "Grade 9", value: "grade 9"},
+                    { label: "Grade 1", value: "grade 1" },
+                    { label: "Grade 2", value: "grade 2" },
+                    { label: "Grade 3", value: "grade 3" },
+                    { label: "Grade 4", value: "grade 4" },
+                    { label: "Grade 5", value: "grade 5" },
+                    { label: "Grade 6", value: "grade 6" },
+                    { label: "Grade 7", value: "grade 7" },
+                    { label: "Grade 8", value: "grade 8" },
+                    { label: "Grade 9", value: "grade 9" },
                   ]}
                   {...form.getInputProps("education")}
                 />
@@ -199,7 +214,7 @@ const StudentProfilSetup = () => {
                   label="Career Interests"
                   searchable
                   data={majors.map((major) => major)}
-                  {...form.getInputProps("majors")}
+                  {...form.getInputProps("careerInterest")}
                 />
 
                 <MultiSelect
@@ -209,7 +224,7 @@ const StudentProfilSetup = () => {
                   label="Subjects you are interested in"
                   data={subjects.map((subject) => subject)}
                   searchable
-                  {...form.getInputProps("subject")}
+                  {...form.getInputProps("subjectOfInterest")}
                 />
                 {validateTwo() && (
                   <div className="text-xs text-red-500">
