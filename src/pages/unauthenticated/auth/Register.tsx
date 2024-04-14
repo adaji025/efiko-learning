@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { useForm } from "@mantine/form";
 import {
   TextInput,
@@ -9,7 +9,7 @@ import {
 
 import { FcGoogle } from "react-icons/fc";
 import Logo from "../../../assets/svgs/logo.svg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { userRegistration } from "../../../services/auth";
 import { toast } from "react-toastify";
 import useNotification from "../../../hooks/useNotification";
@@ -22,6 +22,9 @@ const Register = () => {
 
   const { handleError } = useNotification();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log(location.state);
 
   const form = useForm({
     initialValues: {
@@ -53,6 +56,16 @@ const Register = () => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    if (location && location.state.type === "tutor") {
+      setUser("tutor");
+    } else if (location && location.state.type === "student") {
+      setUser("student");
+    } else {
+      setUser(null);
+    }
+  }, [location.state.type]);
 
   return (
     <Fragment>

@@ -49,7 +49,7 @@ const ManageStudents = () => {
                 className="bg-primary"
                 onClick={() => navigate("/manage-students/create-student")}
               >
-                Create Student
+                Onboard Student
               </Button>
             </div>
             <div className="flex w-full justify-start sm:justify-end">

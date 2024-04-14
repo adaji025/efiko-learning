@@ -75,7 +75,9 @@ const StudentLogin = () => {
             <Button
               size="md"
               className="bg-primary w-full rounded-full text-xs sm:text-base"
-              onClick={() => navigate("/register")}
+              onClick={() =>
+                navigate("/register", { state: { type: "student" } })
+              }
             >
               Sign up and Book a free trial class now
             </Button>
