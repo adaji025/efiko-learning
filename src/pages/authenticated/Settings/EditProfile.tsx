@@ -12,8 +12,10 @@ import { countryList } from "../../../utils/country";
 import { ProfileTypes } from "../../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import { useState } from "react";
 
 const EditProfile = () => {
+  const [files, setFiles] = useState([])
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
   );
@@ -26,7 +28,7 @@ const EditProfile = () => {
       <div className="mt-10 px-4 lg:px-8">
         <div className="border rounded-2xl flex flex-col md:flex-row">
           <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
-            <ImageDropzone />
+            <ImageDropzone files={files} setFiles={setFiles} />
             <div className="font-semibold mt-5">M_Johnson</div>
             <div className="text-sm mt-2">Student</div>
             <div className="text-sm mt-2">markjohnson12@gmail.com</div>

@@ -113,7 +113,7 @@ const StudentProfilSetup = () => {
     )
       return true;
     return false;
-  }, [form.values]);
+  }, [form.values, files]);
 
   const validateTwo = useCallback((): boolean => {
     if (
