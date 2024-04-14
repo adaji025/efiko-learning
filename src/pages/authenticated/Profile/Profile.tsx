@@ -8,6 +8,7 @@ import useNotification from "../../../hooks/useNotification";
 import { getUserProfile } from "../../../services/user";
 import { useNavigate } from "react-router-dom";
 import { SessionTypes } from "../../../types/session";
+import moment from "moment";
 
 export const VerifiedIcon = () => {
   return (
@@ -56,7 +57,7 @@ const Profile = () => {
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
   );
-console.log(userProfile)
+  console.log(userProfile);
   useEffect(() => {
     handleGetUserProfile();
   }, []);
@@ -86,7 +87,11 @@ console.log(userProfile)
         <div className="mt-10 px-4 lg:px-8">
           <div className="border rounded-2xl flex flex-col md:flex-row">
             <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
-              <Avatar size="xl" className="mt-5" />
+              <Avatar
+                size="xl"
+                className="mt-5"
+                src={userProfile?.data.profileImage}
+              />
               <div className="font-semibold mt-5 capitalize">
                 {userData.accountType === "student"
                   ? `${userProfile?.data.firstName}  ${userProfile?.data.lastName}`
@@ -122,43 +127,67 @@ console.log(userProfile)
                 <div className="font-semibold mt-5 text-lg text-primary">
                   Personal Details
                 </div>
-                <div className="mt-2 text-sm">
+                {/* <div className="mt-2 text-sm">
                   Name:{" "}
                   {userData.accountType === "student"
                     ? `${userProfile?.data.firstName}  ${userProfile?.data.lastName}`
                     : userData?.fullName}
+                </div> */}
+                <div className="mt-2 text-sm">
+                  {userData.accountType === "student" ? "Date of birth" : "Age"}
+                  :{" "}
+                  <span className="font-semibold">
+                    {userData.accountType === "student"
+                      ? moment(userProfile?.data.age).format("DD/MM/YYYY")
+                      : `${userProfile?.data.age} Years`}
+                  </span>
                 </div>
                 <div className="mt-2 text-sm">
-                  Age: {userProfile?.data.age} Years
-                </div>
-                <div className="mt-2 text-sm">
-                  Country: {userProfile?.data.country}
+                  Country:{" "}
+                  <span className="font-semibold">
+                    {userProfile?.data.country}
+                  </span>
                 </div>
               </div>
               <div className="p-5 border-b">
                 <div className="font-semibold mt-5 text-lg text-primary">
                   Educational Details
                 </div>
-                <div className="mt-2 text-sm">Education: {userProfile?.data.studentEducationDetails.education} </div>
+                <div className="mt-2 text-sm">
+                  Education:{" "}
+                  <span className="font-semibold capitalize">
+                    {userProfile?.data.studentEducationDetails.education}{" "}
+                  </span>
+                </div>
                 {userData.accountType === "student" && (
                   <div className="mt-2 text-sm">
-                    Career Interests: Computer Science
+                    Career Interests:{" "}
+                    <span className="font-semibold">
+                      {userProfile?.data.studentEducationDetails.careerInterest}
+                    </span>
                   </div>
                 )}
                 {userData.accountType === "tutor" && (
                   <div className="mt-2 text-sm">
-                    Your Majors: Computer Science
+                    Your Majors:{" "}
+                    {userProfile?.data.tutorEducationDetails.education}
                   </div>
                 )}
                 <div className="mt-2 text-sm">
-                  Subjects you are interested in:{" "}
+                  Subjects you are interested in
+                  {userData.accountType === "tutor" && " teaching"}:
                 </div>
                 <div className="mt-2 flex flex-wrap gap-5 ">
-                  {[...Array(7)].map((_, i) => (
-                    <div key={i} className="bg-secondary p-2 rounded-md">
-                      Mathematics
-                    </div>
-                  ))}
+                  {userData.accountType === "student" &&
+                    userProfile?.data?.studentEducationDetails.subjectOfInterest.map(
+                      (item, i) => (
+                        <div key={i} className="bg-secondary py-2 px-4 rounded-md min-w-[100px] text-center">
+                          {item}
+                        </div>
+                      )
+                    )}
+                  {userData.accountType === "tutor" &&
+                    userProfile?.data.tutorEducationDetails.subject}
                 </div>
               </div>
               {userData?.accountType === "tutor" && (

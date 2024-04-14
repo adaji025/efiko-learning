@@ -16,16 +16,13 @@ import { countryList } from "../../../utils/country";
 import { useNavigate } from "react-router-dom";
 import useNotification from "../../../hooks/useNotification";
 import { qaulification, subjects } from "../../../components/data";
-import {
-  profileSetUp,
-  uploadNationalId,
-  uploadEducationalDoc,
-} from "../../../services/user";
+import { profileSetUp } from "../../../services/user";
 import { toast } from "react-toastify";
 
 const TutorProfilSetup = () => {
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [files, setFiles] = useState([]);
   // const [edDocvalue, setEdDocValue] = useState<File[]>([]);
   const [edDocvalue, setEdDocValue] = useState<File | null>(null);
   const [natIdvalue, setNatIdValue] = useState<File | null>(null);
@@ -62,7 +59,8 @@ const TutorProfilSetup = () => {
     if (
       form.values.fullName === "" ||
       form.values.age === "" ||
-      form.values.country === ""
+      form.values.country === "" ||
+      files.length === 0
     )
       return true;
     return false;
@@ -91,32 +89,31 @@ const TutorProfilSetup = () => {
     setLoading(true);
 
     const formData = new FormData();
-    const educationFormData = new FormData();
-    const identityFormData = new FormData();
 
     // Append regular key-value pairs
+    formData.append("image", files[0]);
+    if (edDocvalue) formData.append("educationDoc", edDocvalue);
+    if (natIdvalue) formData.append("nationalId", natIdvalue);
     formData.append("fullName", form.values.fullName);
     formData.append("age", form.values.age);
     formData.append("country", form.values.country);
-    formData.append("teachingExperience", form.values.teachingExperience);
+    // formData.append("teachingExperience", form.values.teachingExperience);
     formData.append("description", form.values.description);
-    formData.append("subject", form.values.subject);
-    formData.append("education", form.values.education);
+    // formData.append("subject", form.values.subject);
+    // formData.append("education", form.values.education);
 
     // Append nested object key-value pairs
     formData.append("tutorEducationDetails.education", form.values.education);
     formData.append(
-      "tutorEducationDetails.majors",
+      "tutorEducationDetails.teachingExperience",
       form.values.teachingExperience
     );
+    formData.append("tutorEducationDetails.subject", form.values.subject);
 
     // Append array elements
     // edDocvalue.forEach((img, index) => {
     //   educationFormData.append(`educationImage[${index}]`, img);
     // });
-
-    if (edDocvalue) educationFormData.append("image", edDocvalue);
-    if (natIdvalue) identityFormData.append("image", natIdvalue);
 
     profileSetUp(id, formData)
       .then(() => {
@@ -128,13 +125,6 @@ const TutorProfilSetup = () => {
       .finally(() => {
         setLoading(false);
       });
-
-    uploadEducationalDoc(id, educationFormData).catch((err) => {
-      handleError(err);
-    });
-    uploadNationalId(id, identityFormData).catch((err) => {
-      handleError(err);
-    });
   };
 
   return (
@@ -155,7 +145,7 @@ const TutorProfilSetup = () => {
           <Stepper active={active} onStepClick={setActive}>
             <Stepper.Step>
               <div className="mt-10 bg-white border shadow px-[40px] lg:px-[100px] py-10 rounded-xl max-w-[650px] w-full">
-                <ImageDropzone />
+                <ImageDropzone files={files} setFiles={setFiles} />
 
                 <TextInput
                   required

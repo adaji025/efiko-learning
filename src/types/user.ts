@@ -26,20 +26,21 @@ export interface Data {
   fullName: string;
   firstName: string;
   lastName: string;
+  profileImage: string;
 }
 
 export type TutorEducationDetailsTypes = {
   education: string;
   educationDoc: string[];
   nationalId: string;
+  subject: string;
 };
 
 export type StudentEducationDetailsTypes = {
-  subject: any[];
-  education: ''
+  subjectOfInterest: any[];
+  education: "";
+  careerInterest: "";
 };
-
-
 
 export interface TutorId {
   _id: string;
