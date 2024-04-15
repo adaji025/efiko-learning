@@ -118,7 +118,7 @@ const EditProfile = () => {
 
     profileSetUp(id, formData)
       .then(() => {
-        toast.success("Profile set up was successful");
+        toast.success("Profile was updated successful");
       })
       .catch((err) => {
         handleError(err);
