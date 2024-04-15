@@ -45,6 +45,7 @@ import PaymentSuccess from "../../pages/authenticated/Settings/PaymentSuccess";
 import AdminNotification from "../../pages/authenticated/Admin/AdminNotification/AdminNotification";
 import ViewRecordedSession from "../../pages/authenticated/Sesssion/ViewRecordedSession";
 import AdminSessionDetails from "../../pages/authenticated/Admin/Session/AdminSessionDetails";
+import EditTutorProfile from "../../pages/authenticated/Settings/EditTutorProfile";
 
 const Authenticated = () => {
   const [mobileNav, openMobileNav] = useState(false);
@@ -163,7 +164,16 @@ const Authenticated = () => {
                 path="/manage-session-requests"
                 element={<ManageSessionRequest />}
               />
-              <Route path="/edit-profile" element={<EditProfile />} />
+              <Route
+                path="/edit-profile"
+                element={
+                  userData.accountType === "student" ? (
+                    <EditProfile />
+                  ) : (
+                    <EditTutorProfile />
+                  )
+                }
+              />
               <Route
                 path="/manage-students/create-student"
                 element={<CreateStudent />}
@@ -177,7 +187,10 @@ const Authenticated = () => {
               <Route path="/manage-issues" element={<ManageIssues />} />
               <Route path="/subscriptions" element={<Subscriptions />} />
               <Route path="user/payment-success" element={<PaymentSuccess />} />
-              <Route path="/admin-notifications" element={<AdminNotification />} />
+              <Route
+                path="/admin-notifications"
+                element={<AdminNotification />}
+              />
             </Routes>
           </main>
         </div>
