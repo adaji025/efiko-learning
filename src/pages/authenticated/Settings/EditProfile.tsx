@@ -3,85 +3,198 @@ import {
   TextInput,
   Select,
   PasswordInput,
-  Textarea,
+  LoadingOverlay,
+  MultiSelect,
 } from "@mantine/core";
 import { MdEdit } from "react-icons/md";
-import ImageDropzone from "../../../components/ImageDropzone";
-import { VerifiedIcon } from "../Profile/Profile";
 import { countryList } from "../../../utils/country";
 import { ProfileTypes } from "../../../types/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import useNotification from "../../../hooks/useNotification";
+import { UserProfileTypes } from "../../../types/user";
+import { getUserProfile, profileSetUp } from "../../../services/user";
+import ProfilePictureUploader from "./components/ProfilePictureUploader";
+import { useForm } from "@mantine/form";
+import { toast } from "react-toastify";
+import { DateInput } from "@mantine/dates";
+import { majors, subjects } from "../../../components/data";
 
 const EditProfile = () => {
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [userProfile, setUserProfile] = useState<UserProfileTypes | null>(null);
+
+  const { handleError } = useNotification();
   const userData: ProfileTypes = useSelector(
     (state: RootState) => state.user.userData
   );
 
+  const id = userData._id;
+  const profileImage = userProfile?.data.profileImage;
+
+  console.log(userProfile?.data);
+  useEffect(() => {
+    handleGetUserProfile();
+  }, []);
+
+  const form = useForm({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      dateOfBirth: "",
+      country: "",
+      education: "",
+      careerInterest: "",
+      subjectOfInterest: [],
+    },
+    validate: {
+      lastName: (value) => (value === "" ? "Input full name" : null),
+      firstName: (value) => (value === "" ? "Input full name" : null),
+      country: (value) => (value === "" ? "Input Country" : null),
+      dateOfBirth: (value) => (value === "" ? "Input age" : null),
+      education: (value) => (value === "" ? "Input Education" : null),
+      careerInterest: (value) =>
+        value === "" ? "Input career of Interest" : null,
+      subjectOfInterest: (value) =>
+        value.length < 6 ? "Input subject Of Interest" : null,
+    },
+  });
+
+  useEffect(() => {
+    form.setValues({
+      firstName: userProfile ? userProfile.data?.firstName : "",
+      lastName: userProfile ? userProfile.data?.lastName : "",
+      // @ts-ignore
+      dateOfBirth: userProfile ? new Date(userProfile.data?.age) : new Date(),
+      country: userProfile ? userProfile.data?.country : "",
+      education: userProfile
+        ? userProfile.data?.studentEducationDetails.education
+        : "",
+      careerInterest: userProfile
+        ? userProfile.data?.studentEducationDetails.careerInterest
+        : "",
+      // @ts-ignore
+      subjectOfInterest: userProfile
+        ? userProfile.data?.studentEducationDetails.subjectOfInterest
+        : [],
+    });
+  }, [userProfile]);
+
+  const validateTwo = useCallback((): boolean => {
+    if (form.values.subjectOfInterest.length < 6) return true;
+    return false;
+  }, [form.values]);
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const formData = new FormData();
+
+    // Append regular key-value pairs
+    if (files) formData.append("image", files);
+    formData.append("firstName", form.values.firstName);
+    formData.append("lastName", form.values.lastName);
+    formData.append("age", form.values.dateOfBirth);
+    formData.append("country", form.values.country);
+    formData.append("subjectOfInterest", form.values.country);
+
+    // Append nested object key-value pairs
+    formData.append("studentEducationDetails.education", form.values.education);
+    formData.append(
+      "studentEducationDetails.careerInterest",
+      form.values.careerInterest
+    );
+
+    // Append array elements
+    form.values.subjectOfInterest.forEach((subject, index) => {
+      formData.append(
+        `studentEducationDetails.subjectOfInterest[${index}]`,
+        subject
+      );
+    });
+
+    profileSetUp(id, formData)
+      .then(() => {
+        toast.success("Profile set up was successful");
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const handleGetUserProfile = () => {
+    setLoading(true);
+
+    getUserProfile(userData._id)
+      .then((res: any) => {
+        setUserProfile(res.data);
+      })
+      .catch((err: any) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <div className="mt-[50px] lg:mt-5">
+      <LoadingOverlay visible={loading} />
       <div className="py-4 font-bold text-xl border-b px-4 lg:px-10">
         Edit Profile
       </div>
       <div className="mt-10 px-4 lg:px-8">
         <div className="border rounded-2xl flex flex-col md:flex-row">
           <div className="w-full md:w-1/3 flex flex-col items-center border-b md:border-b-0 md:border-r p-5">
-            <ImageDropzone files={files} setFiles={setFiles} />
-            <div className="font-semibold mt-5">M_Johnson</div>
-            <div className="text-sm mt-2">Student</div>
-            <div className="text-sm mt-2">markjohnson12@gmail.com</div>
-            <Button
-              className="bg-secondary text-primary font-bold mt-5"
-              leftSection={<VerifiedIcon />}
-            >
-              Verified Account
-            </Button>
+            <ProfilePictureUploader
+              profileImage={profileImage}
+              setFiles={setFiles}
+            />
+            <div className="font-semibold mt-5">
+              {userProfile?.data.firstName} ${userProfile?.data.lastName}
+            </div>
+            <div className="text-sm mt-2 capitalize">
+              {userProfile?.data.accountType}
+            </div>
+            <div className="text-sm mt-2">{userProfile?.data.email}</div>
           </div>
 
           <div className="flex-1">
-            {userData?.accountType === "tutor" && (
-              <div className="p-5 border-b">
-                <div className="font-semibold mt-5 text-lg flex items-center gap-2">
-                  <div>Update Personal Details</div>
-                  <MdEdit />
-                </div>
-                <Textarea
-                  mt={16}
-                  label="Profile Description"
-                  autosize
-                  minRows={8}
-                  size="sm"
-                  className=""
-                  value="I am passionate about teaching and learning, and I enjoy working with students of all ages and abilities. I am also committed to providing my students with the best possible tutoring experience. I am always looking for new ways to improve my teaching methods and to provide my students with the resources they need to succeed. If you are interested in learning more about my tutoring services, please contact me today. I would be happy to discuss your individual needs and to answer any questions you may have"
-                />
-              </div>
-            )}
-
             <div className="p-5 border-b">
               <div className="font-semibold mt-5 text-lg flex items-center gap-2">
                 <div>Update Personal Details</div>
                 <MdEdit />
               </div>
+
               <TextInput
                 size="md"
                 mt={16}
-                label="User name"
-                placeholder="Enter your valid email address"
+                placeholder="Enter your first name"
+                label="First Name"
+                {...form.getInputProps("firstName")}
               />
               <TextInput
-                size="md"
+                required
                 mt={16}
-                label="Full name"
-                placeholder="Enter your full names"
-              />
-              <TextInput
                 size="md"
-                mt={16}
-                label="Age"
-                placeholder="Enter your age"
+                placeholder="Enter your last Name"
+                label="Last Name"
+                {...form.getInputProps("lastName")}
               />
+              <DateInput
+                required
+                mt={16}
+                size="md"
+                label="Date of Birth"
+                {...form.getInputProps("dateOfBirth")}
+              />
+
               <Select
                 required
                 mt={16}
@@ -90,6 +203,7 @@ const EditProfile = () => {
                 placeholder="select your country"
                 data={countryList.map((country) => country)}
                 searchable
+                {...form.getInputProps("country")}
               />
             </div>
 
@@ -101,47 +215,70 @@ const EditProfile = () => {
               <Select
                 required
                 size="md"
-                mt={16}
                 label="Education"
-                placeholder="Choose Education"
                 data={[
-                  { label: "one", value: "1" },
-                  { label: "tw0", value: "2" },
-                  { label: "three", value: "3" },
+                  { label: "Grade 1", value: "grade 1" },
+                  { label: "Grade 2", value: "grade 2" },
+                  { label: "Grade 3", value: "grade 3" },
+                  { label: "Grade 4", value: "grade 4" },
+                  { label: "Grade 5", value: "grade 5" },
+                  { label: "Grade 6", value: "grade 6" },
+                  { label: "Grade 7", value: "grade 7" },
+                  { label: "Grade 8", value: "grade 8" },
+                  { label: "Grade 9", value: "grade 9" },
                 ]}
-              />
-              <Select
-                required
-                size="md"
-                mt={16}
-                label="Your majors"
-                placeholder="Choose Education"
-                data={[
-                  { label: "one", value: "1" },
-                  { label: "tw0", value: "2" },
-                  { label: "three", value: "3" },
-                ]}
+                {...form.getInputProps("education")}
               />
 
               <Select
                 required
-                size="md"
                 mt={16}
-                label="Subjects you are interested in *"
-                placeholder="Choose subjects"
-                data={[
-                  { label: "one", value: "1" },
-                  { label: "tw0", value: "2" },
-                  { label: "three", value: "3" },
-                ]}
+                size="md"
+                label="Career Interests"
+                searchable
+                data={majors.map((major) => major)}
+                {...form.getInputProps("careerInterest")}
               />
+
+              <MultiSelect
+                required
+                // @ts-ignore
+                autocomplete="false"
+                mt={16}
+                size="md"
+                label="Subjects you are interested in"
+                data={subjects.map((subject) => subject)}
+                searchable
+                {...form.getInputProps("subjectOfInterest")}
+              />
+              {validateTwo() && (
+                <div className="text-xs text-red-500">
+                  Select at least 6 subjects
+                </div>
+              )}
 
               <div className="mt-4 flex flex-wrap gap-5 ">
-                {[...Array(7)].map((_, i) => (
-                  <div key={i} className="bg-secondary p-2 rounded-md">
-                    Mathematics
-                  </div>
-                ))}
+                {userProfile?.data?.studentEducationDetails.subjectOfInterest.map(
+                  (item, i) => (
+                    <div
+                      key={i}
+                      className="bg-secondary py-2 px-4 rounded-md min-w-[100px] text-center"
+                    >
+                      {item}
+                    </div>
+                  )
+                )}
+              </div>
+              <div className="flex justify-center">
+                <Button
+                  type="submit"
+                  size="md"
+                  mt={30}
+                  className="bg-primary md:w-1/2 ml-auto"
+                  onClick={handleSubmit}
+                >
+                  Update Changes
+                </Button>
               </div>
             </div>
 
@@ -178,19 +315,18 @@ const EditProfile = () => {
                 className="w-full"
                 // {...form.getInputProps("confirmPassword")}
               />
+              <div className="flex justify-end">
+                <Button
+                  type="submit"
+                  size="md"
+                  mt={30}
+                  className="bg-primary w-1/2 ml-auto"
+                >
+                  Update Password
+                </Button>
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="flex justify-center">
-          <Button
-            type="submit"
-            size="md"
-            mt={30}
-            className="bg-primary w-1/2 mx-auto"
-          >
-            Update Changes
-          </Button>
         </div>
       </div>
     </div>

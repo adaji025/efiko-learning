@@ -127,12 +127,6 @@ const Profile = () => {
                 <div className="font-semibold mt-5 text-lg text-primary">
                   Personal Details
                 </div>
-                {/* <div className="mt-2 text-sm">
-                  Name:{" "}
-                  {userData.accountType === "student"
-                    ? `${userProfile?.data.firstName}  ${userProfile?.data.lastName}`
-                    : userData?.fullName}
-                </div> */}
                 <div className="mt-2 text-sm">
                   {userData.accountType === "student" ? "Date of birth" : "Age"}
                   :{" "}
@@ -181,7 +175,10 @@ const Profile = () => {
                   {userData.accountType === "student" &&
                     userProfile?.data?.studentEducationDetails.subjectOfInterest.map(
                       (item, i) => (
-                        <div key={i} className="bg-secondary py-2 px-4 rounded-md min-w-[100px] text-center">
+                        <div
+                          key={i}
+                          className="bg-secondary py-2 px-4 rounded-md min-w-[100px] text-center"
+                        >
                           {item}
                         </div>
                       )
