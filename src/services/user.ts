@@ -41,7 +41,6 @@ export const profileSetUp = (id: string, data: any) => {
   });
 };
 
-
 export const uploadEducationalDoc = (id: string, data: any) => {
   return new Promise((resolve, reject) => {
     AxoisApi.patch(`${APIS.USER.USER}/education-doc/${id}`, data, {
@@ -73,5 +72,14 @@ export const uploadNationalId = (id: string, data: any) => {
       });
   });
 };
-
-
+export const updatePassword = (data: any) => {
+  return new Promise((resolve, reject) => {
+    AxoisApi.patch(`${APIS.USER.USER}/change-password/`, data)
+      .then((res: any) => {
+        resolve(res);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};

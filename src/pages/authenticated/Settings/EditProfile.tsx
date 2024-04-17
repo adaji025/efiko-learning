@@ -14,7 +14,11 @@ import { RootState } from "../../../redux/store";
 import { useCallback, useEffect, useState } from "react";
 import useNotification from "../../../hooks/useNotification";
 import { UserProfileTypes } from "../../../types/user";
-import { getUserProfile, profileSetUp } from "../../../services/user";
+import {
+  getUserProfile,
+  profileSetUp,
+  updatePassword,
+} from "../../../services/user";
 import ProfilePictureUploader from "./components/ProfilePictureUploader";
 import { useForm } from "@mantine/form";
 import { toast } from "react-toastify";
@@ -118,7 +122,7 @@ const EditProfile = () => {
 
     profileSetUp(id, formData)
       .then(() => {
-        toast.success("Profile set up was successful");
+        toast.success("Profile was updated successful");
       })
       .catch((err) => {
         handleError(err);
@@ -143,6 +147,38 @@ const EditProfile = () => {
       });
   };
 
+  const passwordForm = useForm({
+    initialValues: {
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+    validate: {
+      confirmPassword: (value, values) =>
+        value !== values.newPassword ? "Passwords did not match" : null,
+    },
+  });
+
+  const validatePw = useCallback((): boolean => {
+    if (passwordForm.values.newPassword !== passwordForm.values.confirmPassword)
+      return true;
+    return false;
+  }, [passwordForm.values.confirmPassword]);
+
+  const handleChangePassword = (values: any) => {
+    setLoading(true);
+
+    updatePassword(values)
+      .then(() => {
+        toast.success("Password was updated successful");
+      })
+      .catch((err) => {
+        handleError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
   return (
     <div className="mt-[50px] lg:mt-5">
       <LoadingOverlay visible={loading} />
@@ -287,44 +323,47 @@ const EditProfile = () => {
                 <div>Update Password</div>
                 <MdEdit />
               </div>
-
-              <PasswordInput
-                placeholder="Enter your password"
-                required
-                mt={16}
-                size="md"
-                label="Current Password"
-                className="w-full"
-                // {...form.getInputProps("newPassword")}
-              />
-              <PasswordInput
-                placeholder="Enter your password"
-                required
-                mt={16}
-                size="md"
-                label="New Password"
-                className="w-full"
-                // {...form.getInputProps("newPassword")}
-              />
-              <PasswordInput
-                placeholder="Enter your password"
-                required
-                mt={16}
-                size="md"
-                label="Confirm Password"
-                className="w-full"
-                // {...form.getInputProps("confirmPassword")}
-              />
-              <div className="flex justify-end">
-                <Button
-                  type="submit"
+              <form onSubmit={passwordForm.onSubmit(handleChangePassword)}>
+                <PasswordInput
+                  placeholder="Enter your password"
+                  required
+                  mt={16}
                   size="md"
-                  mt={30}
-                  className="bg-primary w-1/2 ml-auto"
-                >
-                  Update Password
-                </Button>
-              </div>
+                  label="Current Password"
+                  className="w-full"
+                  {...passwordForm.getInputProps("currentPassword")}
+                />
+                <PasswordInput
+                  placeholder="Enter your password"
+                  required
+                  mt={16}
+                  size="md"
+                  label="New Password"
+                  className="w-full"
+                  {...passwordForm.getInputProps("newPassword")}
+                />
+                <PasswordInput
+                  placeholder="Enter your password"
+                  required
+                  mt={16}
+                  size="md"
+                  label="Confirm Password"
+                  className="w-full"
+                  {...passwordForm.getInputProps("confirmPassword")}
+                  error={validatePw() ? "Passwords did not match" : null}
+                />
+               
+                <div className="flex justify-end">
+                  <Button
+                    type="submit"
+                    size="md"
+                    mt={30}
+                    className="bg-primary w-1/2 ml-auto"
+                  >
+                    Update Password
+                  </Button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

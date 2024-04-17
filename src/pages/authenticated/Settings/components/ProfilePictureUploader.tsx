@@ -40,7 +40,7 @@ const ProfilePictureUploader: React.FC<IProps> = ({ profileImage, setFiles:setSe
         <img
           src={previewSource ? previewSource : profileImage}
           alt=""
-          className="rounded-full h-[100px] w-[100px]"
+          className="rounded-full h-[100px] w-[100px] object-cover"
         />
 
         <div

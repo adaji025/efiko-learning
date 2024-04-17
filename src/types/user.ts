@@ -34,6 +34,7 @@ export type TutorEducationDetailsTypes = {
   educationDoc: string[];
   nationalId: string;
   subject: string;
+  teachingExperience: string;
 };
 
 export type StudentEducationDetailsTypes = {
