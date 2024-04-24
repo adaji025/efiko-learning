@@ -56,6 +56,7 @@ const ReportIssues = () => {
               size="md"
               mt={16}
               placeholder="Enter your email"
+              label="Email"
               {...form.getInputProps("email")}
             />
             <Select
@@ -63,6 +64,7 @@ const ReportIssues = () => {
               size="md"
               mt={16}
               placeholder="Choose Issue Category"
+              label="Category"
               data={[
                 { label: "Bad service", value: "bad service" },
                 { label: "Refund", value: "refund" },
@@ -75,6 +77,7 @@ const ReportIssues = () => {
               size="md"
               mt={16}
               placeholder="Choose Subject  "
+              label="Subject"
               data={subjects.map((subject) => subject)}
               searchable
               {...form.getInputProps("subject")}
@@ -83,6 +86,7 @@ const ReportIssues = () => {
               required
               mt={16}
               placeholder="Let us know about your issue."
+              label="Description"
               autosize
               minRows={6}
               size="sm"

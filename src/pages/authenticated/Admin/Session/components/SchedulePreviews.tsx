@@ -27,13 +27,13 @@ const SchedulePreviews = ({
   free,
   tutors,
 }: PreviewType) => {
-  const singleCurriculum = curriculum.find(
-    (curriculum) => curriculum._id
+  const singleCurriculum = curriculum?.find(
+    (curriculum) => curriculum?._id
   )?.title;
 
   console.log(tutors);
 
-  const singleTutors = tutors.find((tutor) => tutor._id === previewData.tutorId)?.fullName;
+  const singleTutors = tutors.find((tutor) => tutor?._id === previewData?.tutorId)?.fullName;
 
   return (
     <div className="mt-[50px] lg:mt-5">
