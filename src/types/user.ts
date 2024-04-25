@@ -27,6 +27,7 @@ export interface Data {
   firstName: string;
   lastName: string;
   profileImage: string;
+  approvalStatus: string;
 }
 
 export type TutorEducationDetailsTypes = {

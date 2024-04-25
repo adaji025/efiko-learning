@@ -9,7 +9,7 @@ import {
   FileInput,
 } from "@mantine/core";
 import { MdEdit } from "react-icons/md";
-import { VerifiedIcon } from "../Profile/Profile";
+// import { VerifiedIcon } from "../Profile/Profile";
 import { countryList } from "../../../utils/country";
 import { ProfileTypes } from "../../../types/auth";
 import { useSelector } from "react-redux";
@@ -184,19 +184,20 @@ const EditTutorProfile = () => {
               profileImage={profileImage}
               setFiles={setFiles}
             />
-            <div className="font-semibold mt-5">{userData?.fullName}</div>
+            <div className="font-semibold mt-5">{userProfile?.data.fullName}</div>
             <div className="text-sm mt-2 capitalize">
               {userProfile?.data.accountType}
             </div>
             <div className="text-sm mt-2">{userProfile?.data.email}</div>
-            {userProfile?.data.isVerified && (
-              <Button
-                className="bg-secondary text-primary font-bold mt-5"
-                leftSection={<VerifiedIcon />}
-              >
-                Verified Account
-              </Button>
-            )}
+
+            {/* <Button
+              className="bg-secondary text-primary font-bold mt-5"
+              leftSection={<VerifiedIcon />}
+            >
+              {userProfile?.data.approvalStatus === "Pending"
+                ? "Pending Account"
+                : "Verified Account"}
+            </Button> */}
           </div>
 
           <div className="flex-1">

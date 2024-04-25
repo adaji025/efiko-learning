@@ -52,7 +52,7 @@ const AdminTable = ({
         .then(() => {
           toast.success(
             `Admin ${
-              status === "Activate" ? "Deactivated" : "Activated"
+              status === "Activate" ? "Activated" : "Deactivated"
             } successfully`
           );
           close();

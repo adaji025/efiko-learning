@@ -10,6 +10,7 @@ export type ReportTypes = {
   _id: string;
   reportedBy: ReportedByTypes;
   title: string;
+  subject: string;
   description: string;
   status: string;
   createdAt: string;
