@@ -2,13 +2,14 @@ import { PinInput, Button, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Logo from "../../../assets/svgs/logo.svg";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { userVerification } from "../../../services/auth";
 import { toast } from "react-toastify";
 import { Fragment } from "react";
 
 const VerifyUser = () => {
   const [loading, setLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   const email = localStorage.getItem("userEmail") ?? "";
@@ -35,6 +36,13 @@ const VerifyUser = () => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+  
   return (
     <Fragment>
       <LoadingOverlay visible={loading} />
@@ -51,7 +59,12 @@ const VerifyUser = () => {
             onSubmit={form.onSubmit((values) => submit(values))}
             className="mx-auto flex flex-col items-center"
           >
-            <PinInput size="md" className="" {...form.getInputProps("otp")} />
+            <PinInput
+              ref={inputRef}
+              size="md"
+              className=""
+              {...form.getInputProps("otp")}
+            />
 
             <Button
               type="submit"
