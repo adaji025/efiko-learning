@@ -34,6 +34,8 @@ const Dashboard = () => {
         <div className="mt-10 border p-5">
           <div className="flex items-center">
             <div className="mb-5 font-semibold mt-5">Statistcs</div>
+            <div className="flex items-center gap-5">
+            <div>Week</div>
             <Menu shadow="md" width={200}>
               <Menu.Target>
                 <Button
@@ -50,6 +52,7 @@ const Dashboard = () => {
                 <Menu.Item>2020</Menu.Item>
               </Menu.Dropdown>
             </Menu>
+            </div>
           </div>
           <Chart />
         </div>

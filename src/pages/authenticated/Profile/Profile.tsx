@@ -142,6 +142,17 @@ const Profile = () => {
                     {userProfile?.data.country}
                   </span>
                 </div>
+                {userData.accountType === "tutor" && (
+                  <div className="mt-2 text-sm">
+                    Experience:{" "}
+                    <span className="font-semibold">
+                      {
+                        userProfile?.data.tutorEducationDetails
+                          .teachingExperience
+                      }
+                    </span>
+                  </div>
+                )}
               </div>
               <div className="p-5 border-b">
                 <div className="font-semibold mt-5 text-lg text-primary">

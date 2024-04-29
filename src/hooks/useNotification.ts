@@ -11,31 +11,31 @@ const useNotification = () => {
   };
 
   const handleError = (error: any) => {
-    if (!error.response) {
+    if (!error?.response) {
       return toast.error("Network Error, Please check your connection");
     }
-    if (error.response.status === 404) {
+    if (error?.response?.status === 404) {
       return toast.error("Route not found");
     }
-    if (error.response.data.error === "Invalid Token") {
+    if (error?.response?.data?.error === "Invalid Token") {
       logoutUser();
       return toast.error("Route not found");
     }
 
-    if (error.response.data.message === "Unable to verify token.") {
+    if (error?.response?.data?.message === "Unable to verify token.") {
       logoutUser();
       return toast.error("Route not found");
     }
 
     if (
-      error.response.data.errors &&
+      error?.response?.data?.errors &&
       Array.isArray(error.response.data.errors)
     ) {
-      return error.response.data.errors?.map((item: any) => item.msg);
+      return error?.response?.data?.errors?.map((item: any) => item.msg);
     }
 
     if (error) {
-      return toast.error(error.response.data.message);
+      return toast.error(error?.response?.data?.message);
     }
 
     if (error?.response?.status === 401 || error?.response?.status === 403) {

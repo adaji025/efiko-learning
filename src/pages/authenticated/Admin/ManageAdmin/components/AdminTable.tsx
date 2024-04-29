@@ -39,6 +39,8 @@ const AdminTable = ({
     if (admins) setTotalPages(Math.ceil(admins?.total / limit));
   }, [admins, limit]);
 
+  console.log(admins)
+
   const { handleError } = useNotification();
 
   const handleUpdateAdmin = () => {
@@ -52,7 +54,7 @@ const AdminTable = ({
         .then(() => {
           toast.success(
             `Admin ${
-              status === "Activate" ? "Deactivated" : "Activated"
+              status === "Activate" ? "Activated" : "Deactivated"
             } successfully`
           );
           close();
@@ -141,7 +143,7 @@ const AdminTable = ({
                           open();
                           setAdmin(admin);
                           admin.status === "Active" && setStatus("Inactive");
-                          admin.status === "inactive" && setStatus("Active");
+                          admin.status === "Inactive" && setStatus("Active");
                         }}
                       >
                         {admin.status === "Active" ? "Deactivate" : "Activate"}

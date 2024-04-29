@@ -40,7 +40,7 @@ const ScheduleSession = () => {
     <ActionIcon
       variant="subtle"
       color="gray"
-      onClick={() => timeRef.current?.showPicker()}
+      onClick={() => timeRef?.current?.showPicker()}
     >
       <FaRegClock />
     </ActionIcon>
@@ -120,8 +120,7 @@ const ScheduleSession = () => {
     console.log({ ...values, free: checked });
   };
 
-  const previewData = form.values;
-  console.log(previewData);
+  const previewData = form?.values;
 
   return (
     <Fragment>

@@ -23,11 +23,10 @@ const TutorProfilSetup = () => {
   const [active, setActive] = useState(0);
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState([]);
-  // const [edDocvalue, setEdDocValue] = useState<File[]>([]);
   const [edDocvalue, setEdDocValue] = useState<File | null>(null);
   const [natIdvalue, setNatIdValue] = useState<File | null>(null);
 
-  const { handleError } = useNotification();
+  const { handleError, logoutUser } = useNotification();
   const id = localStorage.getItem("userId") ?? "";
   const navigate = useNavigate();
 
@@ -64,7 +63,7 @@ const TutorProfilSetup = () => {
     )
       return true;
     return false;
-  }, [form.values]);
+  }, [form.values, files]);
 
   const validateTwo = useCallback((): boolean => {
     if (
@@ -117,7 +116,9 @@ const TutorProfilSetup = () => {
 
     profileSetUp(id, formData)
       .then(() => {
-        toast.success("Profile set up was successful");
+        toast.success(
+          "Profile set up was successful, approval status is pending"
+        );
       })
       .catch((err) => {
         handleError(err);
@@ -296,9 +297,12 @@ const TutorProfilSetup = () => {
                 <Button
                   size="md"
                   className="bg-primary w-full mt-10"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => {
+                    logoutUser();
+                    navigate("/");
+                  }}
                 >
-                  Login
+                  Go Back to Home Page
                 </Button>
               </div>
             </Stepper.Completed>

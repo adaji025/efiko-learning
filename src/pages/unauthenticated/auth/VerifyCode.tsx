@@ -2,7 +2,7 @@ import { PinInput, Button, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Logo from "../../../assets/svgs/logo.svg";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { studentLogin } from "../../../services/auth";
 import { toast } from "react-toastify";
 import { Fragment } from "react";
@@ -12,10 +12,17 @@ import useNotification from "../../../hooks/useNotification";
 
 const VerifyCode = () => {
   const [loading, setLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null)
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const { handleError } = useNotification();
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   const form = useForm({
     initialValues: {
@@ -59,6 +66,7 @@ const VerifyCode = () => {
             className="mx-auto flex flex-col items-center"
           >
             <PinInput
+              ref={inputRef}
               size="md"
               className=""
               {...form.getInputProps("loginCode")}

@@ -1,11 +1,5 @@
 import { useState, Fragment } from "react";
-import {
-  TextInput,
-  Select,
-  Textarea,
-  Button,
-  LoadingOverlay,
-} from "@mantine/core";
+import { Select, Textarea, Button, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { subjects } from "../../../components/data";
 import { sendReport } from "../../../services/report";
@@ -19,10 +13,9 @@ const ReportIssues = () => {
 
   const form = useForm({
     initialValues: {
-      email: "",
-      category: "",
+      title: "",
       subject: "",
-      issue: "",
+      description: "",
     },
   });
 
@@ -50,31 +43,25 @@ const ReportIssues = () => {
         </div>
         <form onSubmit={form.onSubmit((values) => submit(values))}>
           <div className="mt-10 max-w-[1000px] mx-auto px-6 lg:px-8">
-            <TextInput
-              required
-              type="email"
-              size="md"
-              mt={16}
-              placeholder="Enter your email"
-              {...form.getInputProps("email")}
-            />
             <Select
               required
               size="md"
               mt={16}
               placeholder="Choose Issue Category"
+              label="Category"
               data={[
                 { label: "Bad service", value: "bad service" },
                 { label: "Refund", value: "refund" },
                 { label: "Low quality content", value: "low quality content" },
               ]}
-              {...form.getInputProps("category")}
+              {...form.getInputProps("title")}
             />
             <Select
               required
               size="md"
               mt={16}
               placeholder="Choose Subject  "
+              label="Subject"
               data={subjects.map((subject) => subject)}
               searchable
               {...form.getInputProps("subject")}
@@ -83,6 +70,7 @@ const ReportIssues = () => {
               required
               mt={16}
               placeholder="Let us know about your issue."
+              label="Description"
               autosize
               minRows={6}
               size="sm"
