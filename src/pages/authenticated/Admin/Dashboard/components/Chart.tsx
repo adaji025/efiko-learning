@@ -93,11 +93,6 @@ const Chart = ({ statistics }: IProps) => {
         data: [5, 10, 20, 6, 10, 20, 9, 10, 9, 8, 11, 12],
         backgroundColor: "#00F5C0",
       },
-      {
-        label: "Joined Sessions",
-        data: [1, 10, 20, 15, 10, 8, 12, 12, 11, 9, 8, 5],
-        backgroundColor: "#FE66C4",
-      },
     ],
   };
 
