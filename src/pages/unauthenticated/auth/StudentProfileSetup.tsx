@@ -74,7 +74,6 @@ const StudentProfilSetup = () => {
     formData.append("lastName", form.values.lastName);
     formData.append("age", form.values.dateOfBirth);
     formData.append("country", form.values.country);
-    formData.append("subjectOfInterest", form.values.country);
 
     // Append nested object key-value pairs
     formData.append("studentEducationDetails.education", form.values.education);
@@ -86,7 +85,7 @@ const StudentProfilSetup = () => {
     // Append array elements
     form.values.subjectOfInterest.forEach((subject, index) => {
       formData.append(
-        `studentEducationDetails.subjectOfInterest[${index}]`,
+        `subjectOfInterest[${index}]`,
         subject
       );
     });
