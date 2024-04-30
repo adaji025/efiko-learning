@@ -9,8 +9,15 @@ import { SessionTypes } from "../../../types/session";
 import { getTutorSession } from "../../../services/session";
 import useNotification from "../../../hooks/useNotification";
 import UpcomingSessionCard from "../Sesssion/components/UpcomingSessionCard";
+import MoneyChart from "./components/MoneyChart";
 
 const TutorDashboard = () => {
+  const d = new Date();
+  let currentYear = d.getFullYear();
+  const [statistics, setStatistics] = useState("");
+  const [Moneystatistics, setMoneyStatistics] = useState("");
+  const [year, setYear] = useState(currentYear.toString());
+  const [moneyYear, setMoneyYear] = useState(currentYear.toString());
   const [sessions, setSessions] = useState<SessionTypes[] | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -73,27 +80,107 @@ const TutorDashboard = () => {
               ))}
           </div>
         </div>
+
+        <div className="text-2xl font-bold mt-10">Session Statistics</div>
         <div className="mt-10 border p-5">
-          <div className="flex items-center">
+          <div className="flex items-center font-semibold">
             <div className="mb-5 font-semibold mt-5">Statistcs</div>
+            <div className="flex gap-5 items-center ml-5">
+              <div
+                className="text-black/60 text-sm cursor-pointer font-semibold"
+                onClick={() => setStatistics("week")}
+              >
+                This Week
+              </div>
+              <div
+                className="text-black/60 text-sm cursor-pointer font-semibold"
+                onClick={() => setStatistics("month")}
+              >
+                This Month
+              </div>
+            </div>
             <Menu shadow="md" width={200}>
               <Menu.Target>
                 <Button
                   rightSection={<BiChevronDown />}
                   className="bg-transparent text-black/60 font-bold"
                 >
-                  Year 2023
+                  Year {year}
                 </Button>
               </Menu.Target>
               <Menu.Dropdown>
-                <Menu.Item>2023</Menu.Item>
-                <Menu.Item>2022</Menu.Item>
-                <Menu.Item>2021</Menu.Item>
-                <Menu.Item>2020</Menu.Item>
+                <Menu.Item
+                  onClick={() => {
+                    setYear("2024");
+                    setStatistics("2024");
+                  }}
+                >
+                  2024
+                </Menu.Item>
+                <Menu.Item
+                  onClick={() => {
+                    setYear("2023");
+                    setStatistics("2023");
+                  }}
+                >
+                  2023
+                </Menu.Item>
               </Menu.Dropdown>
             </Menu>
           </div>
-          <Chart />
+          <Chart statistics={statistics} />
+        </div>
+
+        <div className="text-2xl font-bold mt-10">Money Earned Statistics</div>
+        <div className="mt-5 border p-5">
+          <div className="flex items-center font-semibold">
+            <div className="mb-5 font-semibold mt-5">Statistcs</div>
+            <div className="flex gap-5 items-center ml-5">
+              <div
+                className="text-black/60 text-sm cursor-pointer font-semibold"
+                onClick={() => setMoneyStatistics("week")}
+              >
+                This Week
+              </div>
+              <div
+                className="text-black/60 text-sm cursor-pointer font-semibold"
+                onClick={() => setMoneyStatistics("month")}
+              >
+                This Month
+              </div>
+            </div>
+            <Menu shadow="md" width={200}>
+              <Menu.Target>
+                <Button
+                  rightSection={<BiChevronDown />}
+                  className="bg-transparent text-black/60 font-bold"
+                >
+                  Year {moneyYear}
+                </Button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item
+                  onClick={() => {
+                    setMoneyYear("2024");
+                    setMoneyStatistics("2024");
+                  }}
+                >
+                  2024
+                </Menu.Item>
+                <Menu.Item
+                  onClick={() => {
+                    setMoneyYear("2023");
+                    setMoneyStatistics("2023");
+                  }}
+                >
+                  2023
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </div>
+          <div className="overflow-hidden">
+            <MoneyChart title="Money Earned in USD" statistics={Moneystatistics} />
+          </div>
         </div>
       </div>
     </Fragment>

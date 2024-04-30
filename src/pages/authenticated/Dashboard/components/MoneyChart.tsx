@@ -12,6 +12,7 @@ import { Box } from "@mantine/core";
 
 type IProps = {
   statistics: string;
+  title: string
 };
 
 ChartJS.register(
@@ -23,7 +24,7 @@ ChartJS.register(
   Legend
 );
 
-const Chart = ({ statistics }: IProps) => {
+const MoneyChart = ({ statistics, title }: IProps) => {
   const labels = [
     "Jan",
     "Feb",
@@ -89,7 +90,7 @@ const Chart = ({ statistics }: IProps) => {
       statistics === "week" ? week : statistics === "month" ? month : labels,
     datasets: [
       {
-        label: "Sesshion",
+        label: title,
         data: [5, 10, 20, 6, 10, 20, 9, 10, 9, 8, 11, 12],
         backgroundColor: "#00F5C0",
       },
@@ -99,10 +100,10 @@ const Chart = ({ statistics }: IProps) => {
   return (
     <div className="overflow-hidden">
       <Box mt={50} className="overflow-hidden">
-        <Bar options={options} data={data} />
+        <Bar options={options} data={data}  />
       </Box>
     </div>
   );
 };
 
-export default Chart;
+export default MoneyChart;

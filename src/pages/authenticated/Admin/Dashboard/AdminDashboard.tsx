@@ -5,6 +5,7 @@ import { BiChevronDown } from "react-icons/bi";
 // import { ProfileTypes } from "../../../../types/auth";
 // import { RootState } from "../../../../redux/store";
 import Chart from "./components/Chart";
+import MoneyChart from "./components/MoneyChart";
 // import { getTutorSession } from "../../../../services/session";
 // import useNotification from "../../../../hooks/useNotification";
 
@@ -13,7 +14,9 @@ const AdminDashboard = () => {
   let currentYear = d.getFullYear();
   // const [loading, setLoading] = useState(false);
   const [statistics, setStatistics] = useState("");
+  const [Moneystatistics, setMoneyStatistics] = useState("");
   const [year, setYear] = useState(currentYear.toString());
+  const [moneyYear, setMoneyYear] = useState(currentYear.toString());
 
   // const { handleError } = useNotification();
   // const userData: ProfileTypes = useSelector(
@@ -36,10 +39,9 @@ const AdminDashboard = () => {
             <div className="mt-6 text-4xl">$220</div>
           </div>
         </div>
-        <div className="mt-10">
-          {/* <h2 className="text-xl font-semibold">My Upcoming Sessions</h2> */}
-        </div>
-        <div className="mt-10 border p-5">
+
+        <div className="text-2xl font-bold mt-10">Session Statistics</div>
+        <div className="mt-5 border p-5">
           <div className="flex items-center font-semibold">
             <div className="mb-5 font-semibold mt-5">Statistcs</div>
             <div className="flex gap-5 items-center ml-5">
@@ -66,13 +68,79 @@ const AdminDashboard = () => {
                 </Button>
               </Menu.Target>
               <Menu.Dropdown>
-                <Menu.Item onClick={() => setYear("2024")}>2024</Menu.Item>
-                <Menu.Item>2023</Menu.Item>
+                <Menu.Item
+                  onClick={() => {
+                    setYear("2024");
+                    setStatistics("2024");
+                  }}
+                >
+                  2024
+                </Menu.Item>
+                <Menu.Item
+                  onClick={() => {
+                    setYear("2023");
+                    setStatistics("2023");
+                  }}
+                >
+                  2023
+                </Menu.Item>
               </Menu.Dropdown>
             </Menu>
           </div>
           <div className="overflow-hidden">
             <Chart statistics={statistics} />
+          </div>
+        </div>
+
+        <div className="text-2xl font-bold mt-10">Money Earned Statistics</div>
+        <div className="mt-5 border p-5">
+          <div className="flex items-center font-semibold">
+            <div className="mb-5 font-semibold mt-5">Statistcs</div>
+            <div className="flex gap-5 items-center ml-5">
+              <div
+                className="text-black/60 text-sm cursor-pointer font-semibold"
+                onClick={() => setMoneyStatistics("week")}
+              >
+                This Week
+              </div>
+              <div
+                className="text-black/60 text-sm cursor-pointer font-semibold"
+                onClick={() => setMoneyStatistics("month")}
+              >
+                This Month
+              </div>
+            </div>
+            <Menu shadow="md" width={200}>
+              <Menu.Target>
+                <Button
+                  rightSection={<BiChevronDown />}
+                  className="bg-transparent text-black/60 font-bold"
+                >
+                  Year {moneyYear}
+                </Button>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item
+                  onClick={() => {
+                    setMoneyYear("2024");
+                    setMoneyStatistics("2024");
+                  }}
+                >
+                  2024
+                </Menu.Item>
+                <Menu.Item
+                  onClick={() => {
+                    setMoneyYear("2023");
+                    setMoneyStatistics("2023");
+                  }}
+                >
+                  2023
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </div>
+          <div className="overflow-hidden">
+            <MoneyChart statistics={Moneystatistics} />
           </div>
         </div>
       </div>
