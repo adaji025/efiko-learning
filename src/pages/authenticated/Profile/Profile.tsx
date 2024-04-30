@@ -77,6 +77,8 @@ const Profile = () => {
       });
   };
 
+  console.log(userProfile?.data)
+
   return (
     <Fragment>
       <LoadingOverlay visible={loading} />
@@ -184,7 +186,7 @@ const Profile = () => {
                 </div>
                 <div className="mt-2 flex flex-wrap gap-5 ">
                   {userData.accountType === "student" &&
-                    userProfile?.data?.studentEducationDetails.subjectOfInterest.map(
+                    userProfile?.data?.subjectOfInterest?.map(
                       (item, i) => (
                         <div
                           key={i}

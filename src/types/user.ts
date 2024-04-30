@@ -28,6 +28,7 @@ export interface Data {
   lastName: string;
   profileImage: string;
   approvalStatus: string;
+  subjectOfInterest: string[];
 }
 
 export type TutorEducationDetailsTypes = {

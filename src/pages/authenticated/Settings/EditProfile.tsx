@@ -81,7 +81,7 @@ const EditProfile = () => {
         : "",
       // @ts-ignore
       subjectOfInterest: userProfile
-        ? userProfile.data?.studentEducationDetails.subjectOfInterest
+        ? userProfile.data?.subjectOfInterest
         : [],
     });
   }, [userProfile]);
@@ -103,7 +103,6 @@ const EditProfile = () => {
     formData.append("lastName", form.values.lastName);
     formData.append("age", form.values.dateOfBirth);
     formData.append("country", form.values.country);
-    formData.append("subjectOfInterest", form.values.country);
 
     // Append nested object key-value pairs
     formData.append("studentEducationDetails.education", form.values.education);
@@ -115,10 +114,14 @@ const EditProfile = () => {
     // Append array elements
     form.values.subjectOfInterest.forEach((subject, index) => {
       formData.append(
-        `studentEducationDetails.subjectOfInterest[${index}]`,
+        `subjectOfInterest[${index}]`,
         subject
       );
     });
+
+    for (var pair of formData.entries()) {
+      console.log(pair[0]+ ' - ' + pair[1]); 
+  }
 
     profileSetUp(id, formData)
       .then(() => {
@@ -179,6 +182,7 @@ const EditProfile = () => {
         setLoading(false);
       });
   };
+  console.log(form.values.subjectOfInterest)
   return (
     <div className="mt-[50px] lg:mt-5">
       <LoadingOverlay visible={loading} />
@@ -294,7 +298,7 @@ const EditProfile = () => {
               )}
 
               <div className="mt-4 flex flex-wrap gap-5 ">
-                {userProfile?.data?.studentEducationDetails.subjectOfInterest.map(
+                {userProfile?.data?.subjectOfInterest.map(
                   (item, i) => (
                     <div
                       key={i}
